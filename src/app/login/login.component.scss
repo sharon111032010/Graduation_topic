@@ -1,0 +1,119 @@
+* {
+    font-family: sans-serif;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.header {
+    background-color: #B6DAFF;
+    height: 20vh;
+}
+
+.header img {
+    width: 50vw;
+    height: 60%;
+}
+
+.content {
+}
+
+.welcome_section {
+    height: 20vh;
+    font-size: 3rem;
+}
+
+.welcome_section h1 {
+    font-size: 5.2rem;
+    font-weight: 700;
+    background: radial-gradient(70.71% 70.71% at 50% 50%, #7AA8DF 0%, #84A0C1 46.52%, rgba(65, 198, 255, 0.00) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.login_section {
+    height: 60vh;
+}
+.mat-typography{
+    line-height: 100px;
+}
+.login_section p {
+    font-weight: 500;
+    font-size: 3rem;
+    color: #5A5A5A;
+}
+
+.input_container {
+    background-color: #ffefd5;
+    width: 70%;
+    height: 75%;
+    border-radius: 4em;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 2px 4px 0px rgba(14, 30, 37, 0.12);
+}
+
+.form_group {
+    width: 65%;
+}
+
+.form_group p {
+    color: #5A5A5A;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.form_group input {
+    height: 5vh;
+    border-radius: 12px;
+    border: 2px rgba(122, 168, 223, 0.50);
+    background: var(--acc, #FDFEFF);
+    box-shadow: 0px 4px 5px 1.2px #868B8F;
+    text-align: center;
+    background: none;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 22px;
+    outline: none;/*外輪廓*/
+    color: #9494a3;
+}
+
+.btn_container {
+    width: 65%;
+    height: 12%;
+}
+
+.btn_container button {
+    width: 30%;
+    height: 100%;
+    border-radius: 12px;
+    background: #7AA8DF;
+    color: #FDFDFD;
+    font-size: 1rem;
+    font-weight: 832;
+}
+
+.link_a_container {
+    width: 65%;
+    height: 10%;
+}
+
+.sign_up {
+    border-radius: 0.5em;
+    background: rgba(112, 179, 200, 0.97);
+    box-shadow: 0px 4px 4px 1px #A4AAAF;
+    width: 30%;
+    color: #FFFCFC;
+    font-size: 20px;
+    font-weight: 700;
+    height: 85%;
+}
+
+.forgot_password {
+    height: 20%;
+    color: #FF6161;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration-line: underline;
+}

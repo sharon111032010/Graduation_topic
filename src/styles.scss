@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+*{ /*通用選取器*/
+    font-family: sans-serif;
+    text-decoration: none;
+    box-sizing: border-box; /*計算容器的寬度高度，包含「邊框＋內距＋內容」計算*/
+    margin: 0;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
