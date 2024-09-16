@@ -1,0 +1,59 @@
+* {
+    font-family: sans-serif;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin: 0px;
+}
+.header {
+    background-color: #B6DAFF;
+    height: 20vh;
+}
+
+.header img {
+    width: 50vw;
+    height: 60%;
+}
+
+.content {
+    background-color: #F5F5F5; /* 淡灰色 */
+    height: 80vh;
+}
+
+.section {
+    background-color: #FFF8DC; /* Cornsilk */
+    height: 75%;
+    border-radius: 10%;
+}
+
+.register {
+    height: 15%;
+    p{
+        font-size: 3rem;
+        margin: 0px;
+        color: #5A5A5A;
+    }
+}
+
+form{
+    height: 65%;
+}
+.form_group {
+    // background-color: #FAF0E6; /* Linen */
+    height: 30%;
+    p{
+        margin: 0px;
+    }
+    input{
+        height: 30%;
+
+        outline: none;/*外輪廓*/
+    }
+}
+
+.btn_container {
+    background-color: #E6E6FA; /* Lavender */
+}
+
+.btn_enter {
+    background-color: #ADD8E6; /* LightBlue */
+}
