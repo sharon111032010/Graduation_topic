@@ -10,27 +10,48 @@
             <form fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
                     <p>姓名</p>
-                    <input type="text" matInput placeholder="姓名">
+                    <mat-form-field class="input_bar">
+                        <mat-label>姓名</mat-label>
+                        <input matInput>
+                    </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
                     <p>科系</p>
-                    <input type="text" matInput placeholder="科系">
+                    <mat-form-field>
+                        <mat-label>科系</mat-label>
+                        <mat-select>
+                            <mat-option value="one">應用中文學系</mat-option>
+                            <mat-option value="two">資訊工程學系</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
                     <p>帳號</p>
-                    <input type="text" matInput placeholder="帳號">
+                    <mat-form-field>
+                        <mat-label>帳號</mat-label>
+                        <input matInput>
+                    </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
                     <p>密碼</p>
-                    <input type="password" matInput placeholder="密碼">
+                    <mat-form-field>
+                        <mat-label>密碼</mat-label>
+                        <input matInput type="password">
+                    </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
                     <p>郵件</p>
-                    <input type="text" matInput placeholder="郵件">
+                    <mat-form-field>
+                        <mat-label>郵件</mat-label>
+                        <input matInput>
+                    </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
                     <p>手機</p>
-                    <input type="text" matInput placeholder="手機">
+                    <mat-form-field>
+                        <mat-label>手機</mat-label>
+                        <input matInput>
+                    </mat-form-field>
                 </div>
             </form>
             <div class="btn_container" fxLayoutAlign="space-between">

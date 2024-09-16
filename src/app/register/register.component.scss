@@ -45,9 +45,13 @@ form{
     }
     input{
         height: 30%;
-
+        border-radius: 10px;
         outline: none;/*外輪廓*/
     }
+}
+.mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-form-field-hide-placeholder {
+    border-radius: 10px;
+
 }
 
 .btn_container {
