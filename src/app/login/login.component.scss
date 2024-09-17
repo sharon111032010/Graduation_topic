@@ -8,6 +8,8 @@
 .header {
     background-color: #B6DAFF;
     height: 20vh;
+    box-shadow: 0 4px 8px #00000033;
+    margin: 0px 0px 8px 0px;
 }
 
 .header img {
@@ -57,6 +59,9 @@
 
 .form_group {
     width: 65%;
+    div{
+        // background-color: #872626 !important;
+    }
 }
 
 .form_group p {
@@ -66,16 +71,16 @@
 }
 
 .form_group input {
-    height: 5vh;
-    border: 2px rgba(122, 168, 223, 0.50);
-    background: var(--acc, #FDFEFF);
-    box-shadow: 0px 4px 5px 1.2px #868B8F;
-    text-align: center;
-    background: none;
-    padding: 12px;
-    font-size: 15px;
-    border-radius: 22px;
-    outline: none;/*外輪廓*/
+    // height: 5vh;
+    // border: 2px rgba(122, 168, 223, 0.50);
+    // background: var(--acc, #FDFEFF);
+    // box-shadow: 0px 4px 5px 1.2px #868B8F;
+    // text-align: center;
+    // background: none;
+    // padding: 12px;
+    // font-size: 15px;
+    // border-radius: 22px;
+    // outline: none;/*外輪廓*/
     color: #9494a3;
 }
 
@@ -85,13 +90,21 @@
 }
 
 .btn_container button {
-    width: 30%;
-    height: 100%;
-    border-radius: 12px;
+    // width: 30%;
+    // height: 100%;
+    // border-radius: 12px;
     background: #7AA8DF;
+    // outline: none;
+    
     color: #FDFDFD;
-    font-size: 1rem;
-    font-weight: 832;
+    font-weight: 800;
+
+    width: 30%;
+    // margin: 0px 10%;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 2px 2px 5px   #8eb2bd;
 }
 
 .link_a_container {
@@ -101,13 +114,16 @@
 
 .sign_up {
     border-radius: 0.5em;
-    background: rgba(112, 179, 200, 0.97);
-    box-shadow: 0px 4px 4px 1px #A4AAAF;
-    width: 30%;
+    background: #70b3c8f7;
+    // box-shadow: 0px 4px 4px 1px #86a6c0;
+    box-shadow: 2px 2px 5px   #8eb2bd;
+    width: 25%;
     color: #FFFCFC;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
-    height: 85%;
+    height: 90%;
+    // color: #5A5A5A;
+    background-color: #ADD8E6; /* LightBlue */
 }
 
 .forgot_password {

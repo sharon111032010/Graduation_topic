@@ -12,12 +12,22 @@
             </div>
             <form class="input_container" fxLayout="column" fxLayoutAlign="space-around center">
                 <div class="form_group" fxLayout="column">
-                    <p>使用者</p>
-                    <input matInput placeholder="username">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                    <mat-form-field>
+                        <mat-label>帳號</mat-label>
+                        <input matInput>
+                    </mat-form-field>
                 </div>
                 <div class="form_group" fxLayout="column">
-                    <p>密碼</p>
-                    <input matInput placeholder="password">
+                    <span class="material-symbols-outlined">
+                        key
+                    </span>
+                    <mat-form-field>
+                        <mat-label>密碼</mat-label>
+                        <input matInput type="password">
+                    </mat-form-field>
                 </div>
                 <div class="btn_container" fxLayoutAlign="end">
                     <button mat-button class="btn_enter">確認</button>

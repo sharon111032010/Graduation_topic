@@ -3,20 +3,27 @@
         <img alt="國立臺中科技大學" src="https://www.nutc.edu.tw/var/file/0/1000/img/2943/464250572.png">
     </div>
     <div class="content" fxLayoutAlign="center center">
-        <div class="section">
+        <div class="section" fxFlex="70">
             <div class="register" fxLayoutAlign="center">
-                <p>註冊</p>
+                <div>註冊</div>
             </div>
             <form fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-                    <p>姓名</p>
+                    <!-- <p>姓名</p> -->
+                    <span class="material-symbols-outlined">
+                        id_card
+                    </span>
                     <mat-form-field class="input_bar">
+                        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home">home</mat-icon> -->
                         <mat-label>姓名</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-                    <p>科系</p>
+                    <!-- <p>科系</p> -->
+                    <span class="material-symbols-outlined">
+                        school
+                    </span>
                     <mat-form-field>
                         <mat-label>科系</mat-label>
                         <mat-select>
@@ -26,28 +33,40 @@
                     </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-                    <p>帳號</p>
+                    <!-- <p>帳號</p> -->
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
                     <mat-form-field>
                         <mat-label>帳號</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-                    <p>密碼</p>
+                    <!-- <p>密碼</p> -->
+                    <span class="material-symbols-outlined">
+                        key
+                    </span>
                     <mat-form-field>
                         <mat-label>密碼</mat-label>
                         <input matInput type="password">
                     </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-                    <p>郵件</p>
+                    <!-- <p>郵件</p> -->
+                    <span class="material-symbols-outlined">
+                        mail
+                    </span>
                     <mat-form-field>
                         <mat-label>郵件</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
-                    <p>手機</p>
+                    <!-- <p>手機</p> -->
+                    <span class="material-symbols-outlined">
+                        call
+                    </span>
                     <mat-form-field>
                         <mat-label>手機</mat-label>
                         <input matInput>
@@ -55,7 +74,7 @@
                 </div>
             </form>
             <div class="btn_container" fxLayoutAlign="space-between">
-                <button mat-button class="btn_enter">確認</button>
+                <button mat-button class="btn_enter">上一頁</button>
                 <button mat-button class="btn_enter">確認</button>
             </div>
         </div>

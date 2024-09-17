@@ -3,10 +3,13 @@
     text-decoration: none;
     box-sizing: border-box;
     margin: 0px;
+    color: #5A5A5A;
 }
 .header {
     background-color: #B6DAFF;
     height: 20vh;
+    box-shadow: 0 4px 8px #00000033;
+    margin: 0px 0px 8px 0px;
 }
 
 .header img {
@@ -15,19 +18,25 @@
 }
 
 .content {
-    background-color: #F5F5F5; /* 淡灰色 */
+    background-color: #fdfcfc; /* 淡灰色 */
     height: 80vh;
 }
 
 .section {
-    background-color: #FFF8DC; /* Cornsilk */
+    // background-color: #FFF8DC; /* Cornsilk */
     height: 75%;
-    border-radius: 10%;
+    border-radius: 40px;
+    box-shadow: 5px 3px 5px 3px #bcbcbc;
+    border: #8eb2bd;
+    
+    
+
 }
 
 .register {
     height: 15%;
-    p{
+    align-items: center !important;
+    div{
         font-size: 3rem;
         margin: 0px;
         color: #5A5A5A;
@@ -49,15 +58,27 @@ form{
         outline: none;/*外輪廓*/
     }
 }
+.mat-mdc-form-field{
+    div{
+        border-radius: 10px;
+    }
+}
 .mat-mdc-form-field mat-mdc-form-field-type-mat-input mat-form-field-appearance-fill mat-form-field-hide-placeholder {
-    border-radius: 10px;
-
+    border-radius: 30px  !important;
 }
 
 .btn_container {
-    background-color: #E6E6FA; /* Lavender */
+    height: 10%;
 }
 
 .btn_enter {
     background-color: #ADD8E6; /* LightBlue */
+    width: 10%;
+    margin: 0px 10%;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 2px 2px 5px   #8eb2bd;
+    color: #5A5A5A;
+    color: #FFFCFC;
 }
