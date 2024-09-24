@@ -13,7 +13,7 @@ export class RegisterComponent {
   form= new FormGroup({
     account: new FormControl(""),
     password:new FormControl(""),
-    email:new FormControl(""),
+    email:new FormControl("",[Validators.required, Validators.email]),
     phone :new FormControl(""),
     name :new FormControl(""),
     major:new FormControl("")
@@ -28,6 +28,7 @@ export class RegisterComponent {
     // console.log(info.account,info.password,info.email,info.major);
     console.log(info);
     console.log(info.major);
-    alert("");
+    // alert(info);
+    alert(`姓名: ${info.name}\n學號: ${info.account}\n科系: ${info.major}\n郵件: ${info.email}\n手機: ${info.phone}`);
   }
 }

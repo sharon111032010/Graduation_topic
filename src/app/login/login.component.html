@@ -16,10 +16,11 @@
                         <span class="material-symbols-outlined">
                             person
                         </span>
-                        <div>&nbsp;帳號</div>
+                        <!-- <mat-icon>person</mat-icon> -->
+                        <div>&nbsp;學號</div>
                     </div>
                     <mat-form-field>
-                        <mat-label>帳號</mat-label>
+                        <mat-label>學號</mat-label>
                         <input matInput formControlName="account">
                     </mat-form-field>
                 </div>
@@ -28,6 +29,8 @@
                         <span class="material-symbols-outlined">
                             key
                         </span>
+                        <mat-icon >home</mat-icon>
+
                         <div>&nbsp;密碼</div>
                     </div>
                     <mat-form-field>
@@ -40,7 +43,7 @@
                 </div>
                 <div class="link_a_container" fxLayout="row" fxLayoutAlign="space-between center">
                     <a href="#" class="sign_up" fxLayoutAlign="center center" routerLink="/register">註冊</a>
-                    <a href="#" class="forgot_password">忘記密碼</a>
+                    <button class="forgot_password" (click)="open_forgot_password_dialog()">忘記密碼</button>
                 </div>
             </form>
         </div>
