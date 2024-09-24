@@ -10,17 +10,17 @@
             <div class="login_title" fxLayoutAlign="center center">
                 <p>登入</p>
             </div>
-            <form  class="input_container" fxLayout="column" fxLayoutAlign="space-around center">
+            <form  [formGroup]="form" class="input_container" fxLayout="column" fxLayoutAlign="space-around center">
                 <div class="form_group" fxLayout="column">
                     <div class="icon_container" fxLayout="row">
                         <span class="material-symbols-outlined">
                             person
                         </span>
-                        <div>帳號</div>
+                        <div>&nbsp;帳號</div>
                     </div>
                     <mat-form-field>
                         <mat-label>帳號</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="account">
                     </mat-form-field>
                 </div>
                 <div class="form_group" fxLayout="column">
@@ -28,15 +28,15 @@
                         <span class="material-symbols-outlined">
                             key
                         </span>
-                        <div>密碼</div>
+                        <div>&nbsp;密碼</div>
                     </div>
                     <mat-form-field>
                         <mat-label>密碼</mat-label>
-                        <input matInput type="password">
+                        <input matInput type="password" formControlName="password">
                     </mat-form-field>
                 </div>
                 <div class="btn_container" fxLayoutAlign="end">
-                    <button mat-button class="btn_enter" (click)="check()" >確認</button>
+                    <button mat-button class="btn_enter" (click)="onclick_login_btn()" >登入</button>
                 </div>
                 <div class="link_a_container" fxLayout="row" fxLayoutAlign="space-between center">
                     <a href="#" class="sign_up" fxLayoutAlign="center center" routerLink="/register">註冊</a>

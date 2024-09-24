@@ -15,11 +15,16 @@ import { RegisterComponent } from './register/register.component';
 
 import {MatSelectModule} from '@angular/material/select';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { IndexComponent } from './index/index.component';//formGroup會用到
+
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +35,9 @@ import {MatSelectModule} from '@angular/material/select';
     FlexLayoutModule,
     MatSelectModule,
     MatIconModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
