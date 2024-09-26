@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import {FormControl, Validators, FormsModule, ReactiveFormsModule,FormGroup} from '@angular/forms';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { RegisterDialogComponent } from '../componetDialog/register-dialog/register-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { RegisterFailedDialogComponent } from '../componetDialog/register-failed-dialog/register-failed-dialog.component';
+import { RegisterSuccessfulDialogComponent } from '../componetDialog/register-successful-dialog/register-successful-dialog.component';
 
 @Component({
   selector: 'app-register',
@@ -8,27 +13,43 @@ import {FormControl, Validators, FormsModule, ReactiveFormsModule,FormGroup} fro
 })
 export class RegisterComponent {
 
-  selected="";
+  selected = "";
 
-  form= new FormGroup({
-    account: new FormControl(""),
-    password:new FormControl(""),
-    email:new FormControl("",[Validators.required, Validators.email]),
-    phone :new FormControl(""),
-    name :new FormControl(""),
-    major:new FormControl("")
-  })
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  constructor(public dialog: MatDialog, private router: Router) { }
 
-  onclick_register_btn(){
-    const info = {
-      ...this.form.getRawValue()
+  form = new FormGroup({
+    account: new FormControl("", Validators.required),
+    password: new FormControl("", Validators.required),
+    email: new FormControl("", [Validators.required, Validators.email]),
+    phone: new FormControl("", Validators.required),
+    name: new FormControl("", Validators.required),
+    major: new FormControl("", Validators.required)
+  });
+
+  onclick_register_btn() {
+    if (this.form.valid) {  // 確保表單有效
+      const info = {
+        ...this.form.getRawValue()
+      };
+
+      console.log(info);
+      console.log(info.major);
+
+      const dialogRef = this.dialog.open(RegisterSuccessfulDialogComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+        this.to_login();
+      });
+
+    } else {
+      this.form.markAllAsTouched();
+      const dialogRef = this.dialog.open(RegisterFailedDialogComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
     }
-
-    // console.log(info.account,info.password,info.email,info.major);
-    console.log(info);
-    console.log(info.major);
-    // alert(info);
-    alert(`姓名: ${info.name}\n學號: ${info.account}\n科系: ${info.major}\n郵件: ${info.email}\n手機: ${info.phone}`);
+  }
+  to_login() {
+    this.router.navigate(['/login']);
   }
 }
