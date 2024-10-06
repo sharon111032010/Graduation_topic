@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { RegisterDialogComponent } from '../componetDialog/register-dialog/register-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RegisterFailedDialogComponent } from '../componetDialog/register-failed-dialog/register-failed-dialog.component';

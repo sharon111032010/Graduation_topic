@@ -92,6 +92,7 @@
     height: 100%;
     overflow: auto;
   max-height: calc(100vh - 100px); /* 根據需求調整最大高度 */
+  height: 650px;//
 }
 .chat_container{
     padding: 0px;
@@ -190,6 +191,7 @@
 //   width: 100%;
 //   background-color: white; /* 如果需要 */
 //   z-index: 1000; /* 確保它在其他元素之上 */
+z-index: 10;
 }
 
 .input_container {
@@ -251,4 +253,57 @@ mat-form-field {
     background-color: red !important;
     height: 50px;
     transition: height ease-in-out 400ms;
+}
+
+
+.conversation{
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+}
+.user_message{
+    // background-color: #132c6a;
+    border-radius: 10px;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 80%;
+    margin: 5%;
+    div{
+        background-color: #b2c6f8;
+        width: 50%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        height: 100%;
+        border-radius: 30px;
+        font-size: 24px;
+        padding: 3%;
+        box-shadow:  2px #ceeeff ;
+    }
+}
+.response_message{
+    // background-color: #132c6a;
+    border-radius: 10px;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 80%;
+    margin: 5%;
+    div{
+        background-color: #b2c6f8;
+        width: 50%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        height: 100%;
+        border-radius: 30px;
+        font-size: 24px;
+        padding: 3%;
+
+    }
 }

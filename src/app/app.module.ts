@@ -20,8 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IndexComponent } from './index/index.component';
 import { ForgotPasswordDialogComponent } from './componetDialog/forgot-password-dialog/forgot-password-dialog.component';//formGroup會用到
 import { MatDialogModule} from '@angular/material/dialog';
-import { LoginDialogComponent } from './componetDialog/login-dialog/login-dialog.component';
-import { RegisterDialogComponent } from './componetDialog/register-dialog/register-dialog.component';
 import { RegisterFailedDialogComponent } from './componetDialog/register-failed-dialog/register-failed-dialog.component';
 import { RegisterSuccessfulDialogComponent } from './componetDialog/register-successful-dialog/register-successful-dialog.component';
 import { LoginSuccessfulDialogComponent } from './componetDialog/login-successful-dialog/login-successful-dialog.component';
@@ -37,8 +35,6 @@ import { FogotCheckFailedDialogComponent } from './componetDialog/fogot-check-fa
     RegisterComponent,
     IndexComponent,
     ForgotPasswordDialogComponent,
-    LoginDialogComponent,
-    RegisterDialogComponent,
     RegisterFailedDialogComponent,
     RegisterSuccessfulDialogComponent,
     LoginSuccessfulDialogComponent,

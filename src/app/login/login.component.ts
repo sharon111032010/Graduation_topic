@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ForgotPasswordDialogComponent } from '../componetDialog/forgot-password-dialog/forgot-password-dialog.component';
-import { LoginDialogComponent } from '../componetDialog/login-dialog/login-dialog.component';
+// import { LoginDialogComponent } from '../componetDialog/login-dialog/login-dialog.component';
 import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialog/login-failed-dialog.component';
 import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successful-dialog/login-successful-dialog.component';
 

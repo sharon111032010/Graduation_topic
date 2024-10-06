@@ -29,7 +29,7 @@
         <div class="chat_interface" fxFlex="83" fxLayout="column">
             <!-- <div class="chat_container"> -->
             <div class="chat_container" fxLayout="column" fxFlexFill fxflex="50">
-                <div *ngIf="!isChatBarVisible" class="chat_header" fxLayout="column" fxLayoutAlign="start center">
+                <div *ngIf="!isChatBarVisible" class="chat_header" fxLayout="column" fxLayoutAlign="start center" >
                     <div class="chat_logo" fxFlex="20" fxLayoutAlign="center center">
                         <div class="chat_logo_image">
                             <img src="../../assets/校徽.gif" alt="校徽" fxLayoutAlign="center center">
@@ -57,10 +57,18 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="isChatBarVisible" class="chat_bar" fxLayout="column" fxFlexFill>
-                    <div class="conversation" *ngFor="let message of conversation">
-                        <div class="user_message">{{ message.user }}</div>
-                        <div class="response_message">{{ message.response }}</div>
+                <div *ngIf="isChatBarVisible" class="chat_bar" fxLayout="column" fxFlexFill fxLayoutAlign="start center">
+                    <div fxLayout="column" class="conversation" *ngFor="let message of conversation">
+                        <div class="user_message">
+                            <div>
+                            {{ message.user }}
+                            </div>
+                        </div>
+                        <div class="response_message">
+                            <div>
+                            {{ message.response }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
