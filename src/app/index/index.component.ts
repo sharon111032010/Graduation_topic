@@ -19,6 +19,22 @@ export class IndexComponent {
     { title: '圖書館公告', content: '圖書館將於本周五進行系統維護，暫停開放', date: '2024-09-15' },
     { title: '校園活動', content: '10月校慶運動會報名現已開始', date: '2024-09-20' }
   ];
+menuItems: string[] = [
+  '學校停車場在哪',
+  '記號可以進宿舍',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '學校停車場在哪',
+  '記號可以進宿舍'
+];
+
 
   constructor() { }
 
@@ -26,28 +42,35 @@ export class IndexComponent {
   on_click_menu() {
     this.isMenuVisible = !this.isMenuVisible;  // 切換布林值
   }
-  on_click_arrow_right(){
+  on_click_arrow_right() {
     if (this.currentIndex < this.announcements.length - 1) {
       this.currentIndex++;
     }
   }
-  on_click_arrow_lift(){
+  on_click_arrow_lift() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
     }
   }
-  on_click_enter_btn(){
+  on_click_enter_btn() {
 
     // 切換 chat_header 為 chat_bar
-    this.isChatBarVisible = true;
 
+  //輸出使用者輸入的輸出
+    console.log(this.userInput);
+    //限制使用者輸入為必填
+    // if (this.userInput === '') {
+    //   return;
+    // }
     // 將使用者輸入和回應新增到 conversation 陣列中
-    this.conversation.push({
-      user: this.userInput,
-      response: '這是一個自動回覆'  // 假資料作為回應
-    });
+      this.isChatBarVisible = true;
+      this.conversation.push({
+        user: this.userInput,
+        response: '這是一個自動回覆'  // 假資料作為回應
+      });
 
-    // 清空輸入框
-    this.userInput = '';
+      // 清空輸入框
+      this.userInput = '';
+
   }
 }

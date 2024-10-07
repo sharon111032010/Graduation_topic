@@ -14,22 +14,16 @@
                     <span class="material-symbols-outlined" (click)="on_click_menu()">menu</span>
                 </div>
                 <div class="menu_items" fxLayout="column" fxLayoutGap="5px">
-                    <div>學校停車場在哪</div>
-                    <div>記號可以進宿舍</div>
-                    <div>學校停車場在哪</div>
-                    <div>學校停車場在哪</div>
-                    <div>學校停車場在哪</div>
-                    <div>學校停車場在哪</div>
-                    <div>學校停車場在哪</div>
-                    <div>學校停車場在哪</div>
-                    <div>學校停車場在哪</div>
+                    <div *ngFor="let item of menuItems">
+                        {{ item }}
+                    </div>
                 </div>
             </div>
         </div>
         <div class="chat_interface" fxFlex="83" fxLayout="column">
             <!-- <div class="chat_container"> -->
             <div class="chat_container" fxLayout="column" fxFlexFill fxflex="50">
-                <div *ngIf="!isChatBarVisible" class="chat_header" fxLayout="column" fxLayoutAlign="start center" >
+                <div *ngIf="!isChatBarVisible" class="chat_header" fxLayout="column" fxLayoutAlign="start center">
                     <div class="chat_logo" fxFlex="20" fxLayoutAlign="center center">
                         <div class="chat_logo_image">
                             <img src="../../assets/校徽.gif" alt="校徽" fxLayoutAlign="center center">
@@ -41,7 +35,6 @@
                             <div class="arrow_icon" fxFlex="none" (click)="on_click_arrow_right()">
                                 <span class="material-symbols-outlined">chevron_left</span>
                             </div>
-
                             <div class="announcement_text" fxFlex>
                                 <div class="announcement_title">{{ announcements[currentIndex].title }}</div>
                                 <div class="announcement_content" fxLayoutAlign="center center">{{
@@ -57,16 +50,18 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="isChatBarVisible" class="chat_bar" fxLayout="column" fxFlexFill fxLayoutAlign="start center">
-                    <div fxLayout="column" class="conversation" *ngFor="let message of conversation">
+                <div *ngIf="isChatBarVisible" class="chat_bar" fxLayout="column" fxFlexFill
+                    fxLayoutAlign="center center">
+                    <div fxLayout="column" class="conversation" *ngFor="let message of conversation"
+                        fxLayoutAlign="center center">
                         <div class="user_message">
                             <div>
-                            {{ message.user }}
+                                {{ message.user }}
                             </div>
                         </div>
                         <div class="response_message">
                             <div>
-                            {{ message.response }}
+                                {{ message.response }}
                             </div>
                         </div>
                     </div>
@@ -75,7 +70,7 @@
             <div class="input_area" fxFlex="20" fxLayout="column" fxLayoutAlign="center center">
                 <div class="input_container" fxFlex="none" fxLayout="row" fxLayoutAlign="center center">
                     <mat-form-field fxFlex="none" class="input_field">
-                        <textarea matInput [(ngModel)]="userInput"></textarea> <!-- 禁止拉伸并设置高度 -->
+                        <textarea matInput [(ngModel)]="userInput"></textarea>
                     </mat-form-field>
                     <div class="send_icon" fxFlex="none" fxLayoutAlign="center center" (click)="on_click_enter_btn()">
                         <span class="material-symbols-outlined send_button">send</span> <!-- 作为按钮 -->
