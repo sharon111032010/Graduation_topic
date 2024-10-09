@@ -47,26 +47,27 @@
     // background-color: #1a236d;
     /* Bisque */
     height: 100%;
+
     /* 網頁捲軸【寬度】 */
-::-webkit-scrollbar {
-    width: 15px;
-  }
-  
-  /* 網頁捲軸【背景】顏色 */
-  ::-webkit-scrollbar-track {
-    background: #1a236d;
-  }
-  
-  /* 網頁捲軸【把手】顏色 */
-  ::-webkit-scrollbar-thumb {
-    background: #aec3d7;
-    border-radius: 10px;
-  }
-  
-  /* 網頁捲軸【滑過時】把手的顏色 */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #ceeeff;
-  }
+    ::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    /* 網頁捲軸【背景】顏色 */
+    ::-webkit-scrollbar-track {
+        background: #1a236d;
+    }
+
+    /* 網頁捲軸【把手】顏色 */
+    ::-webkit-scrollbar-thumb {
+        background: #aec3d7;
+        border-radius: 10px;
+    }
+
+    /* 網頁捲軸【滑過時】把手的顏色 */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #ceeeff;
+    }
 }
 
 .menu_container {
@@ -88,7 +89,6 @@
         // background-color: #152a4c;
         border: #ceeeff 3px solid;
         margin-top: 5%;
-
     }
 }
 
@@ -118,11 +118,29 @@
 }
 
 .chat_interface {
-    // background-color: #ffffff;
-    /* LavenderBlush */
     // overflow: auto;
     max-height: 92vh;
-    height: 85%;
+    height: 84%;
+    /* 網頁捲軸【寬度】 */
+    ::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    /* 網頁捲軸【背景】顏色 */
+    ::-webkit-scrollbar-track {
+        background: #ffffff;
+    }
+
+    /* 網頁捲軸【把手】顏色 */
+    ::-webkit-scrollbar-thumb {
+        background: #d2e2ef;
+        border-radius: 10px;
+    }
+
+    /* 網頁捲軸【滑過時】把手的顏色 */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #cefeff;
+    }
 }
 
 .chat_container {
@@ -139,16 +157,21 @@
 }
 
 .chat_logo_image {
-    // background-color: #f0e68c;
-    // 
-    // margin: 10%;
-
-    /* Khaki */
     img {
         // border-radius: 100%;
         height: 100px;
         width: 100px;
         padding: 10%;
+        // margin: 5%;
+    }
+}
+.chat_logo_image_response {
+    height: 100%;
+    img {
+        // border-radius: 100%;
+        height: 80px;
+        width: 80px;
+        padding: 20%;
         // margin: 5%;
     }
 }
@@ -182,8 +205,6 @@
 //******************************************** */
 .arrow_icon {
 
-    // background-color: #e6e6fa;
-    /* Lavender */
     span {
         border-radius: 100%;
     }
@@ -231,11 +252,9 @@
     max-width: 100%;
     /* 宽度控制为屏幕的90%，根据需求调整 */
     position: sticky;
-    //   bottom: 0;
-    //   width: 100%;
-    //   background-color: white; /* 如果需要 */
-    //   z-index: 1000; /* 確保它在其他元素之上 */
-    z-index: 10;
+    z-index: 10;//在元素之上
+    height: 20%;
+    max-height: 10%;
 }
 
 .input_container {
@@ -273,12 +292,11 @@ textarea {
     /* 禁止调整大小 */
 }
 
-
 .chat_bar {
     max-height: 80%;
     //超過高度自動滾動
     overflow-y: auto;
-    height: 100%;
+    height: 80%;
     //按下按鈕後滾按下按鈕後->沒用
     // scroll-behavior: smooth; 
 }
@@ -288,10 +306,10 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 70%;
+    width: 75%;
 }
 
-.user_message {
+.user_message_contenter {
     // background-color: #132c6a;
     border-radius: 10px;
     height: 30%;
@@ -300,8 +318,9 @@ textarea {
     justify-content: end;
     width: 80%;
     margin: 5%;
+    min-height: 30%;
 
-    div {
+    .user_message {
         background-color: #b2c6f8;
         width: 50%;
         display: flex;
@@ -313,10 +332,10 @@ textarea {
         padding: 3%;
         box-shadow: 2px #ceeeff;
     }
+
 }
 
-.response_message {
-    // background-color: #132c6a;
+.response_message_conterter {
     border-radius: 10px;
     height: 30%;
     display: flex;
@@ -324,8 +343,8 @@ textarea {
     justify-content: start;
     width: 80%;
     margin: 5%;
-
-    div {
+    min-height: 30%;
+    .response_message {
         background-color: #b2c6f8;
         width: 50%;
         display: flex;
