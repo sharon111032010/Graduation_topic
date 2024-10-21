@@ -1,7 +1,7 @@
 <div fxLayout="column" fxFill>
     <div class="header" fxLayout="row" fxLayoutAlign="center center" fxFlex="8">
-        <div class="menu_icon" fxLayoutAlign="start center">
-            <span class="material-symbols-outlined" (click)="on_click_menu()">menu</span>
+        <div class="menu_icon_up menu_icon" fxLayoutAlign="start center" [ngClass]="{'active-icon': isMenuVisible}">
+            <span class="material-symbols-outlined" (click)="on_click_menu()" >menu</span>
         </div>
         <div class="header_container" fxFlex fxLayoutAlign="center center" fxLayout="row">
             <img alt="國立臺中科技大學" src="../../assets/國立臺中科技大學.png">

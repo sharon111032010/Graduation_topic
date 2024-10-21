@@ -26,6 +26,7 @@ import { LoginSuccessfulDialogComponent } from './componetDialog/login-successfu
 import { LoginFailedDialogComponent } from './componetDialog/login-failed-dialog/login-failed-dialog.component';
 import { FogotCheckDialogComponent } from './componetDialog/fogot-check-dialog/fogot-check-dialog.component';
 import { FogotCheckFailedDialogComponent } from './componetDialog/fogot-check-failed-dialog/fogot-check-failed-dialog.component';
+import { UserInfoDialogComponent } from './componetDialog/user-info-dialog/user-info-dialog.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { FogotCheckFailedDialogComponent } from './componetDialog/fogot-check-fa
     LoginSuccessfulDialogComponent,
     LoginFailedDialogComponent,
     FogotCheckDialogComponent,
-    FogotCheckFailedDialogComponent
+    FogotCheckFailedDialogComponent,
+    UserInfoDialogComponent
   ],
   imports: [
     BrowserModule,

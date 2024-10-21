@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-index',
@@ -19,22 +19,23 @@ export class IndexComponent {
     { title: '圖書館公告', content: '圖書館將於本周五進行系統維護，暫停開放', date: '2024-09-15' },
     { title: '校園活動', content: '10月校慶運動會報名現已開始', date: '2024-09-20' }
   ];
-menuItems: string[] = [
-  '學校停車場在哪',
-  '記號可以進宿舍',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '學校停車場在哪',
-  '記號可以進宿舍'
-];
+  menuItems: string[] = [
+    '學校停車場在哪',
+    '記號可以進宿舍',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '學校停車場在哪',
+    '記號可以進宿舍'
+  ];
 
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   constructor() { }
 
@@ -56,21 +57,39 @@ menuItems: string[] = [
 
     // 切換 chat_header 為 chat_bar
 
-  //輸出使用者輸入的輸出
+    //輸出使用者輸入的輸出
     console.log(this.userInput);
     //限制使用者輸入為必填
-    // if (this.userInput === '') {
-    //   return;
-    // }
+    if (this.userInput === '') {
+      return;
+    }
     // 將使用者輸入和回應新增到 conversation 陣列中
-      this.isChatBarVisible = true;
-      this.conversation.push({
-        user: this.userInput,
-        response: '這是一個自動回覆'  // 假資料作為回應
-      });
+    this.isChatBarVisible = true;
+    this.conversation.push({
+      user: this.userInput,
+      response: '這是一個自動回覆'  // 假資料作為回應
+    });
 
-      // 清空輸入框
-      this.userInput = '';
+    // 清空輸入框
+    this.userInput = '';
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 0);  // 確保畫面先渲染完畢
 
   }
+  // 在對話內容更新後滾動到最新
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+
+
+  private scrollToBottom(): void {
+    try {
+      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+    } catch (err) {
+      console.log('Scrolling error:', err);
+    }
+  }
 }
+
