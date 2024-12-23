@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IApiRes, IApiResult, ICreateUserReq, ILoginUserForm, IUpdateUserRes, IUser, IUserItem } from './interface/userAccount';
+import { IApiRes, IApiResult, ICreateUserReq, ILoginUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from './interface/userAccount';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,11 @@ export class UserService {
   loginApi(loginForm: ILoginUserForm): Observable<IApiResult<IUser>> {
     const url = this.baseUrl + '/api/dapper/login';
     return this.http.post<IApiResult<IUser>>(url, loginForm);
+  }
+
+  GetAllApi(): Observable<IApiResult<userDBResult>> {
+    const url = this.baseUrl + '/api/dapper/GetAll';
+    return this.http.get<IApiResult<userDBResult>>(url);
   }
   
 

@@ -37,7 +37,7 @@ export class LoginComponent {
       if (!result.isSuccess) {
         alert(result.msg);
         return;
-      }else{
+      } else {
         this.to_index();
       }
       // 成功
@@ -45,60 +45,66 @@ export class LoginComponent {
     });
   }
 
-    onclick_login_btn() {
-      // 先檢查表單是否有效
-      if (this.form.valid) {
-        // 表單有效時取得表單資料
-        const params = {
-          ...this.form.getRawValue()
-        };
+  getAll() {
+    this.userService.GetAllApi().subscribe(result => {
+      console.log(result);
+    });
+  }
 
-        // 驗證帳號和密碼是否正確
-        if (params.account == "1111032010" && params.password == "123") {
-          const dialogRef = this.dialog.open(LoginSuccessfulDialogComponent, {});
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-            this.to_index();  // 導向首頁
-          });
+  onclick_login_btn() {
+    // 先檢查表單是否有效
+    if (this.form.valid) {
+      // 表單有效時取得表單資料
+      const params = {
+        ...this.form.getRawValue()
+      };
 
-          this.isClass = false;  // 驗證通過，隱藏錯誤
-        } else {
-          const dialogRef = this.dialog.open(LoginFailedDialogComponent, {});
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-          });
-          // alert("slf")
-          this.isClass = true;  // 驗證失敗，顯示錯誤
-        }
+      // 驗證帳號和密碼是否正確
+      if (params.account == "1111032010" && params.password == "123") {
+        const dialogRef = this.dialog.open(LoginSuccessfulDialogComponent, {});
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+          this.to_index();  // 導向首頁
+        });
 
-        console.log(params);
+        this.isClass = false;  // 驗證通過，隱藏錯誤
       } else {
-        // 表單無效時，標記所有欄位為 touched 以便顯示驗證錯誤
         const dialogRef = this.dialog.open(LoginFailedDialogComponent, {});
         dialogRef.afterClosed().subscribe(result => {
           console.log(`Dialog result: ${result}`);
         });
-        this.form.markAllAsTouched();
-        console.log("請填寫所有必填欄位");
+        // alert("slf")
+        this.isClass = true;  // 驗證失敗，顯示錯誤
       }
-    }
 
-    open_forgot_password_dialog() {
-      const dialogRef = this.dialog.open(ForgotPasswordDialogComponent, {
-        width: '35vw',
-        disableClose: true
-      });
-
+      console.log(params);
+    } else {
+      // 表單無效時，標記所有欄位為 touched 以便顯示驗證錯誤
+      const dialogRef = this.dialog.open(LoginFailedDialogComponent, {});
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
       });
+      this.form.markAllAsTouched();
+      console.log("請填寫所有必填欄位");
     }
+  }
 
-    to_index() {
-      this.router.navigate(['/index']);
-    }
+  open_forgot_password_dialog() {
+    const dialogRef = this.dialog.open(ForgotPasswordDialogComponent, {
+      width: '35vw',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
-  function onclick_login_btn() {
-    throw new Error('Function not implemented.');
+
+  to_index() {
+    this.router.navigate(['/index']);
   }
+}
+function onclick_login_btn() {
+  throw new Error('Function not implemented.');
+}
 
