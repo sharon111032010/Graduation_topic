@@ -27,6 +27,7 @@ import { FogotCheckDialogComponent } from './componetDialog/fogot-check-dialog/f
 import { FogotCheckFailedDialogComponent } from './componetDialog/fogot-check-failed-dialog/fogot-check-failed-dialog.component';
 import { UserInfoDialogComponent } from './componetDialog/user-info-dialog/user-info-dialog.component';
 import { ForgotPasswordDialogComponent } from './componetDialog/forgot-password-dialog/forgot-password-dialog.component';
+import { HttpClientModule } from '@angular/common/http';
 // import { UserInterfaceComponent } from './interface/user-interface/user-interface.component';
 
 
@@ -57,7 +58,8 @@ import { ForgotPasswordDialogComponent } from './componetDialog/forgot-password-
     MatIconModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
 
 
   ],
