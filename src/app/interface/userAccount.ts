@@ -40,17 +40,26 @@ export interface IUser {
     userName: string;
     userAccount: string;
     createTime: Date;
-  }
-  export interface ILoginUserForm {
-    account ?: string | null;
-    password ?: string |null;
-  }
-  
-  export interface IApiResult<T> {
+}
+export interface ILoginUserForm {
+    account?: string | null;
+    password?: string | null;
+}
+
+export interface IApiResult<T> {
     isSuccess: boolean;
     msg: string;
     data: T;
-  }
+}
 
 
+export interface userDBResult {
+    id: string,
+    name: string,
+    department: string,
+    studentId: string,
+    password: string,
+    email: string,
+    phone: string
+}
 
