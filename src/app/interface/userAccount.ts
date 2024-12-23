@@ -35,5 +35,22 @@ export interface IUserItem {
     createTime: string;
 }
 
+export interface IUser {
+    userId: number;
+    userName: string;
+    userAccount: string;
+    createTime: Date;
+  }
+  export interface ILoginUserForm {
+    account ?: string | null;
+    password ?: string |null;
+  }
+  
+  export interface IApiResult<T> {
+    isSuccess: boolean;
+    msg: string;
+    data: T;
+  }
+
 
 

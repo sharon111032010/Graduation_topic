@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IApiRes, ICreateUserReq, IUpdateUserRes, IUserItem } from './interface/userAccount';
+import { IApiRes, IApiResult, ICreateUserReq, ILoginUserForm, IUpdateUserRes, IUser, IUserItem } from './interface/userAccount';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,15 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+
+  loginApi(loginForm: ILoginUserForm): Observable<IApiResult<IUser>> {
+    const url = this.baseUrl + '/api/dapper/login';
+    return this.http.post<IApiResult<IUser>>(url, loginForm);
+  }
+  
+
+
+  
   // 註冊新使用者
   register(params: {
     name: string;

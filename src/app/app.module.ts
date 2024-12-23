@@ -18,7 +18,6 @@ import {MatSelectModule} from '@angular/material/select';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { IndexComponent } from './index/index.component';
-import { ForgotPasswordDialogComponent } from './componetDialog/forgot-password-dialog/forgot-password-dialog.component';//formGroup會用到
 import { MatDialogModule} from '@angular/material/dialog';
 import { RegisterFailedDialogComponent } from './componetDialog/register-failed-dialog/register-failed-dialog.component';
 import { RegisterSuccessfulDialogComponent } from './componetDialog/register-successful-dialog/register-successful-dialog.component';
@@ -27,6 +26,7 @@ import { LoginFailedDialogComponent } from './componetDialog/login-failed-dialog
 import { FogotCheckDialogComponent } from './componetDialog/fogot-check-dialog/fogot-check-dialog.component';
 import { FogotCheckFailedDialogComponent } from './componetDialog/fogot-check-failed-dialog/fogot-check-failed-dialog.component';
 import { UserInfoDialogComponent } from './componetDialog/user-info-dialog/user-info-dialog.component';
+import { ForgotPasswordDialogComponent } from './componetDialog/forgot-password-dialog/forgot-password-dialog.component';
 // import { UserInterfaceComponent } from './interface/user-interface/user-interface.component';
 
 
@@ -36,7 +36,6 @@ import { UserInfoDialogComponent } from './componetDialog/user-info-dialog/user-
     LoginComponent,
     RegisterComponent,
     IndexComponent,
-    ForgotPasswordDialogComponent,
     RegisterFailedDialogComponent,
     RegisterSuccessfulDialogComponent,
     LoginSuccessfulDialogComponent,
@@ -44,6 +43,7 @@ import { UserInfoDialogComponent } from './componetDialog/user-info-dialog/user-
     FogotCheckDialogComponent,
     FogotCheckFailedDialogComponent,
     UserInfoDialogComponent,
+    ForgotPasswordDialogComponent
     // UserInterfaceComponent
   ],
   imports: [
