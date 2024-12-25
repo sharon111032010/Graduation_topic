@@ -7,19 +7,20 @@ import { IApiRes, IApiResult, ICreateUserReq, ILoginUserForm, IUpdateUserRes, IU
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:7000'; // 後端 API 的基本 URL
+  private baseUrl = 'https://localhost:7000'; // 後端 API 的基本 URL
 
   constructor(private http: HttpClient) {}
 
 
   loginApi(loginForm: ILoginUserForm): Observable<IApiResult<IUser>> {
-    const url = this.baseUrl + '/api/dapper/login';
+    //const url = this.baseUrl + '/api/dapper/login';
+    const url = this.baseUrl + '/api/dapper/login/?stuId='+loginForm.account+'&password='+loginForm.password;
     return this.http.post<IApiResult<IUser>>(url, loginForm);
   }
 
-  GetAllApi(): Observable<IApiResult<userDBResult>> {
+  GetAllApi(): Observable<userDBResult> {
     const url = this.baseUrl + '/api/dapper/GetAll';
-    return this.http.get<IApiResult<userDBResult>>(url);
+    return this.http.get<userDBResult>(url);
   }
   
 

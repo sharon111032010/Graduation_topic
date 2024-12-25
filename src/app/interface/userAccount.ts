@@ -48,7 +48,7 @@ export interface ILoginUserForm {
 
 export interface IApiResult<T> {
     isSuccess: boolean;
-    msg: string;
+    message: string;
     data: T;
 }
 

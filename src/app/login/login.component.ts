@@ -35,7 +35,9 @@ export class LoginComponent {
     this.userService.loginApi(loginForm).subscribe(result => {
       // 失敗
       if (!result.isSuccess) {
-        alert(result.msg);
+        alert(result.message);
+        alert(result.data);
+        alert(result.isSuccess);
         return;
       } else {
         this.to_index();
