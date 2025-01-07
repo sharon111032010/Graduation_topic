@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IApiRes, IApiResult, ICreateUserReq, ILoginUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from './interface/userAccount';
+import { IApiRes, IApiResult, ICreateUserReq, ILoginUserForm, IRegisterUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from './interface/userAccount';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +14,23 @@ export class UserService {
 
   loginApi(loginForm: ILoginUserForm): Observable<IApiResult<IUser>> {
     //const url = this.baseUrl + '/api/dapper/login';
+    const url = this.baseUrl + '/api/dapper/loginApi';
+    return this.http.post<IApiResult<IUser>>(url, loginForm);
+  }
+
+  registerApi(registerForm: IRegisterUserForm): Observable<IApiResult<IUser>> {
+    //const url = this.baseUrl + '/api/dapper/login';
+    const url = this.baseUrl + '/api/Dapper/RegisterApi';
+    return this.http.post<IApiResult<IUser>>(url, registerForm);
+  }
+  /*
+  loginApi(loginForm: ILoginUserForm): Observable<IApiResult<IUser>> {
+    //const url = this.baseUrl + '/api/dapper/login';
     const url = this.baseUrl + '/api/dapper/login/?stuId='+loginForm.account+'&password='+loginForm.password;
     return this.http.post<IApiResult<IUser>>(url, loginForm);
   }
 
+  */
   GetAllApi(): Observable<userDBResult> {
     const url = this.baseUrl + '/api/dapper/GetAll';
     return this.http.get<userDBResult>(url);

@@ -19,7 +19,7 @@ export class LoginComponent {
 
   // 表單控制項，加入 Validators.required 確保必填
   form = new FormGroup({
-    account: new FormControl('', Validators.required),
+    stuId: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
   });
 
@@ -35,12 +35,19 @@ export class LoginComponent {
     this.userService.loginApi(loginForm).subscribe(result => {
       // 失敗
       if (!result.isSuccess) {
-        alert(result.message);
-        alert(result.data);
-        alert(result.isSuccess);
+        const dialogRef = this.dialog.open(LoginFailedDialogComponent, {});
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
         return;
       } else {
-        this.to_index();
+
+       const dialogRef = this.dialog.open(LoginSuccessfulDialogComponent, {});
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+          this.to_index();  // 導向首頁
+        }); 
+
       }
       // 成功
       // this.dialog.close();
@@ -62,7 +69,7 @@ export class LoginComponent {
       };
 
       // 驗證帳號和密碼是否正確
-      if (params.account == "1111032010" && params.password == "123") {
+      if (params.stuId == "1111032010" && params.password == "123") {
         const dialogRef = this.dialog.open(LoginSuccessfulDialogComponent, {});
         dialogRef.afterClosed().subscribe(result => {
           console.log(`Dialog result: ${result}`);

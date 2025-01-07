@@ -42,8 +42,18 @@ export interface IUser {
     createTime: Date;
 }
 export interface ILoginUserForm {
-    account?: string | null;
+    stuId?: string | null;
     password?: string | null;
+}
+
+export interface IRegisterUserForm {
+    name?: string | null;          // 使用者姓名
+    department?: number | null;    // 部門
+    stuId?: number | null;         // 學號
+    password?: string | null;      // 密碼
+    email?: string | null;         // 電子郵件
+    phone?: string | null;         // 電話
+    account?: string | null;       // 帳戶名稱
 }
 
 export interface IApiResult<T> {
