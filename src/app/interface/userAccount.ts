@@ -56,6 +56,12 @@ export interface IRegisterUserForm {
     account?: string | null;       // 帳戶名稱
 }
 
+export interface IForgetPasswordUserForm {
+    stuId?: string | null;         // 學號
+    //stuId?: number | null;         // 學號
+    email?: string | null;         // 電子郵件
+}
+
 export interface IApiResult<T> {
     isSuccess: boolean;
     message: string;

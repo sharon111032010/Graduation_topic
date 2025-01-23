@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { zipAll } from 'rxjs';
 import { FogotCheckDialogComponent } from '../fogot-check-dialog/fogot-check-dialog.component';
 import { FogotCheckFailedDialogComponent } from '../fogot-check-failed-dialog/fogot-check-failed-dialog.component';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-forgot-password-dialog',
@@ -11,11 +12,39 @@ import { FogotCheckFailedDialogComponent } from '../fogot-check-failed-dialog/fo
   styleUrls: ['./forgot-password-dialog.component.scss']
 })
 export class ForgotPasswordDialogComponent {
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+    private userService: UserService
+  ) { }
   forgot_group = new FormGroup({
-    forgot_stuId: new FormControl("", Validators.required),
-    forgot_email: new FormControl("", [Validators.required, Validators.email])
+    stuId: new FormControl("", Validators.required),
+    email: new FormControl("", [Validators.required, Validators.email])
   })
+
+  onForgetPassword() {
+    const form = this.forgot_group.getRawValue();
+    this.userService.forgetPasswordApi(form).subscribe(result => {
+      if (!result.isSuccess) {
+        this.forgot_group.markAllAsTouched();  // 標記所有欄位為 touched，顯示錯誤
+        this.dialog.open(FogotCheckFailedDialogComponent, {
+          disableClose: false,  // 保留原對話框
+
+          // 打開 forgot-password再次打開 forgot-check-dialog
+
+        }
+
+      ); // 打開錯誤對話框
+      } else {
+        this.dialog.open(FogotCheckDialogComponent, {
+          disableClose: false,  // 保留原對話框
+        });
+      }
+
+
+
+
+    });
+
+  }
   sant_change_email() {
     if (this.forgot_group.valid) {
       const info = {

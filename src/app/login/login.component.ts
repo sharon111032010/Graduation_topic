@@ -41,12 +41,11 @@ export class LoginComponent {
         });
         return;
       } else {
-
-       const dialogRef = this.dialog.open(LoginSuccessfulDialogComponent, {});
+        const dialogRef = this.dialog.open(LoginSuccessfulDialogComponent, {});
         dialogRef.afterClosed().subscribe(result => {
           console.log(`Dialog result: ${result}`);
           this.to_index();  // 導向首頁
-        }); 
+        });
 
       }
       // 成功
@@ -59,6 +58,7 @@ export class LoginComponent {
       console.log(result);
     });
   }
+
 
   onclick_login_btn() {
     // 先檢查表單是否有效

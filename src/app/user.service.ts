@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { IApiRes, IApiResult, ICreateUserReq, ILoginUserForm, IRegisterUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from './interface/userAccount';
+import { IApiRes, IApiResult, ICreateUserReq, IForgetPasswordUserForm, ILoginUserForm, IRegisterUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from './interface/userAccount';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +19,14 @@ export class UserService {
   }
 
   registerApi(registerForm: IRegisterUserForm): Observable<IApiResult<IUser>> {
-    //const url = this.baseUrl + '/api/dapper/login';
     const url = this.baseUrl + '/api/Dapper/RegisterApi';
     return this.http.post<IApiResult<IUser>>(url, registerForm);
+  }
+  forgetPasswordApi(forgetPasswordForm: IForgetPasswordUserForm): Observable<IApiResult<"">> {
+    const url = this.baseUrl + '/api/Dapper/ForgetPasswordApi';
+    //return this.http.post<IApiResult<"">>(url, forgetPasswordForm);
+    //return of ({  isSuccess: true, message: 'sant email successful', data: "" })
+    return of ({  isSuccess: false, message: 'sant email successful', data: "" })
   }
   /*
   loginApi(loginForm: ILoginUserForm): Observable<IApiResult<IUser>> {
