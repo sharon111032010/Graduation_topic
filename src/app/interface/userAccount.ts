@@ -83,7 +83,12 @@ export interface IApiResult<T> {
     message: string;
     data: T;
 }
-
+export interface IApiResultToken<T> {
+    isSuccess: boolean;
+    message: string;
+    data: T;
+    token: string;  // 新增 token 屬性
+}
 
 export interface userDBResult {
     id: string,
