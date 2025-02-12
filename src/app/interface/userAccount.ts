@@ -35,6 +35,22 @@ export interface IUserItem {
     createTime: string;
 }
 
+
+export interface IUserInfo{
+    userId: number;
+    userName: string;
+    userAccount: string;
+    userGender: string;
+    createTime: string;
+    updateTime: string;
+    department: string;
+    studentId: string;
+    email: string;
+    phone: string;
+    password: string;
+
+} 
+
 export interface IUser {
     userId: number;
     userName: string;

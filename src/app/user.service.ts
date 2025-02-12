@@ -42,6 +42,10 @@ export class UserService {
   }
   
 
+  GetUserInforApi(account :string): Observable<IUserItem> {
+    const url = this.baseUrl + '/api/dapper/GetUserInfo';
+    return this.http.post<IUserItem>(url,account);
+  }
 
   
   // 註冊新使用者
@@ -77,40 +81,4 @@ export class UserService {
     });
   }
 
-  /*
-  // 其他使用者管理功能（例如：取得使用者列表）
-  getUserList() {
-    // return this.http.get<IApiRes<IUserItem[]>>(this.baseUrl + '/users');
-    return of({
-      status: 'success',
-      data: [
-        { id: 1, name: 'User One', department: 'CS', email: 'user1@example.com' },
-        { id: 2, name: 'User Two', department: 'IT', email: 'user2@example.com' }
-      ],
-      message: 'Fetched user list (mock)'
-    });
-  }
-
-  // 更新指定使用者
-  updateUser(userId: number, params: ICreateUserReq) {
-    // return this.http.put<IApiRes<IUpdateUserRes>>(
-    //   this.baseUrl + `/users/${userId}`,
-    //   params
-    // );
-    return of({
-      status: 'success',
-      data: { userId, ...params },
-      message: 'User updated successfully (mock)'
-    });
-  }
-
-  // 刪除使用者
-  deleteUser(userId: number) {
-    // return this.http.delete(this.baseUrl + `/users/${userId}`);
-    return of({
-      status: 'success',
-      message: `User with ID ${userId} deleted successfully (mock)`
-    });
-  }
-    */
 }
