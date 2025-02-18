@@ -72,6 +72,7 @@ export class LoginComponent {
 
   // ✅ 確保 JWT 存入後才跳轉
   to_index() {
+    // 若有 JWT，跳轉至首頁
     if (localStorage.getItem('jwt')) {
       this.router.navigate(['/index']);
     } else {
@@ -83,9 +84,11 @@ export class LoginComponent {
   open_forgot_password_dialog() {
     const dialogRef = this.dialog.open(ForgotPasswordDialogComponent, {
       width: '35vw',
+      //無法點擊外部關閉
       disableClose: true
     });
 
+    //對話框關閉時，執行console.log 印出回傳結果
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

@@ -20,7 +20,6 @@
                         <!-- <mat-error *ngIf="form.get('name')?.hasError('required')">姓名是必填項目</mat-error> -->
                     </mat-form-field>
                 </div>
-
                 <div class="form_group" fxFlex="45" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="5px">
                     <div class="icon_container" fxLayout="row">
                         <span class="material-symbols-outlined">school</span>
@@ -108,14 +107,9 @@
                         <!-- <mat-error *ngIf="form.get('phone')?.hasError('required')">手機是必填項目</mat-error> -->
                     </mat-form-field>
                 </div>
-
-
-
             </form>
-
             <div class="btn_container" fxLayoutAlign="space-between">
                 <button mat-button class="btn_enter" routerLink="/login">上一頁</button>
-                <!-- <button mat-button class="btn_enter" (click)="onclick_register_btn()">確認</button> -->
                 <button mat-button class="btn_enter" (click)="onSubmit()">確認</button>
             </div>
         </div>
