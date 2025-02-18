@@ -34,17 +34,10 @@ export class UserService {
     //return of ({  isSuccess: true, message: 'sant email successful', data: "" })
     return of ({  isSuccess: false, message: 'sant email successful', data: "" })
   }
-  /*
-  loginApi(loginForm: ILoginUserForm): Observable<IApiResult<IUser>> {
-    //const url = this.baseUrl + '/api/dapper/login';
-    const url = this.baseUrl + '/api/dapper/login/?stuId='+loginForm.account+'&password='+loginForm.password;
-    return this.http.post<IApiResult<IUser>>(url, loginForm);
-  }
 
-  */
-  GetAllApi(): Observable<userDBResult> {
+  GetAllApi(): Observable<IApiResult<userDBResult>> {
     const url = this.baseUrl + '/api/dapper/GetAll';
-    return this.http.get<userDBResult>(url);
+    return this.http.get<IApiResult<userDBResult>>(url);
   }
   
 
