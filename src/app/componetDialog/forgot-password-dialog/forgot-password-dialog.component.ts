@@ -5,6 +5,7 @@ import { zipAll } from 'rxjs';
 import { FogotCheckDialogComponent } from '../fogot-check-dialog/fogot-check-dialog.component';
 import { FogotCheckFailedDialogComponent } from '../fogot-check-failed-dialog/fogot-check-failed-dialog.component';
 import { UserService } from '../../user.service';
+import { ForgetPasswordService } from 'src/app/forget-password.service';
 
 @Component({
   selector: 'app-forgot-password-dialog',
@@ -13,16 +14,19 @@ import { UserService } from '../../user.service';
 })
 export class ForgotPasswordDialogComponent {
   constructor(public dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private forgetPasswordService: ForgetPasswordService
   ) { }
+
   forgot_group = new FormGroup({
-    stuId: new FormControl("", Validators.required),
-    email: new FormControl("", [Validators.required, Validators.email])
+    email: new FormControl("", [Validators.required, Validators.email]),
+    account: new FormControl("", Validators.required)
   })
 
   onForgetPassword() {
     const form = this.forgot_group.getRawValue();
-    this.userService.forgetPasswordApi(form).subscribe(result => {
+    console.log(form);
+    this.forgetPasswordService.requestPasswordReset(form).subscribe(result => {
       if (!result.isSuccess) {
         this.forgot_group.markAllAsTouched();  // 標記所有欄位為 touched，顯示錯誤
         this.dialog.open(FogotCheckFailedDialogComponent, {
@@ -50,6 +54,8 @@ export class ForgotPasswordDialogComponent {
       const info = {
         ...this.forgot_group.getRawValue()
       };
+
+
 
       // 打開新的對話框，保持原對話框開啟
       this.dialog.open(FogotCheckDialogComponent, {});

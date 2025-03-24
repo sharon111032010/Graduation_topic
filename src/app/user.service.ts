@@ -44,9 +44,9 @@ export class UserService {
   //忘記密碼api
   forgetPasswordApi(forgetPasswordForm: IForgetPasswordUserForm): Observable<IApiResult<"">> {
     const url = this.baseUrl + '/api/Dapper/ForgetPasswordApi';
-    //return this.http.post<IApiResult<"">>(url, forgetPasswordForm);
+    return this.http.post<IApiResult<"">>(url, forgetPasswordForm);
     //return of ({  isSuccess: true, message: 'sant email successful', data: "" })
-    return of ({  isSuccess: false, message: 'sant email successful', data: "" })
+    // return of ({  isSuccess: false, message: 'sant email successful', data: "" })
   }
 
   //更新使用者資料api 
@@ -56,4 +56,7 @@ export class UserService {
     return this.http.post<IApiResult<IUser>>(url, updateUserForm);
   }
 
+  
+
+  
 }
