@@ -8,6 +8,7 @@ import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { ForgetPasswordService } from '../forget-password.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout'; // 引入 FlexLayoutModule
 
 
 
@@ -16,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.scss'],
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, FlexLayoutModule],
 })
 
 
