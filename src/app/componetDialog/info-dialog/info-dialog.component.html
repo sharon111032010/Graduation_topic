@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content class="mat-typography">
+    <h3></h3>
+    <div class="form_group" fxLayout="column">
+        <div class="icon_container" fxLayout="row">
+            <div>&nbsp;{{ data.message }}</div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="button_style" mat-button [mat-dialog-close]="true" cdkFocusInitial mat-dialog-close>關閉</button>
+</mat-dialog-actions>

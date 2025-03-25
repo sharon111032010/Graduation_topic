@@ -1,7 +1,4 @@
 import { Component, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { IApiResult } from '../interface/userAccount';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
@@ -9,17 +6,20 @@ import { ForgetPasswordService } from '../forget-password.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'; // 引入 FlexLayoutModule
-
-
+import { FogotCheckFailedDialogComponent } from '../componetDialog/fogot-check-failed-dialog/fogot-check-failed-dialog.component';
+import { InfoDialogComponent } from '../componetDialog/info-dialog/info-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.scss'],
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, FlexLayoutModule],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, FlexLayoutModule,
+    ReactiveFormsModule,
+  ],
 })
-
 
 export class ForgetPasswordComponent {
   token: string | null = null;
@@ -31,9 +31,12 @@ export class ForgetPasswordComponent {
   constructor(
     private forgetPasswordService: ForgetPasswordService,
     private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,//用於開啟對話框 (MatDialog)
+    private router: Router,//用於頁面跳轉
   ) { }
 
 
+  //在載入頁面時，取得 token
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'] || null;
@@ -44,7 +47,14 @@ export class ForgetPasswordComponent {
   onSubmit() {
     // 檢查表單是否 無效
     if (!this.form.valid || !this.token) {
-      alert("表單無效");
+
+      this.dialog.open(InfoDialogComponent, {
+        width: '300px',  // 設定寬度
+        height: '200px', // 設定高度
+        maxWidth: '80vw', // 限制最大寬度（可選）
+        maxHeight: '80vh', // 限制最大高度（可選）
+        data: { message: '表單無效', title: '錯誤' } // 傳遞的字串); 
+      })
       this.form.markAllAsTouched();
       return;
     }
@@ -56,15 +66,30 @@ export class ForgetPasswordComponent {
       token: this.token
     };
 
-    console.log('即將送出的資料:', forgetPasswordForm);
     this.forgetPasswordService.resetPassword(forgetPasswordForm).subscribe({
       next: (result) => {
         if (result.isSuccess) {
-          alert("密碼重設成功");
+          this.dialog.open(InfoDialogComponent, {
+            width: '300px',  // 設定寬度
+            height: '200px', // 設定高度
+            maxWidth: '30vw', // 限制最大寬度（可選）
+            maxHeight: '20vh', // 限制最大高度（可選）
+            data: { message: '即將為您跳轉頁面'+result.message, title: '密碼重設成功' } // 傳遞的字串); 
+          })
+          this.router.navigate(['/index']);//跳轉頁面 
+          
         } else {
-          alert("密碼重設失敗：" + result.message);
+          // 顯示錯誤對話框
+          this.dialog.open(InfoDialogComponent, {
+            width: '300px',  // 設定寬度
+            height: '200px', // 設定高度
+            maxWidth: '30vw', // 限制最大寬度（可選）
+            maxHeight: '20vh', // 限制最大高度（可選）
+            data: { message: '密碼重設失敗'+result.message, title: '錯誤' } // 傳遞的字串); 
+          })
         }
       },
+
       error: (error) => {
         console.error("API 請求錯誤：", error);
       }
