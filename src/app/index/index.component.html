@@ -1,7 +1,7 @@
 <div fxLayout="column" fxFill>
     <div class="header" fxLayout="row" fxLayoutAlign="center center" fxFlex="8">
         <div class="menu_icon_up menu_icon" fxLayoutAlign="start center" [ngClass]="{'active-icon': isMenuVisible}">
-            <span class="material-symbols-outlined" (click)="on_click_menu()" >menu</span>
+            <span class="material-symbols-outlined" (click)="on_click_menu()">menu</span>
         </div>
         <div class="header_container" fxFlex fxLayoutAlign="center center" fxLayout="row">
             <img alt="國立臺中科技大學" src="../../assets/國立臺中科技大學.png">
@@ -55,7 +55,8 @@
                 </div>
                 <div *ngIf="isChatBarVisible" class="chat_bar" fxLayout="column" fxFlexFill
                     fxLayoutAlign="center center">
-                    <div fxLayout="column" class="conversation" *ngFor="let message of conversation" fxLayoutAlign="center center">
+                    <div fxLayout="column" class="conversation" *ngFor="let message of conversation"
+                        fxLayoutAlign="center center">
                         <div class="user_message_contenter">
                             <div class="user_message">
                                 {{ message.user }}
@@ -78,7 +79,12 @@
                     <mat-form-field fxFlex="none" class="input_field">
                         <textarea matInput [(ngModel)]="userInput"></textarea>
                     </mat-form-field>
-                    <div class="send_icon" fxFlex="none" fxLayoutAlign="center center" (click)="on_click_enter_btn()"  [routerLink]="['#bottom']"  >
+                    <!-- <div class="send_icon" fxFlex="none" fxLayoutAlign="center center" (click)="on_click_enter_btn()"  [routerLink]="['#bottom']"  >
+                        <span class="material-symbols-outlined send_button">send</span> 
+                        作为按钮
+                    </div> -->
+                    <div class="send_icon" fxFlex="none" fxLayoutAlign="center center" (click)="sandToChatBot()"
+                        [routerLink]="['#bottom']">
                         <span class="material-symbols-outlined send_button">send</span> <!-- 作为按钮 -->
                     </div>
                 </div>
