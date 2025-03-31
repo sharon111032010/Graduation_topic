@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { IChatBar } from './interface/IchatBar';
+import { IChatBor } from './interface/IchatBor';
 import { lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({
@@ -18,8 +18,8 @@ export class ChatBotService {
   //   const url = this.baseUrl + '/Chat_test_API';
   //   return await lastValueFrom(this.http.post<string>(url, chatBotRequest));
   // }
-  chatBotResponse(chatBotRequest: IChatBar): Observable<string> {
+  chatBotResponse(chatBotRequest: IChatBor): Observable<any> {
     const url = this.baseUrl + '/Chat_test_API';
-    return this.http.post<string>(url, chatBotRequest);
+    return this.http.post<any>(url, chatBotRequest);
 }
 }

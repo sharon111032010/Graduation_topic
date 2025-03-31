@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ChatBotService } from '../chat-bot.service';
-import { IChatBar } from '../interface/IchatBar';
+import { IChatBor } from '../interface/IchatBor';
 
 @Component({
   selector: 'app-index',
@@ -48,7 +48,7 @@ export class IndexComponent {
   constructor(
     private chatBotService: ChatBotService
   ) { }
-  
+
 
   // 點擊 menu icon 後，切換 menu 的顯示/隱藏狀態
   on_click_menu() {
@@ -68,23 +68,19 @@ export class IndexComponent {
 
     // 切換 chat_header 為 chat_bar
 
-    const chatRequest: IChatBar = {
-        ID: 'A12345', // 這裡應該填入真實的使用者 ID
-        msg: this.userInput
+    const chatRequest: IChatBor = {
+      ID: 'A12345', // 這裡應該填入真實的使用者 ID
+      msg: this.userInput
     };
     //輸出使用者輸入的輸出
-    console.log(this.userInput);
-    
-    this.chatBotService.chatBotResponse(chatRequest).subscribe(
-    (response) => {
-        console.log('機器人回應:', response);
-        this.chatResponseText = response; // 存到變數
-    },
-    (error) => {
-        console.error('API 錯誤:', error);
+    console.log('chatRequest', chatRequest);
+
+    this.chatBotService.chatBotResponse(chatRequest).subscribe(res => {
+      console.log('機器人回應:', res);
+      // this.chatResponseText = res; // 存到變數
     }
-);
-    
+    );
+
     //限制使用者輸入為必填
     if (this.userInput === '') {
       return;
@@ -93,8 +89,9 @@ export class IndexComponent {
     this.isChatBarVisible = true;
     this.conversation.push({
       user: this.userInput,
-      response: '這是一個自動回覆'  // 假資料作為回應
+      response: "機器人回應的內容" // 這裡可以替換為實際的機器人回應
     });
+    console.log(this.conversation);
 
     // 清空輸入框
     this.userInput = '';
@@ -121,7 +118,7 @@ export class IndexComponent {
 
   sandToChatBot() {
     // 這裡是發送請求的邏輯
-    const chatRequest: IChatBar = {
+    const chatRequest: IChatBor = {
       ID: 'A12345', // 這裡應該填入真實的使用者 ID
       msg: this.userInput
     };

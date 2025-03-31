@@ -79,13 +79,8 @@
                     <mat-form-field fxFlex="none" class="input_field">
                         <textarea matInput [(ngModel)]="userInput"></textarea>
                     </mat-form-field>
-                    <!-- <div class="send_icon" fxFlex="none" fxLayoutAlign="center center" (click)="on_click_enter_btn()"  [routerLink]="['#bottom']"  >
-                        <span class="material-symbols-outlined send_button">send</span> 
-                        作为按钮
-                    </div> -->
-                    <div class="send_icon" fxFlex="none" fxLayoutAlign="center center" (click)="sandToChatBot()"
-                        [routerLink]="['#bottom']">
-                        <span class="material-symbols-outlined send_button">send</span> <!-- 作为按钮 -->
+                    <div class="send_icon" fxFlex="none" fxLayoutAlign="center center" (click)="on_click_enter_btn()">
+                        <span class="material-symbols-outlined send_button">send</span>
                     </div>
                 </div>
             </div>
