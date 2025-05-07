@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ForgotPasswordDialogComponent } from '../componetDialog/forgot-password-dialog/forgot-password-dialog.component';
 import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialog/login-failed-dialog.component';
 import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successful-dialog/login-successful-dialog.component';
-import { UserService } from '../user.service';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-login',

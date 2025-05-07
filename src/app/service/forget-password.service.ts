@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IApiRes, IApiResultToken, ICreateUserReq, IForgetPasswordUserForm, ILoginUserForm, IRegisterUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from './interface/userAccount';
-import { IsendEmaiReq, IApiResult, IresetPasswordReq } from './interface/Iforget-password';
+import { IsendEmaiReq, IApiResult, IresetPasswordReq } from '../interface/Iforget-password';
 
 @Injectable({
   providedIn: 'root'

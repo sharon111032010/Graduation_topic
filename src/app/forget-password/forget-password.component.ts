@@ -2,7 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
-import { ForgetPasswordService } from '../forget-password.service';
+import { ForgetPasswordService } from '../service/forget-password.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'; // 引入 FlexLayoutModule

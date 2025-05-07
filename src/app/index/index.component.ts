@@ -1,7 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ChatBotService } from '../chat-bot.service';
+import { ChatBotService } from '../service/chat-bot.service';
 import { IChatBor } from '../interface/IchatBor';
-
+import { IMessageLog } from '../interface/Imessage';
+import { chatMessages } from '../@mockData/botResponse';
+import { SaveMessageService } from '../service/save-message.service';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -18,7 +20,8 @@ export class IndexComponent {
 
 
 
-  currentIndex: number = 0;
+  // currentIndex: number = 0;
+  currentIndex: number = 1;  // 初始化為 1，從第二個回應開始顯示
   conversation: { user: string; response: string; }[] = [];
   announcements = [
     { title: '教務處公告', content: '113學年度第一學期開學及選課相關事宜', date: '2024-09-12' },
@@ -46,8 +49,14 @@ export class IndexComponent {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   constructor(
-    private chatBotService: ChatBotService
+    private chatBotService: ChatBotService,
+    private saveMessageLogService: SaveMessageService, // 假設這是用來儲存訊息的服務
   ) { }
+
+
+
+
+  //-----------------------------------
 
 
   // 點擊 menu icon 後，切換 menu 的顯示/隱藏狀態
@@ -64,6 +73,7 @@ export class IndexComponent {
       this.currentIndex--;
     }
   }
+
   on_click_enter_btn() {
 
     // 切換 chat_header 為 chat_bar
@@ -72,25 +82,85 @@ export class IndexComponent {
       ID: 'A12345', // 這裡應該填入真實的使用者 ID
       msg: this.userInput
     };
+    const chatUserResponse = {
+       MessageId: 0,
+      UserId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      MessageType: 0,
+      MessageText: this.userInput,
+      CreatedTime: new Date().toISOString(),
+      MenuId: 1 
+      
+    }; // 取得當前索引的回應
+
     //輸出使用者輸入的輸出
     console.log('chatRequest', chatRequest);
 
     this.chatBotService.chatBotResponse(chatRequest).subscribe(res => {
       console.log('機器人回應:', res);
-      // this.chatResponseText = res; // 存到變數
+      this.chatResponseText = res; // 存到變數
+      this.conversation.push({
+        user: chatRequest.msg,
+        response: res
+        // response: "機器人回應的內容" // 這裡可以替換為實際的機器人回應
+      });
     }
     );
 
-    //限制使用者輸入為必填
+
+
+    // 將使用者輸入和回應新增到 conversation 陣列中
+    this.isChatBarVisible = true;
+    // this.conversation.push({
+    //   user: this.userInput,
+    //   response : this.chatResponseText // 這裡顯示 chatMessages 陣列中的第一個回應
+    //   // response: "機器人回應的內容" // 這裡可以替換為實際的機器人回應
+    // });
+    console.log(this.conversation);
+
+    console.log('chatUserResponse', chatUserResponse);
+    this.saveMessageLogService.saveMessageApi(chatUserResponse).subscribe(res => {
+      console.log('儲存訊息:', res);
+    });
+    // 清空輸入框
+    // 儲存訊息到後端
+    this.userInput = '';
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 0);  // 確保畫面先渲染完畢
+
+  }
+
+  /***********************************
+
+
+  on_click_enter_btn() {
+    // 限制使用者輸入為必填
     if (this.userInput === '') {
       return;
     }
-    // 將使用者輸入和回應新增到 conversation 陣列中
+
+    const chatRequest: IChatBor = {
+      ID: 'A12345', // 這裡應該填入真實的使用者 ID
+      msg: this.userInput
+    };
+
+
+    this.chatBotService.chatBotResponse(chatRequest).subscribe(res => {
+      console.log('機器人回應:', res);
+      // this.chatResponseText = res; // 存到變數
+    }
+  )
+
+    
     this.isChatBarVisible = true;
     this.conversation.push({
       user: this.userInput,
-      response: "機器人回應的內容" // 這裡可以替換為實際的機器人回應
+      response:  chatMessages[this.currentIndex].message// 這裡顯示 chatMessages 陣列中的第一個回應
     });
+
+// 每次發送後，更新 currentIndex，並使其循環回到第一個回應
+    this.currentIndex = (this.currentIndex + 2) % chatMessages.length;
+
     console.log(this.conversation);
 
     // 清空輸入框
@@ -98,14 +168,13 @@ export class IndexComponent {
     setTimeout(() => {
       this.scrollToBottom();
     }, 0);  // 確保畫面先渲染完畢
-
   }
-  // 在對話內容更新後滾動到最新
+   ************************************/
+
+
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
-
-
 
   private scrollToBottom(): void {
     try {
@@ -116,22 +185,41 @@ export class IndexComponent {
   }
 
 
-  sandToChatBot() {
-    // 這裡是發送請求的邏輯
-    const chatRequest: IChatBor = {
-      ID: 'A12345', // 這裡應該填入真實的使用者 ID
-      msg: this.userInput
-    };
-
-    this.chatBotService.chatBotResponse(chatRequest).subscribe(
-      (response) => {
-        console.log('機器人回應:', response);
-        this.chatResponseText = response; // 存到變數
-      },
-      (error) => {
-        console.error('API 錯誤:', error);
+  /**************************************
+    // 在對話內容更新後滾動到最新
+    ngAfterViewChecked() {
+      this.scrollToBottom();
+    }
+  
+  
+   * 
+    private scrollToBottom(): void {
+      try {
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+      } catch (err) {
+        console.log('Scrolling error:', err);
       }
-    );
-  }
+    }
+  
+  
+    sandToChatBot() {
+      // 這裡是發送請求的邏輯
+      const chatRequest: IChatBor = {
+        ID: 'A12345', // 這裡應該填入真實的使用者 ID
+        msg: this.userInput
+      };
+  
+      this.chatBotService.chatBotResponse(chatRequest).subscribe(
+        (response) => {
+          console.log('機器人回應:', response);
+          this.chatResponseText = response; // 存到變數
+        },
+        (error) => {
+          console.error('API 錯誤:', error);
+        }
+      );
+    }
+  
+   *******************************/
 }
 

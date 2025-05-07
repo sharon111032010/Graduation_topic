@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 //發送http請發
 import { HttpClient } from '@angular/common/http';
 //匯入interface
-import { IApiRes, IApiResult, IApiResultToken, ICreateUserReq, IForgetPasswordUserForm, ILoginUserForm, IRegisterUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from './interface/userAccount';
+import { IApiRes, IApiResult, IApiResultToken, ICreateUserReq, IForgetPasswordUserForm, ILoginUserForm, IRegisterUserForm, IUpdateUserRes, IUser, IUserItem, userDBResult } from '../interface/userAccount';
 
 //設定為可注入 使其它元件可以使用(全域)
 @Injectable({

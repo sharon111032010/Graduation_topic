@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { zipAll } from 'rxjs';
 import { FogotCheckDialogComponent } from '../fogot-check-dialog/fogot-check-dialog.component';
 import { FogotCheckFailedDialogComponent } from '../fogot-check-failed-dialog/fogot-check-failed-dialog.component';
-import { UserService } from '../../user.service';
-import { ForgetPasswordService } from 'src/app/forget-password.service';
+import { UserService } from '../../service/user.service';
+import { ForgetPasswordService } from 'src/app/service/forget-password.service';
 
 @Component({
   selector: 'app-forgot-password-dialog',
