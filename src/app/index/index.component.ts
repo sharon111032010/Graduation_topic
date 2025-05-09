@@ -45,7 +45,6 @@ export class IndexComponent {
   ];
 
 
-
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   constructor(
@@ -83,14 +82,23 @@ export class IndexComponent {
       msg: this.userInput
     };
     const chatUserResponse = {
-       MessageId: 0,
+      MessageId: 0,
       UserId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
       MessageType: 0,
       MessageText: this.userInput,
       CreatedTime: new Date().toISOString(),
-      MenuId: 1 
-      
+      MenuId: 1
+
     }; // 取得當前索引的回應
+    const chatBotResponse = {
+      MessageId: 0,
+      UserId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      MessageType: 0,
+      MessageText: this.conversation[this.conversation.length - 1].response ,
+      CreatedTime: new Date().toISOString(),
+      MenuId: 1
+
+    };
 
     //輸出使用者輸入的輸出
     console.log('chatRequest', chatRequest);
@@ -118,9 +126,15 @@ export class IndexComponent {
     console.log(this.conversation);
 
     console.log('chatUserResponse', chatUserResponse);
+
     this.saveMessageLogService.saveMessageApi(chatUserResponse).subscribe(res => {
       console.log('儲存訊息:', res);
     });
+
+    this.saveMessageLogService.saveMessageApi(chatBotResponse).subscribe(res => {
+      console.log('儲存訊息:', res);
+    });
+
     // 清空輸入框
     // 儲存訊息到後端
     this.userInput = '';
