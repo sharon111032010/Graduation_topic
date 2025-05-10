@@ -6,11 +6,13 @@ import { IndexComponent } from './index/index.component';
 
 import { authGuard } from './auth.guard'; // ✅ 引入 authGuard
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { ChatPageComponent } from './chat-page/chat-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
+  { path: 'chatPage', component: ChatPageComponent},
   { 
     path: 'index', 
     component: IndexComponent,
