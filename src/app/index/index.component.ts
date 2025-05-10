@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ChatBotService } from '../service/chat-bot.service';
-import { IChatBor } from '../interface/IchatBor';
-import { IMessageLog } from '../interface/Imessage';
+import { IChatBor } from '../@interface/IchatBor';
+import { IMessageLog } from '../@interface/Imessage';
 import { chatMessages } from '../@mockData/botResponse';
 import { SaveMessageService } from '../service/save-message.service';
 @Component({

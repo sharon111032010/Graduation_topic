@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { IChatBor } from '../interface/IchatBor';
+import { IChatBor } from '../@interface/IchatBor';
 import { lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({

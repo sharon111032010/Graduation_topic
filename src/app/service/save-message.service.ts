@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IApiResult, IMessageLog } from '../interface/Imessage';
+import { IApiResult, IMessageLog } from '../@interface/Imessage';
 
 @Injectable({
   providedIn: 'root'
