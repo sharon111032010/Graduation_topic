@@ -1,0 +1,40 @@
+<header>
+    <h1>AI 校園助手</h1>
+    <p>讓校園生活更輕鬆</p>
+</header>
+<main>
+    <section class="left-column">
+        <h2>歡迎回到<br>AI 校園助手</h2>
+        <p>智慧校園・盡在掌握</p>
+    </section>
+    <section class="right-column">
+        <h2>登入</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <label for="username">帳號</label>
+            <input type="text" id="username" formControlName="username" placeholder="輸入帳號" required>
+            <div *ngIf="submitted && f.username.errors" class="error-message">
+                <div *ngIf="f.username.errors.required">請輸入帳號</div>
+            </div>
+
+            <label for="password">密碼</label>
+            <input type="password" id="password" formControlName="password" placeholder="輸入密碼" required matInput appearance="outline"> 
+            <div *ngIf="submitted && f.password.errors" class="error-message">
+                <div *ngIf="f.password.errors.required">請輸入密碼</div>
+            </div>
+
+            <button type="submit" [disabled]="loading" mat-button>
+                <span *ngIf="loading" class="spinner"></span>
+                登入
+            </button>
+        </form>
+
+        <div class="divider">或</div>
+
+        <button mat-button class="google-btn" (click)="loginWithGoogle()">立即註冊</button>
+
+
+        <div class="register">
+            忘記密碼了嗎？<a routerLink="/register">點我重設</a>
+        </div>
+    </section>
+</main>

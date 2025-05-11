@@ -1,0 +1,318 @@
+:host {
+    display: block;
+    min-height: 100vh; // 確保整個頁面至少佔滿視窗高度
+}
+
+$primary-color: #003366;
+$secondary-color: #66CCFF;
+$hover-color: #3399FF;
+$text-color: #333;
+$bg-light: #E6F7FF;
+$bg-lighter: #F9FCFF;
+$border-color: #D0E9FF;
+$error-color: #f44336;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; // 防止水平滾動
+}
+
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: $bg-light;
+
+    h1 {
+        font-size: 2.25rem;
+        color: $primary-color;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        font-size: 1.125rem;
+        color: #3399CC;
+        margin: 0; // 移除預設邊距
+    }
+}
+
+
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    min-height: calc(100vh - 150px); // 調整高度計算
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+    padding: 1rem;
+
+    h2 {
+        font-size: 2.5rem;
+        color: #006699;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    p {
+        font-size: 1.5rem;
+        color: #444;
+        margin: 0; // 移除預設邊距
+    }
+}
+
+.right-column {
+    width: 50%;
+    max-width: 450px;
+    background-color: $bg-lighter;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid $border-color;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+
+    h2 {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: $primary-color;
+    }
+}
+
+label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #CCCCCC;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-color: $secondary-color;
+        box-shadow: 0 0 0 2px rgba(102, 204, 255, 0.2);
+    }
+}
+
+.error-message {
+    color: $error-color;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: $secondary-color;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: $hover-color;
+    }
+
+    &:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
+}
+
+.spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.divider {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #777;
+    margin: 1.25rem 0;
+    position: relative;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: #ddd;
+    }
+
+    &::before {
+        left: 0;
+    }
+
+    &::after {
+        right: 0;
+    }
+}
+
+.google-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #F5F5F5;
+    color: #444;
+    font-size: 0.875rem;
+    // border: 1px solid #ddd;
+    // border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 1.25rem;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #EBEBEB ;
+    }
+
+    // &::before {
+    //     content: "";
+    //     display: inline-block;
+    //     width: 18px;
+    //     height: 18px;
+    //     margin-right: 8px;
+    //     background-color: transparent;
+    //     border-radius: 50%;
+    //     border: 2px solid #4285F4;
+    //     position: relative;
+    // }
+}
+
+.register {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #555;
+
+    a {
+        color: #1976D2;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $hover-color;
+            text-decoration: underline;
+        }
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    main {
+        padding: 1.5rem 1rem;
+    }
+
+    .left-column {
+        h2 {
+            font-size: 2.25rem;
+        }
+
+        p {
+            font-size: 1.25rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        padding: 1rem;
+        min-height: auto; // 在手機版移除最小高度限制
+    }
+
+    .left-column,
+    .right-column {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .left-column {
+        padding: 1rem 1rem 2rem;
+    }
+
+    .right-column {
+        margin-top: 1rem;
+    }
+
+    .left-column h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.5rem 1rem;
+
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .left-column {
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+        }
+    }
+
+    .right-column {
+        padding: 1.5rem;
+    }
+}

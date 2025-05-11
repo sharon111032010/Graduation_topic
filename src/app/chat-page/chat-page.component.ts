@@ -31,8 +31,8 @@ export class ChatPageComponent {
   chatMessagesList = [
     { type: 'user', text: '請問怎麼查課表?', timestamp: '10:00' },
     { type: 'bot', text: '您可以透過以下幾種方式查詢個人課表:...', timestamp: '10:01' },
-    { type: 'user', text: '謝謝,那我在校務系統上看到的課表和實際的是否會有差異?', timestamp: '10:02' },
-    { type: 'bot', text: '校務系統上的課表是官方資料,但在某些情況下可能與實際有所差異:...', timestamp: '10:03' }
+    // { type: 'user', text: '謝謝,那我在校務系統上看到的課表和實際的是否會有差異?', timestamp: '10:02' },
+    // { type: 'bot', text: '校務系統上的課表是官方資料,但在某些情況下可能與實際有所差異:...', timestamp: '10:03' }
   ];
 
   userInput = '';
