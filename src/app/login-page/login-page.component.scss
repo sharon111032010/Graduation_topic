@@ -27,21 +27,39 @@ html {
 }
 
 header {
+    display: flex;
+    justify-content: center;
     text-align: center;
     padding: 2rem 1rem;
     background-color: $bg-light;
 
-    h1 {
-        font-size: 2.25rem;
-        color: $primary-color;
-        margin-bottom: 0.5rem;
+    img {
+        width: 80px;
+        height: auto;
+        // margin-bottom: 1rem;
+        border-radius: 100%;
     }
 
-    p {
-        font-size: 1.125rem;
-        color: #3399CC;
-        margin: 0; // 移除預設邊距
+    div {
+        display: flex;
+        flex-direction:column;
+        margin: 10px;
+        //分散式對㝛齊
+       justify-content: space-around;
+        h1 {
+            font-size: 2.25rem;
+            color: $primary-color;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: #3399CC;
+            margin: 0; // 移除預設邊距
+        }
+
     }
+
 }
 
 
@@ -212,7 +230,7 @@ button {
     transition: background-color 0.2s ease;
 
     &:hover {
-        background-color: #EBEBEB ;
+        background-color: #EBEBEB;
     }
 
     // &::before {

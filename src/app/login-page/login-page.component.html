@@ -1,6 +1,9 @@
 <header>
-    <h1>AI 校園助手</h1>
-    <p>讓校園生活更輕鬆</p>
+    <img src="../../assets/校徽.gif" alt="">
+    <div>
+        <h1>AI 校園助手</h1>
+        <p>讓校園生活更輕鬆</p>
+    </div>
 </header>
 <main>
     <section class="left-column">
@@ -17,7 +20,8 @@
             </div>
 
             <label for="password">密碼</label>
-            <input type="password" id="password" formControlName="password" placeholder="輸入密碼" required matInput appearance="outline"> 
+            <input type="password" id="password" formControlName="password" placeholder="輸入密碼" required matInput
+                appearance="outline">
             <div *ngIf="submitted && f.password.errors" class="error-message">
                 <div *ngIf="f.password.errors.required">請輸入密碼</div>
             </div>
