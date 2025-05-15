@@ -2,19 +2,21 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { delay, filter, fromEvent, of, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
+import { ChatBotService } from '../service/chat-bot.service';
+import { IChatBor } from '../@interface/IchatBor';
 
 @Component({
   selector: 'app-chat-page',
   standalone: true,
-  imports: [CommonModule, FormsModule,MatIconModule], 
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './chat-page.component.html',
   styleUrl: './chat-page.component.scss'
 })
 export class ChatPageComponent {
 
   // @ViewChild('chatMessages') chatMessagesRef!: ElementRef<HTMLDivElement>;
-  @ViewChild('sidebar') sidebarRef!:ElementRef<HTMLDivElement>;
+  @ViewChild('sidebar') sidebarRef!: ElementRef<HTMLDivElement>;
 
   historyItems = [
     '5/5 10:00:課表怎麼查',
@@ -36,6 +38,16 @@ export class ChatPageComponent {
   ];
 
   userInput = '';
+  chatRequest: IChatBor = {
+    ID: 'A12345', // 這裡應該填入真實的使用者 ID
+    msg: this.userInput
+  };
+
+
+
+  constructor(
+    private chatBotService: ChatBotService
+  ) { }
 
   ngAfterViewInit(): void {
     // 可以在這裡做一些初始化或監聽
@@ -62,19 +74,35 @@ export class ChatPageComponent {
 
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     this.chatMessagesList.push({ type: 'user', text: this.userInput, timestamp });
-    this.userInput = '';
 
+
+
+    this.chatRequest.msg=this.userInput;
+    console.log(this.chatRequest);
+    this.chatBotService.chatBotResponse(this.chatRequest).subscribe(res => {
+      // 處理 AI 回應
+
+      
+      const response = res;
+      this.chatMessagesList.push({
+        type: 'bot',
+        text: response,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      });
+    });
+    this.userInput = '';
     // 模擬 AI 回應
     of(null)
-      .pipe(
-        delay(1000),
-        tap(() => this.chatMessagesList.push({
-          type: 'bot',
-          text: '這是AI的回覆。',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        }))
-      )
-      .subscribe();
+        .pipe(
+          delay(1000),
+          tap(() => this.chatMessagesList.push({
+            type: 'bot',
+            text: '這是AI的回覆。',
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }))
+        )
+        .subscribe();
   }
+
 
 }
