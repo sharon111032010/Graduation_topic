@@ -15,15 +15,15 @@
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <label for="username">帳號</label>
             <input type="text" id="username" formControlName="username" placeholder="輸入帳號" required>
-            <div *ngIf="submitted && f.username.errors" class="error-message">
-                <div *ngIf="f.username.errors.required">請輸入帳號</div>
+                <div *ngIf="submitted && f['username'].errors" class="error-message">
+                    <div *ngIf="f['username'].errors?.['required']">請輸入帳號</div>
             </div>
 
             <label for="password">密碼</label>
             <input type="password" id="password" formControlName="password" placeholder="輸入密碼" required matInput
                 appearance="outline">
-            <div *ngIf="submitted && f.password.errors" class="error-message">
-                <div *ngIf="f.password.errors.required">請輸入密碼</div>
+            <div *ngIf="submitted && f['password'].errors" class="error-message">
+                <div *ngIf="f['password'].errors?.['required']">請輸入密碼</div>
             </div>
 
             <button type="submit" [disabled]="loading" mat-button>

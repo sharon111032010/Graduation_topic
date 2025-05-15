@@ -65,6 +65,7 @@ export class ChatPageComponent {
     this.userInput = question;
   }
 
+  // 要接 menu API
   onHistoryClick(index: number): void {
     this.selectedHistoryIndex = index;
   }
@@ -83,6 +84,7 @@ export class ChatPageComponent {
       // 處理 AI 回應
 
       
+      // 打chat api 
       const response = res;
       this.chatMessagesList.push({
         type: 'bot',
