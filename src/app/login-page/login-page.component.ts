@@ -93,11 +93,11 @@ export class LoginPageComponent implements OnInit {
     
     // 在此處理登入邏輯
     // 以下為模擬登入過程
-    setTimeout(() => {
-      // 登入成功，轉導至首頁
-      this.router.navigate(['/dashboard']);
-      this.loading = false;
-    }, 1500);
+    // setTimeout(() => {
+    //   // 登入成功，轉導至首頁
+    //   this.router.navigate(['/dashboard']);
+    //   this.loading = false;
+    // }, 1500);
   }
 
   loginWithGoogle() {
