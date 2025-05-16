@@ -19,7 +19,7 @@ import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialo
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup = this.formBuilder.group({
     // username: ['', Validators.required],
-    stdId: ['', Validators.required],
+    stuId: ['', Validators.required],
     password: ['', Validators.required]
   });
   
@@ -61,13 +61,14 @@ export class LoginPageComponent implements OnInit {
       this.dialog.open(LoginFailedDialogComponent, {}); // 顯示錯誤對話框
       return;
     }
+
     // 此
     if (this.loginForm.invalid) {
       this.dialog.open(LoginFailedDialogComponent, {}); // 顯示錯誤對話框
       return;
     }
     //取得值
-    const loginform = this.form.getRawValue();
+    const loginform = this.loginForm.getRawValue();
     //呼叫api
     this.userService.loginApi(loginform).subscribe({
       next :(result) =>{
