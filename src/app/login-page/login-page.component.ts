@@ -18,7 +18,8 @@ import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialo
 })
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup = this.formBuilder.group({
-    username: ['', Validators.required],
+    // username: ['', Validators.required],
+    stdId: ['', Validators.required],
     password: ['', Validators.required]
   });
   

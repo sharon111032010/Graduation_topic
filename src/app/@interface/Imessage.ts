@@ -11,3 +11,23 @@ export interface IApiResult<T> {
     message: string;    // 回應訊息
     data: T;            // 回應的資料，類型由泛型決定
 }
+
+/*
+create table msg 
+(
+	msg nvarchar(max),
+	userId uniqueidentifier,
+	creatTime dateTime default (getdate()),
+	menuId uniqueidentifier,
+	msgTpye bit
+);
+
+create table menu  
+(
+	title nvarchar(max),
+	userId uniqueidentifier,
+	creatTime dateTime default getDate(),
+	menuId uniqueidentifier
+);
+
+*/

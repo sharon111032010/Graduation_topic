@@ -80,6 +80,7 @@ export class LoginComponent {
     }
   }
 
+  
   // ✅ 忘記密碼對話框
   open_forgot_password_dialog() {
     const dialogRef = this.dialog.open(ForgotPasswordDialogComponent, {
