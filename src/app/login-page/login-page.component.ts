@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../service/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialog/login-failed-dialog.component';
+import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successful-dialog/login-successful-dialog.component';
 
 @Component({
   selector: 'app-login-page',
@@ -79,7 +80,7 @@ export class LoginPageComponent implements OnInit {
         //存入jwt
         localStorage.setItem('jwt',result.token);
 
-        this.dialog.open(LoginFailedDialogComponent,{}).afterClosed().subscribe(()=>{
+        this.dialog.open(LoginSuccessfulDialogComponent,{}).afterClosed().subscribe(()=>{
           this.router.navigate(['/chatPage']);
         });
       },
