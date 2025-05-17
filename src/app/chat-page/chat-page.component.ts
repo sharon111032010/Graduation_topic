@@ -72,7 +72,8 @@ export class ChatPageComponent {
 
   onSendClick(): void {
     alert(localStorage.getItem('jwt'));
-    
+    console.log(localStorage.getItem('jwt'));
+
     if (!this.userInput.trim()) return;
 
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
