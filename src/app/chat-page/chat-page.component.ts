@@ -71,6 +71,8 @@ export class ChatPageComponent {
   }
 
   onSendClick(): void {
+    alert(localStorage.getItem('jwt'));
+    
     if (!this.userInput.trim()) return;
 
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -106,5 +108,14 @@ export class ChatPageComponent {
         .subscribe();
   }
 
+  createMenuApi(){
+    alert("createMeunApi");
+  }
+  createLogApi(){
+    alert("createLogApi");
+  }
+  chatApi(req:IChatBor){
+    alert("call chatApi");
+  }
 
 }

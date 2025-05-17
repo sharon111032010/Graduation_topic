@@ -102,8 +102,7 @@ export class LoginPageComponent implements OnInit {
 
   loginWithResgister() {
     this.loading = true;
-
-    this.router.navigate(['/resgister']);
+    this.router.navigate(['/registerPage']);
     this.loading = false;
   }
 }
