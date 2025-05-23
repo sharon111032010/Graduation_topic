@@ -12,7 +12,7 @@ export class LoginSystemService {
     private http:HttpClient
   ) { }
 
-  private baseUrl = 'http://163.17.136.69:5680';
+  private baseUrl = 'https://localhost:7000';
 
   LoginAPI(loginInterface : ILoginRes):Observable<any>{
     const url = this.baseUrl + '/api/' // 沒填完!!

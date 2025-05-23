@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ICreateMenuRes, IgetMenuDataReq, IGetMenuRes } from '../@InterfaceAPI/IMenu';
+import { ICreateMenuRes ,IGetMenuRes } from '../@InterfaceAPI/IMenu';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CreateMenuService {
+export class MenuService {
 
   constructor(
     private http:HttpClient
@@ -23,5 +23,4 @@ export class CreateMenuService {
     const url = this.baseUrl+'/api/' //未完
     return this.http.post(url, getMentAPI);
   }
-
 }
