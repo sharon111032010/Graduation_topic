@@ -63,9 +63,11 @@ export class LoginPageComponent implements OnInit {
     // });
   }
   form :ILoginRes = this.Form.getRawValue();
+  
 
   loginApiOnClick() {
     this.submitted = true;
+    console.log(this.form);
     this.loginService.LoginAPI(this.form).subscribe({
       next: (result) => {
         if (result.isSuccess) {
