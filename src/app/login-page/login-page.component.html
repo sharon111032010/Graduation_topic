@@ -13,7 +13,7 @@
     <section class="right-column">
         <h2>登入</h2>
         <!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
-        <form [formGroup]="loginForm" (ngSubmit)="loginApiOnClick()">
+        <form [formGroup]="Form" (ngSubmit)="loginApiOnClick()">
             <label for="username">帳號</label>
             <!-- <input type="text" id="username" formControlName="stuId" placeholder="輸入帳號" required> -->
             <input type="text" id="username" formControlName="account" placeholder="輸入帳號" required>
