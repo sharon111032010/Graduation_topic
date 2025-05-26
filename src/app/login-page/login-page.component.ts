@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialog/login-failed-dialog.component';
 import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successful-dialog/login-successful-dialog.component';
 import { MenuService } from '../@service/menu.service';
+import { LoginSystemService } from '../@service/login-system.service';
+import { ILoginRes } from '../@InterfaceAPI/ILoginSystem';
 
 @Component({
   selector: 'app-login-page',
@@ -20,16 +22,17 @@ import { MenuService } from '../@service/menu.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  
+
   loginForm: FormGroup = this.formBuilder.group({
     // username: ['', Validators.required],
     stuId: ['', Validators.required],
     password: ['', Validators.required]
   });
 
-  form = new FormGroup({
-    stuId: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
+  Form: FormGroup = this.formBuilder.group({
+    // username: ['', Validators.required],
+    account: ['', Validators.required],
+    password: ['', Validators.required]
   });
   // 或者，使用驚嘆號符號告訴 TypeScript 這個屬性會在後面初始化
   // loginForm!: FormGroup;
@@ -37,19 +40,19 @@ export class LoginPageComponent implements OnInit {
   loading = false;
   submitted = false;
   menus: any[] = []; // 假設有一個菜單數組
-  userId=""; // 假設有一個用戶ID
+  userId = ""; // 假設有一個用戶ID
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,//用於呼叫API
     public dialog: MatDialog,//用於開啟對話框 (MatDialog)
-  private menuService: MenuService, // 假設有一個 MenuService 用於處理菜單相關邏輯
+    private loginService: LoginSystemService, // 用於呼叫登入API
   ) {
-    
+
     // this.menuService.getMentAPI(); // 初始化時隱藏菜單
 
-   }
+  }
 
 
   ngOnInit(): void {
@@ -58,6 +61,29 @@ export class LoginPageComponent implements OnInit {
     //   username: ['', Validators.required],
     //   password: ['', Validators.required]
     // });
+  }
+  form :ILoginRes = this.loginForm.getRawValue();
+
+  loginApiOnClick() {
+    this.submitted = true;
+    this.loginService.LoginAPI(this.form).subscribe({
+      next: (result) => {
+        if (result.isSuccess) {
+          this.dialog.open(LoginSuccessfulDialogComponent, {}).afterClosed().subscribe(() => {
+            this.router.navigate(['/chatPage']);
+          });
+        } else {
+          this.dialog.open(LoginFailedDialogComponent, {});
+        }
+      },
+      error: () => {
+        this.dialog.open(LoginFailedDialogComponent, {});
+        //可以改別的錯誤匡
+      }
+    });
+
+    this.loading = true;
+
   }
 
   // convenience getter for easy access to form fields
