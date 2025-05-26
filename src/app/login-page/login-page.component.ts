@@ -62,7 +62,7 @@ export class LoginPageComponent implements OnInit {
     //   password: ['', Validators.required]
     // });
   }
-  form :ILoginRes = this.loginForm.getRawValue();
+  form :ILoginRes = this.Form.getRawValue();
 
   loginApiOnClick() {
     this.submitted = true;
