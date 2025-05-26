@@ -63,7 +63,7 @@ Form: FormGroup = this.formBuilder.group({
     //   password: ['', Validators.required]
     // });
   }
-  form :ILoginRes = this.Form.getRawValue();
+  form = this.Form.getRawValue();
   
 
   loginApiOnClick() {
