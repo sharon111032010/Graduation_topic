@@ -69,6 +69,7 @@ Form: FormGroup = this.formBuilder.group({
     this.submitted = true;
     const form :ILoginRes= this.Form.getRawValue();
     console.log(this.Form);
+    console.log(form);
     this.loginService.LoginAPI(form).subscribe({
       next: (result) => {
         if (result.isSuccess) {
