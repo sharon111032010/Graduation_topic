@@ -22,6 +22,11 @@ import { ILoginRes } from '../@InterfaceAPI/ILoginSystem';
 })
 export class LoginPageComponent implements OnInit {
 
+Form: FormGroup = this.formBuilder.group({
+    // username: ['', Validators.required],
+    account: ['', Validators.required],
+    password: ['', Validators.required]
+  });
 
   loginForm: FormGroup = this.formBuilder.group({
     // username: ['', Validators.required],
@@ -29,11 +34,7 @@ export class LoginPageComponent implements OnInit {
     password: ['', Validators.required]
   });
 
-  Form: FormGroup = this.formBuilder.group({
-    // username: ['', Validators.required],
-    account: ['', Validators.required],
-    password: ['', Validators.required]
-  });
+  
   // 或者，使用驚嘆號符號告訴 TypeScript 這個屬性會在後面初始化
   // loginForm!: FormGroup;
 
