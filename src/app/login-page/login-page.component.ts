@@ -68,6 +68,7 @@ Form: FormGroup = this.formBuilder.group({
 
   loginApiOnClick() {
     this.submitted = true;
+    console.log(this.Form);
     console.log(this.form);
     this.loginService.LoginAPI(this.form).subscribe({
       next: (result) => {
