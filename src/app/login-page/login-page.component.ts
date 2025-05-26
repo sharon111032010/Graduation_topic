@@ -9,6 +9,7 @@ import { UserService } from '../service/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialog/login-failed-dialog.component';
 import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successful-dialog/login-successful-dialog.component';
+import { MenuService } from '../@service/menu.service';
 
 @Component({
   selector: 'app-login-page',
@@ -18,6 +19,8 @@ import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successf
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent implements OnInit {
+
+  
   loginForm: FormGroup = this.formBuilder.group({
     // username: ['', Validators.required],
     stuId: ['', Validators.required],
@@ -33,13 +36,21 @@ export class LoginPageComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  menus: any[] = []; // 假設有一個菜單數組
+  userId=""; // 假設有一個用戶ID
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,//用於呼叫API
     public dialog: MatDialog,//用於開啟對話框 (MatDialog)
-  ) { }
+  private menuService: MenuService, // 假設有一個 MenuService 用於處理菜單相關邏輯
+  ) {
+    
+    // this.menuService.getMentAPI(); // 初始化時隱藏菜單
+
+   }
+
 
   ngOnInit(): void {
     // 如果使用驚嘆號方法，可以在這裡初始化
