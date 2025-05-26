@@ -11,7 +11,7 @@ import { LoginFailedDialogComponent } from '../componetDialog/login-failed-dialo
 import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successful-dialog/login-successful-dialog.component';
 import { MenuService } from '../@service/menu.service';
 import { LoginSystemService } from '../@service/login-system.service';
-import { ILoginRes } from '../@InterfaceAPI/ILoginSystem';
+import { ILoginReq } from '../@InterfaceAPI/ILoginSystem';
 
 @Component({
   selector: 'app-login-page',
@@ -67,7 +67,7 @@ Form: FormGroup = this.formBuilder.group({
 
   loginApiOnClick() {
     this.submitted = true;
-    const form :ILoginRes= this.Form.getRawValue();
+    const form = this.Form.getRawValue();
     console.log(this.Form);
     console.log(form);
     this.loginService.LoginAPI(form).subscribe({
