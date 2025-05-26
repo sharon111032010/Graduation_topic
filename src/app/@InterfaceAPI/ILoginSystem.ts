@@ -1,15 +1,19 @@
-export interface ILoginRes {
+export interface ILoginReq {
     acccount : string;
     password: string;
 }
-export interface IRegisterRes {
+export interface ILoginDataRes{
+    userId: string;
+    account: string;
+}
+export interface IRegisterReq {
     name: string;
     stuId : string;
     email: string;
     password: string;
     account: string;
 }
-export interface IDeleteRes {
+export interface IDeleteReq{
     account: string; 
     password: string;
     email: string;
