@@ -63,14 +63,13 @@ Form: FormGroup = this.formBuilder.group({
     //   password: ['', Validators.required]
     // });
   }
-  form = this.Form.getRawValue();
   
 
   loginApiOnClick() {
     this.submitted = true;
+    const form :ILoginRes= this.Form.getRawValue();
     console.log(this.Form);
-    console.log(this.form);
-    this.loginService.LoginAPI(this.form).subscribe({
+    this.loginService.LoginAPI(form).subscribe({
       next: (result) => {
         if (result.isSuccess) {
           this.dialog.open(LoginSuccessfulDialogComponent, {}).afterClosed().subscribe(() => {
