@@ -10,7 +10,7 @@ export interface IcreateMenuDataReq{
 }
 // 取得目錄 請求值
 export interface IGetMenuRes{
-    userId :string;
+    userId :string|undefined;
 }
 // 取得目錄 回傳資料
 export interface IgetMenuDataReq{

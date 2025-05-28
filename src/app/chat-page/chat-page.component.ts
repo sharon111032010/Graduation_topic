@@ -7,6 +7,8 @@ import { ChatBotService } from '../service/chat-bot.service';
 import { IChatBor } from '../@interface/IchatBor';
 import { Router } from '@angular/router';
 import { GetIdService } from '../service/get-id.service';
+import { MenuService } from '../@service/menu.service';
+import { IGetMenuRes } from '../@InterfaceAPI/IMenu';
 
 @Component({
   selector: 'app-chat-page',
@@ -16,7 +18,6 @@ import { GetIdService } from '../service/get-id.service';
   styleUrl: './chat-page.component.scss'
 })
 export class ChatPageComponent {
-  userId: string | null = null;
   // account: string | null = null;
 
   // @ViewChild('chatMessages') chatMessagesRef!: ElementRef<HTMLDivElement>;
@@ -50,9 +51,20 @@ export class ChatPageComponent {
   constructor(
     private chatBotService: ChatBotService,
     private router: Router,
-    public getIdService: GetIdService // 假設有一個 UserService 用於獲取用戶信息
+    public getIdService: GetIdService, // 假設有一個 UserService 用於獲取用戶信息
+    public MenuService: MenuService
   ) {
+  }
+
+  ngOnInit(): void {
     const user = this.getIdService.getUser();
+
+    console.log('User:', user);
+    if (user) {
+      this.onInitMenuClick();
+    } else {
+      console.warn('User ID is not available yet.');
+    }
   }
 
   ngAfterViewInit(): void {
@@ -76,6 +88,36 @@ export class ChatPageComponent {
     this.selectedHistoryIndex = index;
     const selectedMessage = this.historyItems[index];
     alert(`您選擇的歷史記錄: ${selectedMessage}`);
+  }
+  onInitMenuClick(): void {
+    console.log('onInitMenuClick 被呼叫');
+    const userId: IGetMenuRes = { userId: this.getIdService.getUserId() ?? undefined };
+    console.log('userId:', userId);
+    if (!userId) {
+      console.error('userId 為 null，無法呼叫 getMentAPI');
+      return;
+    }
+
+    this.MenuService.getMentAPI(userId).subscribe(
+      res => {
+        console.log('Menu API 回應:', res);
+        if (res?.isSuccess && Array.isArray(res.data)) {
+          this.historyItems.push(
+            ...res.data.map((item: any) => {
+              const date = new Date(item.createTime);
+              const dateStr = date.toLocaleDateString();
+              const timeStr = date.toLocaleTimeString();
+              return `${dateStr} ${timeStr} - ${item.title}`;
+            })
+          );
+        } else {
+          console.warn('Menu 回傳資料格式錯誤或無資料');
+        }
+      },
+      error => {
+        console.error('Menu API 錯誤:', error);
+      }
+    )
   }
 
   onSendClick(): void {
