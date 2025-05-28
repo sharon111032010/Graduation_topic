@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ChatBotService } from '../service/chat-bot.service';
 import { IChatBor } from '../@interface/IchatBor';
+import { Router } from '@angular/router';
+import { GetIdService } from '../service/get-id.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -14,6 +16,8 @@ import { IChatBor } from '../@interface/IchatBor';
   styleUrl: './chat-page.component.scss'
 })
 export class ChatPageComponent {
+  userId: string | null = null;
+  // account: string | null = null;
 
   // @ViewChild('chatMessages') chatMessagesRef!: ElementRef<HTMLDivElement>;
   @ViewChild('sidebar') sidebarRef!: ElementRef<HTMLDivElement>;
@@ -43,11 +47,13 @@ export class ChatPageComponent {
     msg: this.userInput
   };
 
-
-
   constructor(
-    private chatBotService: ChatBotService
-  ) { }
+    private chatBotService: ChatBotService,
+    private router: Router,
+    public getIdService: GetIdService // 假設有一個 UserService 用於獲取用戶信息
+  ) {
+    const user = this.getIdService.getUser();
+  }
 
   ngAfterViewInit(): void {
     // 可以在這裡做一些初始化或監聽
@@ -68,6 +74,8 @@ export class ChatPageComponent {
   // 要接 menu API
   onHistoryClick(index: number): void {
     this.selectedHistoryIndex = index;
+    const selectedMessage = this.historyItems[index];
+    alert(`您選擇的歷史記錄: ${selectedMessage}`);
   }
 
   onSendClick(): void {
@@ -81,12 +89,12 @@ export class ChatPageComponent {
 
 
 
-    this.chatRequest.msg=this.userInput;
+    this.chatRequest.msg = this.userInput;
     console.log(this.chatRequest);
     this.chatBotService.chatBotResponse(this.chatRequest).subscribe(res => {
       // 處理 AI 回應
 
-      
+
       // 打chat api 
       const response = res;
       this.chatMessagesList.push({
@@ -98,24 +106,24 @@ export class ChatPageComponent {
     this.userInput = '';
     // 模擬 AI 回應
     of(null)
-        .pipe(
-          delay(1000),
-          tap(() => this.chatMessagesList.push({
-            type: 'bot',
-            text: '這是AI的回覆。',
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          }))
-        )
-        .subscribe();
+      .pipe(
+        delay(1000),
+        tap(() => this.chatMessagesList.push({
+          type: 'bot',
+          text: '這是AI的回覆。',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }))
+      )
+      .subscribe();
   }
 
-  createMenuApi(){
+  createMenuApi() {
     alert("createMeunApi");
   }
-  createLogApi(){
+  createLogApi() {
     alert("createLogApi");
   }
-  chatApi(req:IChatBor){
+  chatApi(req: IChatBor) {
     alert("call chatApi");
   }
 

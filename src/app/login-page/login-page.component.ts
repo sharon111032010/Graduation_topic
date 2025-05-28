@@ -12,6 +12,7 @@ import { LoginSuccessfulDialogComponent } from '../componetDialog/login-successf
 import { MenuService } from '../@service/menu.service';
 import { LoginSystemService } from '../@service/login-system.service';
 import { ILoginReq } from '../@InterfaceAPI/ILoginSystem';
+import { GetIdService } from '../service/get-id.service';
 
 @Component({
   selector: 'app-login-page',
@@ -22,7 +23,7 @@ import { ILoginReq } from '../@InterfaceAPI/ILoginSystem';
 })
 export class LoginPageComponent implements OnInit {
 
-Form: FormGroup = this.formBuilder.group({
+  Form: FormGroup = this.formBuilder.group({
     // username: ['', Validators.required],
     account: ['', Validators.required],
     password: ['', Validators.required]
@@ -34,7 +35,7 @@ Form: FormGroup = this.formBuilder.group({
     password: ['', Validators.required]
   });
 
-  
+
   // 或者，使用驚嘆號符號告訴 TypeScript 這個屬性會在後面初始化
   // loginForm!: FormGroup;
 
@@ -49,6 +50,7 @@ Form: FormGroup = this.formBuilder.group({
     private userService: UserService,//用於呼叫API
     public dialog: MatDialog,//用於開啟對話框 (MatDialog)
     private loginService: LoginSystemService, // 用於呼叫登入API
+    public getIdService:GetIdService
   ) {
 
     // this.menuService.getMentAPI(); // 初始化時隱藏菜單
@@ -63,7 +65,7 @@ Form: FormGroup = this.formBuilder.group({
     //   password: ['', Validators.required]
     // });
   }
-  
+
 
   loginApiOnClick() {
     this.submitted = true;
@@ -74,7 +76,10 @@ Form: FormGroup = this.formBuilder.group({
       next: (result) => {
         if (result.isSuccess) {
           this.dialog.open(LoginSuccessfulDialogComponent, {}).afterClosed().subscribe(() => {
-            this.router.navigate(['/chatPage']);
+            this.getIdService.setUser(result.data);
+            this.router.navigate(['/chatPage'], {
+              state: result.data
+            });
           });
         } else {
           this.dialog.open(LoginFailedDialogComponent, {});
