@@ -1,4 +1,4 @@
-export interface IApiReq<T>{
+export interface IApiRes<T>{
     isSuccess : boolean;
     message : string ;
     data :T;

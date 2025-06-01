@@ -1,1 +1,15 @@
-<p>user-info-dialog works!</p>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+    <input type="text" formControlName="userName" placeholder="Enter your name">
+    <br>
+  
+    <input type="password" formControlName="userPassword" placeholder="Enter your password">
+    <br>
+  
+    <input type="email" formControlName="userEmail" placeholder="Enter your email">
+    <br>
+  
+    <button type="submit" [disabled]="!myForm.valid">Submit</button>
+  
+  </form>
+  

@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 import { GetIdService } from '../service/get-id.service';
 import { MenuService } from '../@service/menu.service';
 import { IGetMenuRes } from '../@InterfaceAPI/IMenu';
+import { DeleteAccountService } from '../@service/delete-account.service';
+import { Dialog } from '@angular/cdk/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { UserInfoDialogComponent } from '../componetDialog/user-info-dialog/user-info-dialog.component';
 
 @Component({
   selector: 'app-chat-page',
@@ -18,6 +22,7 @@ import { IGetMenuRes } from '../@InterfaceAPI/IMenu';
   styleUrl: './chat-page.component.scss'
 })
 export class ChatPageComponent {
+[x: string]: any;
   // account: string | null = null;
 
   // @ViewChild('chatMessages') chatMessagesRef!: ElementRef<HTMLDivElement>;
@@ -49,7 +54,9 @@ export class ChatPageComponent {
     private chatBotService: ChatBotService,
     private router: Router,
     public getIdService: GetIdService, // 假設有一個 UserService 用於獲取用戶信息
-    public MenuService: MenuService
+    public MenuService: MenuService,
+    public DeleteService:  DeleteAccountService,// 假設有一個 DeleteService 用於刪除操作
+    public dialog: MatDialog
   ) {
   }
 
@@ -172,4 +179,10 @@ export class ChatPageComponent {
     alert("call chatApi");
   }
 
+
+  onTestDelete(): void {
+    // 打開一個 對話框或其他方式來確認刪除帳號
+
+    this.dialog.open(UserInfoDialogComponent, {});
+  } 
 }
