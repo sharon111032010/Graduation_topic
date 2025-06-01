@@ -13,7 +13,7 @@ export class DeleteAccountService {
     private http: HttpClient,
   ) { }
 
-  private baseUrl = 'http://163.17.136.69:5680';
+  private baseUrl = 'https://localhost:7000';
 
   deleteAccountAPI(deleteAccountReq:IDeleteAccountReq): Observable<IApiRes<any>> {
     const url = `${this.baseUrl}/api/DeleteAccount/DeleteAccount`;

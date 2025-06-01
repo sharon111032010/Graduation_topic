@@ -1,12 +1,12 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
 
-    <input type="text" formControlName="userName" placeholder="Enter your name">
+    <input type="text" formControlName="name" placeholder="Enter your name">
     <br>
   
-    <input type="password" formControlName="userPassword" placeholder="Enter your password">
+    <input type="password" formControlName="password" placeholder="Enter your password">
     <br>
   
-    <input type="email" formControlName="userEmail" placeholder="Enter your email">
+    <input type="email" formControlName="email" placeholder="Enter your email">
     <br>
   
     <button type="submit" [disabled]="!myForm.valid">Submit</button>

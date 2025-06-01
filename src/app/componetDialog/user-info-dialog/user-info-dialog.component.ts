@@ -3,6 +3,7 @@ import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeleteAccountService } from 'src/app/@service/delete-account.service';
+import { IDeleteAccountReq } from 'src/app/@InterfaceAPI/IDeleteAccoutn';
 
 @Component({
   selector: 'app-user-info-dialog',
@@ -19,14 +20,14 @@ export class UserInfoDialogComponent {
     public DelteDialogService: DeleteAccountService // 用於關閉對話框
   ) {
     this.myForm = fb.group({
-      userName: ['', Validators.required],
-      userPassword: ['', Validators.required],
-      userEmail: ['', [Validators.required, Validators.email]]
+      name: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
   onSubmit() {
-    const fromData = this.myForm.getRawValue();
+    const fromData :IDeleteAccountReq = this.myForm.getRawValue();
     if (this.myForm.valid) {
       console.log('送出的表單資料:', this.myForm.value);
       this.DelteDialogService.deleteAccountAPI(fromData).subscribe({
