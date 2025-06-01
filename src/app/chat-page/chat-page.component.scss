@@ -47,6 +47,8 @@ header {
     color: #003366;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex:1;
     gap: 10px;
     img{
         width: 30px;

@@ -11,7 +11,7 @@
             <span>校園 AI 助手</span>
         </div>
         <div class="user-profile">
-            <span>王小明</span>
+            <!-- <span>王小明</span> -->
         </div>
     </header>
     <div class="main-container">
@@ -35,19 +35,20 @@
                 <ul>
                     <li *ngFor="let item of historyItems; let i = index" [class.active]="i === selectedHistoryIndex"
                         (click)="onHistoryClick(i)">
-                        {{ item }}
+                        <span class="timestamp">{{ item.createtime }}</span>
+                        {{ item.title }}
                     </li>
                 </ul>
             </div>
 
-            <div class="quick-ask">
+            <!-- <div class="quick-ask">
                 <h2>快速提問</h2>
                 <button (click)="onQuickAskClick('我要查課表')">我要查課表</button>
                 <button (click)="onQuickAskClick('教務處怎麼走?')">教務處怎麼走?</button>
                 <button (click)="onQuickAskClick('怎麼選課?')">怎麼選課?</button>
                 <button (click)="onQuickAskClick('哪裡借教室?')">哪裡借教室?</button>
                 <button (click)="onQuickAskClick('有免費 Wi-Fi 嗎?')">有免費 Wi-Fi 嗎?</button>
-            </div>
+            </div> -->
 
             <div class="version">
                 <p>版本 v1.0.0</p>

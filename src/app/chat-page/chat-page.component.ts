@@ -23,23 +23,20 @@ export class ChatPageComponent {
   // @ViewChild('chatMessages') chatMessagesRef!: ElementRef<HTMLDivElement>;
   @ViewChild('sidebar') sidebarRef!: ElementRef<HTMLDivElement>;
 
+  menuId ='';
+
   historyItems = [
-    '5/5 10:00:課表怎麼查',
-    '5/4 16:30:圖書館開放時間',
-    '5/4 13:00:怎麼借教室',
-    '5/3 15:45:學生證遺失',
-    '5/3 11:20:選課系統使用方式',
-    '5/2 14:10:成績查詢',
-    '5/1 09:30:獎學金申請',
-    '4/30 16:00:宿舍申請流程'
+    { menuId: 'B6D0A5E2-4940-4B66-88EE-5275FD5099DC', title: '課表怎麼查', createtime: '10:00' },
+    { menuId: 'B6D0A5E2-4940-4B66-88EE-5275FD5099DC', title: '圖書館開放時間', createtime: '16:30' },
+    { menuId: 'B6D0A5E2-4940-4B66-88EE-5275FD5099DC', title: '怎麼借教室', createtime: '13:00' },
+    { menuId: 'B6D0A5E2-4940--5275FD5099DC', title: '宿舍申請流程', createtime: '16:00' }
   ];
+
   selectedHistoryIndex = 0;
 
   chatMessagesList = [
     { type: 'user', text: '請問怎麼查課表?', timestamp: '10:00' },
     { type: 'bot', text: '您可以透過以下幾種方式查詢個人課表:...', timestamp: '10:01' },
-    // { type: 'user', text: '謝謝,那我在校務系統上看到的課表和實際的是否會有差異?', timestamp: '10:02' },
-    // { type: 'bot', text: '校務系統上的課表是官方資料,但在某些情況下可能與實際有所差異:...', timestamp: '10:03' }
   ];
 
   userInput = '';
@@ -59,7 +56,6 @@ export class ChatPageComponent {
   ngOnInit(): void {
     const user = this.getIdService.getUser();
 
-    console.log('User:', user);
     if (user) {
       this.onInitMenuClick();
     } else {
@@ -87,8 +83,11 @@ export class ChatPageComponent {
   onHistoryClick(index: number): void {
     this.selectedHistoryIndex = index;
     const selectedMessage = this.historyItems[index];
-    alert(`您選擇的歷史記錄: ${selectedMessage}`);
+    this.menuId = selectedMessage.menuId;
+    alert(`menuId: ${this.menuId}`);
+    alert(`您選擇的歷史記錄: ${selectedMessage.title}`);
   }
+
   onInitMenuClick(): void {
     console.log('onInitMenuClick 被呼叫');
     const userId: IGetMenuRes = { userId: this.getIdService.getUserId() ?? undefined };
@@ -104,12 +103,15 @@ export class ChatPageComponent {
         if (res?.isSuccess && Array.isArray(res.data)) {
           this.historyItems.push(
             ...res.data.map((item: any) => {
-              const date = new Date(item.createTime);
-              const dateStr = date.toLocaleDateString();
-              const timeStr = date.toLocaleTimeString();
-              return `${dateStr} ${timeStr} - ${item.title}`;
+              const time = new Date(item.createTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              return {
+                menuId: item.menuId,
+                title: item.title,
+                createtime: time
+              };
             })
           );
+
         } else {
           console.warn('Menu 回傳資料格式錯誤或無資料');
         }
