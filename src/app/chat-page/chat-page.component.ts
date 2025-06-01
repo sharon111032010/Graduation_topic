@@ -133,6 +133,7 @@ export class ChatPageComponent {
 
 
 
+
     this.chatRequest.msg = this.userInput;
     console.log(this.chatRequest);
     this.chatBotService.chatBotResponse(this.chatRequest).subscribe(res => {
