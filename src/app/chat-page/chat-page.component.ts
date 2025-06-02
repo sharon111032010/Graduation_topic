@@ -13,6 +13,8 @@ import { DeleteAccountService } from '../@service/delete-account.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserInfoDialogComponent } from '../componetDialog/user-info-dialog/user-info-dialog.component';
+import { LogService } from '../@service/log.service';
+import { IGetMsgReq } from '../@InterfaceAPI/IMsg';
 
 @Component({
   selector: 'app-chat-page',
@@ -56,7 +58,8 @@ export class ChatPageComponent {
     public getIdService: GetIdService, // 假設有一個 UserService 用於獲取用戶信息
     public MenuService: MenuService,
     public DeleteService:  DeleteAccountService,// 假設有一個 DeleteService 用於刪除操作
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public getMsgService: LogService // 假設有一個 GetMsgService 用於獲取對話紀錄
   ) {
   }
 
@@ -69,6 +72,7 @@ export class ChatPageComponent {
       console.warn('User ID is not available yet.');
     }
   }
+  userId: IGetMenuReq = { userId: this.getIdService.getUserId() ?? undefined };
 
   ngAfterViewInit(): void {
     // 可以在這裡做一些初始化或監聽
@@ -91,20 +95,40 @@ export class ChatPageComponent {
     this.selectedHistoryIndex = index;
     const selectedMessage = this.historyItems[index];
     this.menuId = selectedMessage.menuId;
+    const userId = this.getIdService.getUserId();
+    const getMsgReq :IGetMsgReq = {userId:userId, menuId: this.menuId};
+    this.getMsgService.getLogAPI(getMsgReq).subscribe({
+      next: (res) => {
+        console.log('getMsgAPI 回應:', res);
+        if (res?.isSuccess && Array.isArray(res.data)) {
+          this.chatMessagesList = res.data.map((item: any) => {
+            const time = new Date(item.createTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return {
+              type: item.type,
+              text: item.text,
+              timestamp: time
+            };
+          });
+        } else {
+          console.warn('getMsgAPI 回傳資料格式錯誤或無資料');
+        }
+      },
+      error: (err) => {}
+    }
+    );
     alert(`menuId: ${this.menuId}`);
     alert(`您選擇的歷史記錄: ${selectedMessage.title}`);
   }
 
   onInitMenuClick(): void {
     console.log('onInitMenuClick 被呼叫');
-    const userId: IGetMenuReq = { userId: this.getIdService.getUserId() ?? undefined };
-    console.log('userId:', userId);
-    if (!userId) {
+    console.log('userId:', this.userId);
+    if (!this.userId) {
       console.error('userId 為 null，無法呼叫 getMentAPI');
       return;
     }
 
-    this.MenuService.getMentAPI(userId).subscribe(
+    this.MenuService.getMentAPI(this.userId).subscribe(
       res => {
         console.log('Menu API 回應:', res);
         if (res?.isSuccess && Array.isArray(res.data)) {
