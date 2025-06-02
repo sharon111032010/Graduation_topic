@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { delay, filter, fromEvent, of, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -59,7 +59,8 @@ export class ChatPageComponent {
     public MenuService: MenuService,
     public DeleteService:  DeleteAccountService,// 假設有一個 DeleteService 用於刪除操作
     public dialog: MatDialog,
-    public getMsgService: LogService // 假設有一個 GetMsgService 用於獲取對話紀錄
+    public getMsgService: LogService, // 假設有一個 GetMsgService 用於獲取對話紀錄
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -108,6 +109,9 @@ export class ChatPageComponent {
               text: item.text,
               timestamp: time
             };
+            this.cdr.detectChanges(); // 手動觸發畫面更新
+            console.log('chatMessagesList:', this.chatMessagesList);
+            console.log('getMsgAPI 回傳資料:', res.data);
           });
         } else {
           console.warn('getMsgAPI 回傳資料格式錯誤或無資料');
