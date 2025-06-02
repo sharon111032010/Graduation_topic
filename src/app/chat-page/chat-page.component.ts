@@ -8,7 +8,7 @@ import { IChatBor } from '../@interface/IchatBor';
 import { Router } from '@angular/router';
 import { GetIdService } from '../service/get-id.service';
 import { MenuService } from '../@service/menu.service';
-import { IGetMenuRes } from '../@InterfaceAPI/IMenu';
+import { IGetMenuReq } from '../@InterfaceAPI/IMenu';
 import { DeleteAccountService } from '../@service/delete-account.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -97,7 +97,7 @@ export class ChatPageComponent {
 
   onInitMenuClick(): void {
     console.log('onInitMenuClick 被呼叫');
-    const userId: IGetMenuRes = { userId: this.getIdService.getUserId() ?? undefined };
+    const userId: IGetMenuReq = { userId: this.getIdService.getUserId() ?? undefined };
     console.log('userId:', userId);
     if (!userId) {
       console.error('userId 為 null，無法呼叫 getMentAPI');

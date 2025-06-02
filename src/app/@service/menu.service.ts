@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICreateMenuRes ,IGetMenuRes } from '../@InterfaceAPI/IMenu';
+import { ICreateMenuReq ,IGetMenuReq } from '../@InterfaceAPI/IMenu';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
@@ -14,12 +14,12 @@ export class MenuService {
   ) { }
 
   private baseUrl = 'https://localhost:7000';
-  createMenuAPI(createMenuAPI :ICreateMenuRes):Observable<IApiRes<any>>{
+  createMenuAPI(createMenuAPI :ICreateMenuReq):Observable<IApiRes<any>>{
     const url = this.baseUrl+'/api/createMenu/createMenu' //未完
     return this.http.post<any>(url,createMenuAPI);
   }
 
-  getMentAPI(getMentAPI : IGetMenuRes):Observable<IApiRes<any>>{
+  getMentAPI(getMentAPI : IGetMenuReq):Observable<IApiRes<any>>{
     const url = this.baseUrl+'/api/createMenu/getMenuList' //未完
     return this.http.post<any>(url, getMentAPI);
   }

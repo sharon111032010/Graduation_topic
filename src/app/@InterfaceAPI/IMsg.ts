@@ -1,5 +1,5 @@
 // 存對話紀錄 的 請求值 
-export interface ISaveMsgRes {
+export interface ISaveMsgReq {
     userId: string;
     menuId: string;
     createTime: string;
@@ -7,7 +7,7 @@ export interface ISaveMsgRes {
     msgType: string;
 }
 // 儲存對話紀錄 的 回傳資料 
-export interface ISaveMsgDataReq {
+export interface ISaveMsgDataRes {
     userId: string;
     menuId: string;
     createTime: string;
@@ -15,12 +15,12 @@ export interface ISaveMsgDataReq {
     msgType: string;
 }
 // 取得對話紀錄 的 請求值
-export interface IGetMsgRes {
+export interface IGetMsgReq {
     userId: string;
     menuId: string;
 }
 // 取得對話紀錄 的 回傳資料
-export interface IGetMsgDataReq {
+export interface IGetMsgDataRes {
     userId: string;
     menuId: string;
     createTime: string;
