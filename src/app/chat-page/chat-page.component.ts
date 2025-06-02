@@ -45,7 +45,10 @@ export class ChatPageComponent {
     { type: 'user', text: '請問怎麼查課表?', timestamp: '10:00' },
     { type: 'bot', text: '您可以透過以下幾種方式查詢個人課表:...', timestamp: '10:01' },
   ];
-
+  chatMessagesLists = [
+    { type: '1', msg: '請問怎麼查課表?', createTime: '10:00' },
+    { type: '0', msg: '您可以透過以下幾種方式查詢個人課表:...', createTime: '10:01' },
+  ];
   userInput = '';
   chatRequest: IChatBor = {
     ID: 'A12345', // 這裡應該填入真實的使用者 ID
@@ -101,19 +104,21 @@ export class ChatPageComponent {
       next: (res) => {
         console.log('getMsgAPI 回應:', res);
         if (res?.isSuccess && Array.isArray(res.data)) {
-          this.chatMessagesList = res.data.map((item: any) => {
+          this.chatMessagesLists = res.data.map((item: any) => {
             const time = new Date(item.createTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             return {
-              type: item.type,
-              text: item.text,
-              timestamp: time
+              type: item.msgType ? '1' : '0', // 使用 '1' 表使用者、'0' 表系統（符合你原本的格式）
+              msg: item.msg,
+              createTime: time
             };
           });
         } else {
           console.warn('getMsgAPI 回傳資料格式錯誤或無資料');
         }
       },
-      error: (err) => {}
+      error: (err) => {
+        console.error('getMsgAPI 錯誤:', err);
+      }
     }
     );
     alert(`menuId: ${this.menuId}`);
