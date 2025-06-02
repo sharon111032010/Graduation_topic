@@ -14,12 +14,12 @@ export class LogService {
   private baseUrl = 'https://localhost:7000';
 
   saveLogAPI(saveMsgReq:ISaveMsgReq):Observable<IApiRes<any>>{
-    const url = this.baseUrl + '/api'; // 未完
+    const url = this.baseUrl + '/api/saveLog'; // 未完
     return this.http.post<any>(url,saveMsgReq);
   }
 
   getLogAPI(getMesgReq:IGetMsgReq):Observable<IApiRes<any>>{
-    const url = this.baseUrl + '/api';
+    const url = this.baseUrl + '/api/getLog'; // 未完
     return this.http.post<any>(url ,getMesgReq);
   }
 }
