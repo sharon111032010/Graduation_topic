@@ -1,3 +1,4 @@
+// 刪除帳號對話框組件
 import { Component } from '@angular/core';
 import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
