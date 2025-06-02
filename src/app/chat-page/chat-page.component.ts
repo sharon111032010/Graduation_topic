@@ -94,6 +94,7 @@ export class ChatPageComponent {
     this.userInput = question;
   }
 
+
   // 要接 menu API
   onHistoryClick(index: number): void {
     this.selectedHistoryIndex = index;
