@@ -14,7 +14,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { UserInfoDialogComponent } from '../componetDialog/user-info-dialog/user-info-dialog.component';
 import { LogService } from '../@service/log.service';
-import { IGetMsgReq } from '../@InterfaceAPI/IMsg';
+import { IGetMsgReq, ISaveMsgDataRes, ISaveMsgReq } from '../@InterfaceAPI/IMsg';
 
 @Component({
   selector: 'app-chat-page',
@@ -24,13 +24,13 @@ import { IGetMsgReq } from '../@InterfaceAPI/IMsg';
   styleUrl: './chat-page.component.scss'
 })
 export class ChatPageComponent {
-[x: string]: any;
+  [x: string]: any;
   // account: string | null = null;
 
   // @ViewChild('chatMessages') chatMessagesRef!: ElementRef<HTMLDivElement>;
   @ViewChild('sidebar') sidebarRef!: ElementRef<HTMLDivElement>;
 
-  menuId ='';
+  menuId = '';
 
   historyItems = [
     { menuId: 'B6D0A5E2-4940-4B66-88EE-5275FD5099DC', title: '課表怎麼查', createtime: '10:00' },
@@ -60,9 +60,10 @@ export class ChatPageComponent {
     private router: Router,
     public getIdService: GetIdService, // 假設有一個 UserService 用於獲取用戶信息
     public MenuService: MenuService,
-    public DeleteService:  DeleteAccountService,// 假設有一個 DeleteService 用於刪除操作
-    public dialog: MatDialog,
+    public DeleteService: DeleteAccountService,// 假設有一個 DeleteService 用於刪除操作
     public getMsgService: LogService, // 假設有一個 GetMsgService 用於獲取對話紀錄
+    public createMsgService: LogService,
+    public dialog: MatDialog,
     private cdr: ChangeDetectorRef
   ) {
   }
@@ -94,29 +95,23 @@ export class ChatPageComponent {
     this.userInput = question;
   }
 
-
   // 要接 menu API
   onHistoryClick(index: number): void {
     this.selectedHistoryIndex = index;
     const selectedMessage = this.historyItems[index];
     this.menuId = selectedMessage.menuId;
     const userId = this.getIdService.getUserId();
-    const getMsgReq :IGetMsgReq = {userId:userId, menuId: this.menuId};
+    const getMsgReq: IGetMsgReq = { userId: userId, menuId: this.menuId };
     this.getMsgService.getLogAPI(getMsgReq).subscribe({
       next: (res) => {
         console.log('getMsgAPI 回應:', res);
+        console.log('data:', res.data);
         if (res?.isSuccess && Array.isArray(res.data)) {
-          this.chatMessagesLists = res.data.map((item: any) => {
-            const time = new Date(item.createTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            return {
-              type: item.msgType ? '1' : '0', // 使用 '1' 表使用者、'0' 表系統（符合你原本的格式）
-              msg: item.msg,
-              createTime: time
-            };
-            this.cdr.detectChanges(); // 手動觸發畫面更新
-            console.log('chatMessagesList:', this.chatMessagesList);
-            console.log('getMsgAPI 回傳資料:', res.data);
-          });
+          this.chatMessagesLists = res.data.map(item => ({
+            type: item.msgType ? '1' : '0',  // true 為使用者, false 為系統
+            msg: item.msg,
+            createTime: this.formatTime(item.createTime)  // 選擇格式化時間
+          }));
         } else {
           console.warn('getMsgAPI 回傳資料格式錯誤或無資料');
         }
@@ -126,8 +121,10 @@ export class ChatPageComponent {
       }
     }
     );
-    alert(`menuId: ${this.menuId}`);
-    alert(`您選擇的歷史記錄: ${selectedMessage.title}`);
+  }
+  private formatTime(isoString: string): string {
+    const date = new Date(isoString);
+    return date.toTimeString().slice(0, 5);  // e.g. "15:41"
   }
 
   onInitMenuClick(): void {
@@ -140,7 +137,7 @@ export class ChatPageComponent {
 
     this.MenuService.getMentAPI(this.userId).subscribe(
       res => {
-        console.log('Menu API 回應:', res);
+        console.log('Menu API 回應', res);
         if (res?.isSuccess && Array.isArray(res.data)) {
           this.historyItems.push(
             ...res.data.map((item: any) => {
@@ -164,13 +161,57 @@ export class ChatPageComponent {
   }
 
   onSendClick(): void {
-    alert(localStorage.getItem('jwt'));
-    console.log(localStorage.getItem('jwt'));
 
     if (!this.userInput.trim()) return;
 
+    const timestampISO1 = new Date().toISOString();
+    const saveUserMsgReq: ISaveMsgReq = { userId: this.userId.userId, menuId: this.menuId, createTime: timestampISO1, msg: this.userInput, msgType: true };
+
+    this.createMsgService.saveLogAPI(saveUserMsgReq).subscribe({
+      next: (res) => {
+        console.log('saveLogAPI 回應:', res);
+        if (res?.isSuccess) {
+          console.log('訊息已成功儲存');
+        } else {
+          console.warn('saveLogAPI 回傳資料格式錯誤或無資料');
+        }
+      },
+      error: (err) => {
+        console.error('saveLogAPI 錯誤:', err);
+      }
+    });
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    this.chatMessagesLists.push({ type: '1', msg: this.userInput, createTime: timestamp });
+
     this.chatMessagesList.push({ type: 'user', text: this.userInput, timestamp });
+
+    const BotMsg = this.chatApi(this.chatRequest);
+
+    // 這裡之後還需要調用實際的聊天機器這裡之後還需要調用實際的聊天機器人 API
+
+
+
+    const timestampISO2 = new Date().toISOString();
+    const saveBotMsgReq: ISaveMsgReq = { userId: this.userId.userId, menuId: this.menuId, createTime: timestampISO2, msg: this.userInput, msgType: false };
+
+    this.createMsgService.saveLogAPI(saveBotMsgReq).subscribe({
+      next: (res) => {
+        console.log('saveLogAPI 回應:', res);
+        if (res?.isSuccess) {
+          console.log('訊息已成功儲存');
+        } else {
+          console.warn('saveLogAPI 回傳資料格式錯誤或無資料');
+        }
+      },
+      error: (err) => {
+        console.error('saveLogAPI 錯誤:', err);
+      }
+    });
+    const timestamp2 = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    this.chatMessagesLists.push({ type: '0', msg: this.userInput, createTime: timestamp2 });
+
+
+
 
 
 
@@ -218,5 +259,5 @@ export class ChatPageComponent {
     // 打開一個 對話框或其他方式來確認刪除帳號
 
     this.dialog.open(UserInfoDialogComponent, {});
-  } 
+  }
 }
