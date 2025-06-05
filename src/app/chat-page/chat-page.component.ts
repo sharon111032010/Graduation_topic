@@ -17,6 +17,7 @@ import { LogService } from '../@service/log.service';
 import { IGetMsgReq, ISaveMsgDataRes, ISaveMsgReq } from '../@InterfaceAPI/IMsg';
 import { ChatTestLocalService } from '../service/chat-test-local.service';
 import { IChatMessage, IHistoryItem } from '../@interface/chatPageInterface/IChatPage';
+import { GetUUidService } from '../@service/get-uuid.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -34,9 +35,9 @@ export class ChatPageComponent {
 
   menuId = '';
 
-  historyItems :IHistoryItem[] = [
+  historyItems: IHistoryItem[] = [
   ];
-  title ="";
+  title = "";
 
   selectedHistoryIndex = 0;
 
@@ -44,7 +45,7 @@ export class ChatPageComponent {
     { type: 'user', text: '請問怎麼查課表?', timestamp: '10:00' },
     { type: 'bot', text: '您可以透過以下幾種方式查詢個人課表:...', timestamp: '10:01' },
   ];
-  chatMessagesLists :IChatMessage[] =  [
+  chatMessagesLists: IChatMessage[] = [
   ];
   userInput = '';
   chatRequest: IChatBor = {
@@ -60,6 +61,7 @@ export class ChatPageComponent {
     public DeleteService: DeleteAccountService,// 假設有一個 DeleteService 用於刪除操作
     public getMsgService: LogService, // 假設有一個 GetMsgService 用於獲取對話紀錄
     public createMsgService: LogService,
+    public CreateMenuIdService: GetUUidService,
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
 
@@ -94,6 +96,23 @@ export class ChatPageComponent {
 
   onQuickAskClick(question: string): void {
     this.userInput = question;
+  }
+
+  onCreateNewChat(): void {
+    this.chatMessagesLists = [];
+    this.title="";
+    this.CreateMenuIdService.getMenuId().subscribe({
+      next: res => {
+        if (res.isSuccess) {
+          this.menuId = res.data.uuId;
+        }
+        console.log("get uuid",this.menuId);
+      },
+      error: err => {
+        console.error('Failed to get UUID:', err);
+      }
+    })
+    // this.MenuService.createMenuAPI();
   }
 
   // 要接 menu API
@@ -230,14 +249,14 @@ export class ChatPageComponent {
             text: res.answer,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }
-        );
-        console.log('test', this.chatMessagesList);
+          );
+          console.log('test', this.chatMessagesList);
           console.log('AI 回應:', res.answer);
         } else {
           console.warn('ChatTestLocalService 回傳資料格式錯誤或無資料');
         }
       },
-      error: (err) => {   
+      error: (err) => {
         console.error('ChatTestLocalService 錯誤:', err);
       }
     });
@@ -264,7 +283,6 @@ export class ChatPageComponent {
     alert("createLogApi");
   }
   chatApi(req: IChatBor) {
-    alert("call chatApi");
   }
 
 

@@ -23,7 +23,7 @@
             <div class="user-info">
                 <h2>使用者資訊</h2>
                 <div class="avatar">
-                        王
+                    王
                 </div>
                 <p class="username">王小明</p>
                 <p class="userid">學號:A112345678</p>
@@ -61,8 +61,12 @@
                 <div class="chat-title-area">
                     <h2>{{title}}</h2>
                 </div>
+                <div class="chat-add-area" (click)="onCreateNewChat()">
+                    <span class="material-symbols-outlined">
+                        add_circle
+                    </span>
+                </div>
             </div>
-
             <div class="chat-messages" #chatMessages>
                 <div *ngFor="let message of chatMessagesLists; let i = index" class="message-container">
                     <div *ngIf="message.type === '1'" class="user-message-container">
