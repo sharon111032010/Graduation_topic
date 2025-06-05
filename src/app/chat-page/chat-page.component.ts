@@ -16,6 +16,7 @@ import { UserInfoDialogComponent } from '../componetDialog/user-info-dialog/user
 import { LogService } from '../@service/log.service';
 import { IGetMsgReq, ISaveMsgDataRes, ISaveMsgReq } from '../@InterfaceAPI/IMsg';
 import { ChatTestLocalService } from '../service/chat-test-local.service';
+import { IChatMessage, IHistoryItem } from '../@interface/chatPageInterface/IChatPage';
 
 @Component({
   selector: 'app-chat-page',
@@ -33,12 +34,9 @@ export class ChatPageComponent {
 
   menuId = '';
 
-  historyItems = [
-    { menuId: 'B6D0A5E2-4940-4B66-88EE-5275FD5099DC', title: '課表怎麼查', createtime: '10:00' },
-    { menuId: 'B6D0A5E2-4940-4B66-88EE-5275FD5099DC', title: '圖書館開放時間', createtime: '16:30' },
-    { menuId: 'B6D0A5E2-4940-4B66-88EE-5275FD5099DC', title: '怎麼借教室', createtime: '13:00' },
-    { menuId: 'B6D0A5E2-4940--5275FD5099DC', title: '宿舍申請流程', createtime: '16:00' }
+  historyItems :IHistoryItem[] = [
   ];
+  title ="";
 
   selectedHistoryIndex = 0;
 
@@ -46,9 +44,7 @@ export class ChatPageComponent {
     { type: 'user', text: '請問怎麼查課表?', timestamp: '10:00' },
     { type: 'bot', text: '您可以透過以下幾種方式查詢個人課表:...', timestamp: '10:01' },
   ];
-  chatMessagesLists = [
-    { type: '1', msg: '請問怎麼查課表?', createTime: '10:00' },
-    { type: '0', msg: '您可以透過以下幾種方式查詢個人課表:...', createTime: '10:01' },
+  chatMessagesLists :IChatMessage[] =  [
   ];
   userInput = '';
   chatRequest: IChatBor = {
@@ -103,6 +99,7 @@ export class ChatPageComponent {
   // 要接 menu API
   onHistoryClick(index: number): void {
     this.selectedHistoryIndex = index;
+    this.title = this.historyItems[index].title;
     const selectedMessage = this.historyItems[index];
     this.menuId = selectedMessage.menuId;
     const userId = this.getIdService.getUserId();
@@ -244,22 +241,6 @@ export class ChatPageComponent {
       }
     });
     // 呼叫聊天機器人服務
-    // 立軒學ㄓㄤ
-    /*
-    this.chatBotService.chatBotResponse(this.chatRequest).subscribe(res => {
-      // 處理 AI 回應
-
-
-      // 打chat api 
-      const response = res;
-      this.chatMessagesList.push({
-        type: 'bot',
-        text: response,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      });
-    });
-
-    */
     this.userInput = '';
     // 模擬 AI 回應
 
