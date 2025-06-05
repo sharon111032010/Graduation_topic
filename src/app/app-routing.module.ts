@@ -8,6 +8,7 @@ import { authGuard } from './auth.guard'; // ✅ 引入 authGuard
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ChatPageComponent } from './chat-page/chat-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { RegistrationPageComponent } from './registration-page/registration-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'forgetPassword', component: ForgetPasswordComponent },
   { path: 'chatPage', component: ChatPageComponent},
   { path: 'loginPage', component: LoginPageComponent},
+  { path: 'registration', component: RegistrationPageComponent }, // ✅ 註冊頁面路由
   { 
     path: 'index', 
     component: IndexComponent,

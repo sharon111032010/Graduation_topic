@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserInfoDialogComponent } from '../componetDialog/user-info-dialog/user-info-dialog.component';
 import { LogService } from '../@service/log.service';
 import { IGetMsgReq, ISaveMsgDataRes, ISaveMsgReq } from '../@InterfaceAPI/IMsg';
+import { ChatTestLocalService } from '../service/chat-test-local.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -64,7 +65,11 @@ export class ChatPageComponent {
     public getMsgService: LogService, // 假設有一個 GetMsgService 用於獲取對話紀錄
     public createMsgService: LogService,
     public dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+
+
+
+    private chatTestlocalService: ChatTestLocalService // 假設有一個 ChatTestLocalService 用於測試聊天功能
   ) {
   }
 
@@ -218,6 +223,29 @@ export class ChatPageComponent {
 
     this.chatRequest.msg = this.userInput;
     console.log(this.chatRequest);
+
+    this.chatTestlocalService.getChatTest({ msg: this.chatRequest.msg }).subscribe({
+      next: (res) => {
+        console.log('ChatTestLocalService 回應:', res);
+        if (res?.answer) {
+          this.chatMessagesList.push({
+            type: 'bot',
+            text: res.answer,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }
+        );
+          console.log('AI 回應:', res.answer);
+        } else {
+          console.warn('ChatTestLocalService 回傳資料格式錯誤或無資料');
+        }
+      },
+      error: (err) => {   
+        console.error('ChatTestLocalService 錯誤:', err);
+      }
+    });
+    // 呼叫聊天機器人服務
+    // 立軒學ㄓㄤ
+    /*
     this.chatBotService.chatBotResponse(this.chatRequest).subscribe(res => {
       // 處理 AI 回應
 
@@ -230,18 +258,21 @@ export class ChatPageComponent {
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       });
     });
+
+    */
     this.userInput = '';
     // 模擬 AI 回應
-    of(null)
-      .pipe(
-        delay(1000),
-        tap(() => this.chatMessagesList.push({
-          type: 'bot',
-          text: '這是AI的回覆。',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        }))
-      )
-      .subscribe();
+
+    // of(null)
+    //   .pipe(
+    //     delay(1000),
+    //     tap(() => this.chatMessagesList.push({
+    //       type: 'bot',
+    //       text: '這是AI的回覆。',
+    //       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    //     }))
+    //   )
+    //   .subscribe();
   }
 
   createMenuApi() {

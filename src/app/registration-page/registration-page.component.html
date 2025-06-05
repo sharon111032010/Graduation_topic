@@ -1,0 +1,135 @@
+<header>
+    <h1>AI 校園助手</h1>
+    <p>讓校園生活更輕鬆</p>
+</header>
+
+<main>
+    <section class="left-column">
+        <h2>加入我們的校園社群</h2>
+        <p>創建您的帳號，享受個人化的校園服務體驗。我們將為您提供最相關的資訊和協助。</p>
+        <p>註冊過程簡單快速，只需要幾個步驟就能開始使用所有功能。</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="progressPercent"></div>
+        </div>
+        <p style="font-size: 14px; color: #666;">
+            註冊進度：第 {{ currentStep <= totalSteps ? currentStep : totalSteps }} 步，共 {{ totalSteps }} 步 </p>
+    </section>
+
+    <section class="right-column">
+        <!-- 步驟 1: 基本資料 -->
+        <div *ngIf="currentStep === 1" class="step active">
+            <h2>基本資料</h2>
+            <div class="step-indicator">第 1 步，共 3 步</div>
+
+            <label>電子郵件</label>
+            <input type="email" [(ngModel)]="registrationData.email" name="email" required />
+            <div *ngIf="!validateEmail(registrationData.email) && registrationData.email" class="error-message">
+                請輸入有效的電子郵件格式
+            </div>
+
+            <div class="field-group">
+                <!-- <div>
+                    <label>姓氏</label>
+                    <input type="text" [(ngModel)]="registrationData.firstName" name="firstName" required />
+                </div> -->
+                <div>
+                    <label>名字</label>
+                    <input type="text" [(ngModel)]="registrationData.lastName" name="lastName" required />
+                </div>
+            </div>
+
+            <label>學號</label>
+            <input type="text" [(ngModel)]="registrationData.studentId" name="studentId" required />
+            <div *ngIf="!validateStudentId(registrationData.studentId) && registrationData.studentId"
+                class="error-message">
+                請輸入有效的學號格式
+            </div>
+
+            <button (click)="nextStep()">下一步</button>
+        </div>
+
+        <!-- 步驟 2: 密碼設定 -->
+        <div *ngIf="currentStep === 2" class="step active">
+            <h2>密碼設定</h2>
+            <div class="step-indicator">第 2 步，共 3 步</div>
+
+            <label>設定密碼</label>
+            <input type="password" [(ngModel)]="registrationData.password"
+                (input)="checkPasswordStrength(registrationData.password)" name="password" required />
+            <div class="strength-meter">
+                <div class="strength-fill" [ngClass]="passwordStrengthClass"></div>
+            </div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 15px;">
+                密碼強度：{{ passwordStrengthLabel }}
+            </div>
+
+            <label>確認密碼</label>
+            <input type="password" [(ngModel)]="registrationData.confirmPassword" name="confirmPassword" required />
+            <div *ngIf="
+            registrationData.confirmPassword &&
+            registrationData.password !== registrationData.confirmPassword
+          " class="error-message">
+                密碼不一致
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-secondary" (click)="prevStep()">上一步</button>
+                <button type="button" (click)="nextStep()">下一步</button>
+            </div>
+        </div>
+
+        <!-- 步驟 3: 個人資訊 -->
+        <div *ngIf="currentStep === 3" class="step active">
+            <h2>個人資訊</h2>
+            <div class="step-indicator">第 3 步，共 3 步</div>
+
+            <label>系所</label>
+            <select [(ngModel)]="registrationData.department" required>
+                <option value="">請選擇您的系所</option>
+                <option value="computer-science">資訊工程系</option>
+                <option value="electrical">電機工程系</option>
+                <option value="mechanical">機械工程系</option>
+                <option value="business">企業管理系</option>
+                <option value="psychology">心理學系</option>
+                <option value="other">其他</option>
+            </select>
+
+            <label>年級</label>
+            <select [(ngModel)]="registrationData.grade" required>
+                <option value="">請選擇年級</option>
+                <option value="1">大一</option>
+                <option value="2">大二</option>
+                <option value="3">大三</option>
+                <option value="4">大四</option>
+                <option value="graduate">研究生</option>
+                <option value="phd">博士生</option>
+            </select>
+
+            <label>聯絡電話（選填）</label>
+            <input type="tel" [(ngModel)]="registrationData.phone" />
+
+            <div class="button-group">
+                <button class="btn-secondary" (click)="prevStep()">上一步</button>
+                <button (click)="onSubmit()">完成註冊</button>
+            </div>
+        </div>
+
+        <!-- 步驟 4: 註冊成功 -->
+        <div *ngIf="currentStep === 4" class="step active">
+            <div class="success-animation">
+                <div class="checkmark">✔️</div>
+                <h2>註冊成功！</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                    歡迎加入 AI 校園助手！<br />
+                    您的帳號已成功創建，現在可以開始使用所有功能。
+                </p>
+                <button (click)="toLogin()">前往登入</button>
+            </div>
+        </div>
+
+        <div class="login-link" *ngIf="currentStep < 4">
+            已經有帳號了嗎？<a href="#" (click)="toLogin()">立即登入</a>
+        </div>
+    </section>
+</main>

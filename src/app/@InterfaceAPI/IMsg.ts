@@ -17,7 +17,7 @@ export interface ISaveMsgDataRes {
 // 取得對話紀錄 的 請求值
 export interface IGetMsgReq {
     userId: string| undefined;
-    menuId: string;
+    menuId: string;  
 }
 // 取得對話紀錄 的 回傳資料
 export interface IGetMsgDataRes {

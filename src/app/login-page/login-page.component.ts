@@ -70,7 +70,7 @@ export class LoginPageComponent implements OnInit {
   loginApiOnClick() {
     this.submitted = true;
     const form = this.Form.getRawValue();
-    console.log(this.Form);
+    console.log(this.Form)
     console.log(form);
     this.loginService.LoginAPI(form).subscribe({
       next: (result) => {
