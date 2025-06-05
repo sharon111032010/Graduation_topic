@@ -231,6 +231,7 @@ export class ChatPageComponent {
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }
         );
+        console.log('test', this.chatMessagesList);
           console.log('AI 回應:', res.answer);
         } else {
           console.warn('ChatTestLocalService 回傳資料格式錯誤或無資料');
