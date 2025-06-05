@@ -263,16 +263,16 @@ export class ChatPageComponent {
     this.userInput = '';
     // 模擬 AI 回應
 
-    // of(null)
-    //   .pipe(
-    //     delay(1000),
-    //     tap(() => this.chatMessagesList.push({
-    //       type: 'bot',
-    //       text: '這是AI的回覆。',
-    //       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    //     }))
-    //   )
-    //   .subscribe();
+    of(null)
+      .pipe(
+        delay(1000),
+        tap(() => this.chatMessagesList.push({
+          type: 'bot',
+          text: '這是AI的回覆。',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }))
+      )
+      .subscribe();
   }
 
   createMenuApi() {

@@ -64,18 +64,22 @@
             </div>
 
             <div class="chat-messages" #chatMessages>
-                <div *ngFor="let message of chatMessagesLists; let i = index" class="message-container">
+                <div *ngFor="let message of chatMessagesList; let i = index" class="message-container">
                     <div *ngIf="message.type === '1'" class="user-message-container">
-                        <div class="message user">{{ message.msg }}</div>
-                        <div class="timestamp">{{ message.createTime}}</div>
+                        <!-- <div class="message user">{{ message.msg }}</div> -->
+                        <!-- <div class="timestamp">{{ message.createTime}}</div> -->
+                        <div class="message user">{{ message.text }}</div>
+                        <div class="timestamp">{{ message.timestamp}}</div>
                     </div>
                     <div *ngIf="message.type === '0'" class="message-with-avatar">
                         <div class="ai-avatar">
                             <img src="../../assets/校徽.gif" alt="">
                         </div>
                         <div>
-                            <div class="message bot">{{ message.msg }}</div>
-                            <div class="timestamp">{{ message.createTime }}</div>
+                            <!-- <div class="message bot">{{ message.msg }}</div> -->
+                            <!-- <div class="timestamp">{{ message.createTime }}</div> -->
+                            <div class="message bot">{{ message.text }}</div>
+                            <div class="timestamp">{{ message.timestamp }}</div>
                         </div>
                     </div>
                 </div>
