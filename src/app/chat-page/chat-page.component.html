@@ -33,13 +33,22 @@
             <div class="history">
                 <h2>對話紀錄</h2>
                 <ul>
-                    <li *ngFor="let item of historyItems; let i = index" [class.active]="i === selectedHistoryIndex"
-                        (click)="onHistoryClick(i)">
+                    <li *ngFor="let item of historyItems.slice().reverse(); let i = index"
+                        [class.active]="historyItems.length - 1 - i === selectedHistoryIndex"
+                        (click)="onHistoryClick(historyItems.length - 1 - i)">
+                        <span class="index">{{ historyItems.length - i }}</span>
                         <span class="timestamp">{{ item.createtime }}</span>
                         {{ item.title }}
                     </li>
+                    <!-- <li *ngFor="let item of historyItems; let i = index" [class.active]="i === selectedHistoryIndex"
+                        (click)="onHistoryClick(i)">
+                        <span class="index">{{ i + 1 }}</span>
+                        <span class="timestamp">{{ item.createtime }}</span>
+                        {{ item.title }}
+                    </li> -->
                 </ul>
             </div>
+
 
             <!-- <div class="quick-ask">
                 <h2>快速提問</h2>
@@ -61,11 +70,12 @@
                 <div class="chat-title-area">
                     <h2>{{title}}</h2>
                 </div>
-                <div class="chat-add-area" (click)="onCreateNewChat()">
+                <!-- <div class="chat-add-area" (click)="onCreateNewChat()" [disabled]="newMenuIdIsTrue"> -->
+                <button class="chat-add-area" (click)="onCreateNewChat()" [disabled]="newMenuIdIsTrue">
                     <span class="material-symbols-outlined">
                         add_circle
                     </span>
-                </div>
+                </button>
             </div>
             <div class="chat-messages" #chatMessages>
                 <div *ngFor="let message of chatMessagesLists; let i = index" class="message-container">
@@ -92,7 +102,8 @@
             <div class="chat-input-container">
                 <div class="chat-input-box">
                     <input type="text" class="chat-input" placeholder="請輸入問題..." [(ngModel)]="userInput">
-                    <button class="send-button" (click)="onSendClick()">送出</button>
+                    <button class="send-button" (click)="onSendClick()" [disabled]="!menuId">送出</button>
+
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 // 創建 目錄 請求值
 export interface ICreateMenuReq{
     title :string;
-    userId :string;
+    userId :string |undefined;
     createTime :string;
 }
 // 創建 目錄 回傳資料
