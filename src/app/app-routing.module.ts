@@ -22,8 +22,8 @@ const routes: Routes = [
     component: IndexComponent,
     canActivate: [authGuard] // ✅ 這裡加入 authGuard，只有登入的人才能進入
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // ✅ 預設導向登入頁面
-  { path: '**', redirectTo: '/login' } // ✅ 其他未定義路由，全部跳轉到登入
+  { path: '', redirectTo: '/loginPage', pathMatch: 'full' }, // ✅ 預設導向登入頁面
+  { path: '**', redirectTo: '/loginPage' } // ✅ 其他未定義路由，全部跳轉到登入
 ];
 
 @NgModule({

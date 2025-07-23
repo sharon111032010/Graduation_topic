@@ -78,6 +78,14 @@
                 </button>
             </div>
             <div class="chat-messages" #chatMessages>
+
+                <!-- 彈跳新增聊天室按鈕（只在剛進來時顯示） -->
+                <div class="floating-add-chat-button" *ngIf="showAddChatButton" (click)="onCreateNewChat()">
+                    <span class="material-symbols-outlined">
+                        add_circle
+                    </span>
+                </div>
+
                 <div *ngFor="let message of chatMessagesLists; let i = index" class="message-container">
                     <div *ngIf="message.type === '1'" class="user-message-container">
                         <div class="message user">{{ message.msg }}</div>

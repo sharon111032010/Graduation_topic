@@ -417,6 +417,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   chatMessagesLists: IChatMessage[] = [];
   isLoading = false;
   isAddButtonDisabled = false; // 控制新增聊天按鈕的禁用狀態
+  showAddChatButton = true;
 
 
   constructor(
@@ -475,6 +476,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     }
 
     this.isAddButtonDisabled = true; // 禁用新增按鈕
+    this.showAddChatButton = false; // 點擊後讓按鈕消失
     this.resetChatState();
     this.createNewChatMenu();
   }
@@ -541,6 +543,8 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     this.loadChatMessages(selectedItem.menuId);
     //點選歷史紀錄後允許再次新增聊天
     this.isAddButtonDisabled = false;
+    // 點擊後讓大按鈕消失
+    this.showAddChatButton = false; 
     console.log('選擇的歷史紀錄:', this.isAddButtonDisabled);
   }
 
@@ -662,17 +666,17 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     this.saveMessage(userMessage, true);
 
     if (isFirstMessage) {
-      this.botService.chatTitle({ msg: this.title })
+      this.botService.chatTitle({ msg: userMessage })
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res) => {
-            if (res?.title) {
-              this.title = res.title;
+            if (res?.isSuccess) {
+              this.title = res.data.title; // 更新標題
               this.hasUpdatedTitle = true; // 標記已更新標題
 
               const index = this.selectedHistoryIndex;
               if (index >= 0 && index < this.historyItems.length) {
-                this.historyItems[index].title = res.title; // 更新歷史紀錄中的標題
+                this.historyItems[index].title = res.data.title; // 更新歷史紀錄中的標題
               }
               this.getBotResponse(userMessage); // 獲取機器人回應
             }
@@ -703,23 +707,31 @@ export class ChatPageComponent implements OnInit, OnDestroy {
         finalize(() => this.isLoading = false)
       )
       .subscribe({
-        next: (res) => this.handleBotResponse(res),
+        next: (res) =>{
+          console.log('機器人回應:', res);
+          if (res?.isSuccess) {
+            this.handleBotResponse(res);
+          } else {
+            console.warn('機器人回應格式錯誤');
+          }
+        this.handleBotResponse(res)
+        },
         error: (err) => this.handleError('獲取機器人回應失敗', err)
       });
   }
 
   private handleBotResponse(res: any): void {
-    if (res?.answer) {
+    if (res.isSuccess) {
       const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       this.chatMessagesLists.push({
         type: '0',
-        msg: res.answer,
+        msg: res.data.answer,
         createTime: timestamp
       });
 
       // Save bot message
-      this.saveMessage(res.answer, false);
+      // this.saveMessage(res.data.answer, false);
     } else {
       console.warn('機器人回應格式錯誤');
     }

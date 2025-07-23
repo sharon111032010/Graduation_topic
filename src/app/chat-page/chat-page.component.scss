@@ -236,6 +236,46 @@ header {
     background: none;
 }
 
+.floating-add-chat-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-color: $primary-light ;
+    border-radius: 50%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bounce 1.5s infinite ease-in-out;
+    z-index: 10;
+}
+
+.floating-add-chat-button:hover {
+    background-color: #87cefa;
+}
+
+.floating-add-chat-button .material-symbols-outlined {
+    font-size: 60px;
+    color: white;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-20px);
+    }
+}
+
+
 .chat-messages {
     flex: 1;
     padding: 20px;
@@ -243,6 +283,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    position: relative;
 }
 
 .message {
