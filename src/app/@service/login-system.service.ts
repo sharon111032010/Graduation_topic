@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IDeleteReq, ILoginDataRes, ILoginReq, IRegisterReq } from '../@InterfaceAPI/ILoginSystem';
 import { Observable } from 'rxjs';
 import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
@@ -10,8 +10,8 @@ import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
 export class LoginSystemService {
 
   constructor(
-    private http:HttpClient
   ) { }
+  http = inject(HttpClient);
 
   private baseUrl = 'https://localhost:7000';
 

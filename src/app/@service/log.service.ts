@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IGetMsgReq, ISaveMsgReq } from '../@InterfaceAPI/IMsg';
 import { Observable } from 'rxjs';
 import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
@@ -9,7 +9,8 @@ import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
 })
 export class LogService {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
+  http = inject(HttpClient);
 
   private baseUrl = 'https://localhost:7000';
 

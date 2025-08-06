@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IChatBorData, IChatBorReq, IChatBorTitleData } from '../@interface/IchatBor';
 import { Observable } from 'rxjs';
 import { IApiRes, IApiResult } from '../@interface/userAccount';
@@ -12,7 +12,10 @@ export class BotAPIService {
   // baseUrl = "http://10.25.1.144:5002";
   baseUrl="http://10.25.1.148:5002";
   // baseUrl = "http://192.168.53.10:5002";
-  constructor(private http: HttpClient) { }
+
+  constructor() { }
+  http = inject(HttpClient);
+
   chatBot(chatMessage:IChatBorReq): Observable<IApiResult<IChatBorData>> {
     const url = this.baseUrl + "/Chat_test";
     return this.http.post<IApiResult<IChatBorData>>(url, chatMessage);
