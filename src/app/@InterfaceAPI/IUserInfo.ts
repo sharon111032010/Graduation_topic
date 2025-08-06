@@ -10,10 +10,13 @@ export interface IUserInfoRes{
     userId:string;
 }
 // 這是後端給前端的資料
-export interface IUserInfoDataReq{
+export interface IUserInfoData{
     userId:string;
     name:string;
     // 不知道為啥要加時間
     createTime:string;
     email:string;
+}
+export interface IUserId{
+    userId:string;
 }

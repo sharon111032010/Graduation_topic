@@ -21,6 +21,7 @@ import { IGetMsgReq, ISaveMsgReq } from '../@InterfaceAPI/IMsg';
 import { IChatMessage, IHistoryItem } from '../@interface/chatPageInterface/IChatPage';
 // Components
 import { UserInfoDialogComponent } from '../componetDialog/user-info-dialog/user-info-dialog.component';
+import { UserInfoService } from '../service/user-info.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -49,12 +50,15 @@ export class ChatPageComponent implements OnInit {
   isAddButtonDisabled = false; // 控制新增聊天按鈕的禁用狀態
   showAddChatButton = true;
 
+  userName = '';
+
   constructor(
   ) { }
   private getIdService = inject(GetIdService);
   private menuService = inject(MenuService);
   private logService = inject(LogService);
   private botService = inject(BotAPIService);
+  private userInfoService = inject(UserInfoService);
   private dialog = inject(MatDialog);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
@@ -63,6 +67,7 @@ export class ChatPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeComponent();
+    this.onGetUserName(); // 獲取使用者名稱
   }
 
   // Initialization
@@ -90,6 +95,22 @@ export class ChatPageComponent implements OnInit {
 
   onQuickAskClick(question: string): void {
     this.userInput = question;
+  }
+
+  onGetUserName(){
+    this.userInfoService.getUserInfo({ userId: this.userId })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          if (res?.isSuccess) {
+            console.log('User Name:', res.data.name);
+            this.userName = res.data.name || '未設定';
+          } else {
+            console.warn('Failed to get user name');
+          }
+        },
+        error: (err) => this.handleError('Failed to get user name', err)
+      });
   }
 
   // Chat Management

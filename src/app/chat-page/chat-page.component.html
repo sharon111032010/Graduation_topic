@@ -23,9 +23,9 @@
             <div class="user-info">
                 <h2>使用者資訊</h2>
                 <div class="avatar">
-                    王
+                    {{userName.at(0)}} 
                 </div>
-                <p class="username">王小明</p>
+                <p class="username">{{ userName }}</p>
                 <p class="userid">學號:A112345678</p>
                 <button class="logout-btn" (click)="onTestDelete()">登出</button>
             </div>

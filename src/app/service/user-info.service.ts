@@ -15,7 +15,7 @@ export class UserInfoService {
   private baseUrl = 'https://localhost:7000'; // 後端 API 的基本 URL
 
   getUserInfo(Interface:any):Observable<IApiResult<any>>{
-    const url =this.baseUrl+'/';
+    const url =this.baseUrl+'/api/userInfo';
     return this.http.post<any>(url,Interface)
   }
 
