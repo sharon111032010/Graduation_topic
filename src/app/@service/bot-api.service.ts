@@ -9,8 +9,9 @@ import { IApiRes, IApiResult } from '../@interface/userAccount';
 })
 export class BotAPIService {
 
-  //baseUrl = "http://10.25.1.180:5002";
-  baseUrl = "http://192.168.53.10:5002";
+  // baseUrl = "http://10.25.1.144:5002";
+  baseUrl="http://10.25.1.148:5002";
+  // baseUrl = "http://192.168.53.10:5002";
   constructor(private http: HttpClient) { }
   chatBot(chatMessage:IChatBorReq): Observable<IApiResult<IChatBorData>> {
     const url = this.baseUrl + "/Chat_test";
@@ -20,4 +21,6 @@ export class BotAPIService {
     const url = this.baseUrl + "/Chat_Title";
     return this.http.post<IApiResult<IChatBorTitleData>>(url, chatMessage);
   }
+
+
 }

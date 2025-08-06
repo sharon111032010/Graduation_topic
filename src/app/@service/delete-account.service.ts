@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { IDeleteAccountReq } from '../@InterfaceAPI/IDeleteAccoutn';
 import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
 import { Observable } from 'rxjs';
@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 export class DeleteAccountService {
 
   constructor(
-    private http: HttpClient,
   ) { }
+  http=inject(HttpClient);
 
   private baseUrl = 'https://localhost:7000';
 
