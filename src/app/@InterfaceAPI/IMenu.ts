@@ -19,3 +19,7 @@ export interface IgetMenuDataRes{
     createTime :string;
     menuId :string;
 }
+export interface IupdateMenuTitle {
+    menuId: string;
+    title: string;
+}

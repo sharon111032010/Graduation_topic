@@ -300,6 +300,8 @@ export class ChatPageComponent implements OnInit {
             if (res?.isSuccess) {
               this.title = res.data.title; // 更新標題
               this.hasUpdatedTitle = true; // 標記已更新標題
+              
+              this.updateMenuTitle(this.title,this.menuId);
 
               const index = this.selectedHistoryIndex;
               if (index >= 0 && index < this.historyItems.length) {
@@ -326,6 +328,22 @@ export class ChatPageComponent implements OnInit {
 
     //啟用新增按鈕
     this.isAddButtonDisabled = false;
+  }
+
+  private updateMenuTitle(title: string, menuId: string): void {
+    const updateReq = { title, menuId };
+    this.menuService.updateMenuTitle(updateReq)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          if (res?.isSuccess) {
+            console.log('標題已成功更新:', title);
+          } else {
+            console.warn('更新標題失敗: 回傳資料格式錯誤');
+          }
+        },
+        error: (err) => this.handleError('更新標題失敗', err)
+      });
   }
 
   private getBotResponse(userMessage: string): void {
@@ -411,3 +429,4 @@ export class ChatPageComponent implements OnInit {
     });
   }
 }
+
