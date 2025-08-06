@@ -6,7 +6,7 @@ import { IApiResult } from '../@interface/userAccount';
 @Injectable({
   providedIn: 'root'
 })
-export class UserInofService {
+export class UserInfoService {
 
   constructor(
     private http :HttpClient
