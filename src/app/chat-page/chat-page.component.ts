@@ -327,7 +327,6 @@ export class ChatPageComponent implements OnInit {
               const index = this.selectedHistoryIndex;
               if (index >= 0 && index < this.historyItems.length) {
                 this.historyItems[index].title = res.data.title; // 更新歷史紀錄中的標題
-                this.saveMessage(userMessage, true);
               }
               this.getBotResponse(userMessage); // 獲取機器人回應
             }
@@ -378,6 +377,7 @@ export class ChatPageComponent implements OnInit {
           console.log('機器人回應:', res);
           if (res?.isSuccess) {
             this.handleBotResponse(res);
+            this.saveMessage(userMessage, true); // 儲存使用者訊息
             this.saveMessage(res.data.answer, false);
           } else {
             console.warn('機器人回應格式錯誤');
@@ -398,7 +398,6 @@ export class ChatPageComponent implements OnInit {
       });
 
       // Save bot message
-      // this.saveMessage(res.data.answer, false);
     } else {
       console.warn('機器人回應格式錯誤');
     }

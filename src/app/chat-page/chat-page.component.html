@@ -23,15 +23,22 @@
             <div class="user-info">
                 <h2>使用者資訊</h2>
                 <div class="avatar">
-                    {{userName.at(0)}} 
+                    {{userName.at(0)}}
                 </div>
                 <p class="username">{{ userName }}</p>
-                <p class="userid">學號:A112345678</p>
+                <p class="userid">學號:112345678</p>
                 <button class="logout-btn" (click)="onTestDelete()">登出</button>
             </div>
 
             <div class="history">
-                <h2>對話紀錄</h2>
+                <div class="history-header">
+                    <h2>對話紀錄</h2>
+                    <button class="chat-add-area" (click)="onCreateNewChat()" [disabled]="isAddButtonDisabled">
+                        <span class="material-symbols-outlined">
+                            add_circle
+                        </span>
+                    </button>
+                </div>
                 <ul>
                     <li *ngFor="let item of historyItems.slice().reverse(); let i = index"
                         [class.active]="historyItems.length - 1 - i === selectedHistoryIndex"
@@ -50,14 +57,14 @@
             </div>
 
 
-            <!-- <div class="quick-ask">
+            <div class="quick-ask">
                 <h2>快速提問</h2>
-                <button (click)="onQuickAskClick('我要查課表')">我要查課表</button>
-                <button (click)="onQuickAskClick('教務處怎麼走?')">教務處怎麼走?</button>
-                <button (click)="onQuickAskClick('怎麼選課?')">怎麼選課?</button>
+                <button (click)="onQuickAskClick('中科大宿舍一間幾個人?')">中科大宿舍一間幾個人?</button>
+                <button (click)="onQuickAskClick('中科大宿舍一間多少錢?')">中科大宿舍一間多少錢?</button>
+                <button (click)="onQuickAskClick('中科大宿舍有門禁嗎?')">中科大宿舍有門禁嗎?</button>
                 <button (click)="onQuickAskClick('哪裡借教室?')">哪裡借教室?</button>
                 <button (click)="onQuickAskClick('有免費 Wi-Fi 嗎?')">有免費 Wi-Fi 嗎?</button>
-            </div> -->
+            </div>
 
             <div class="version">
                 <p>版本 v1.0.0</p>
