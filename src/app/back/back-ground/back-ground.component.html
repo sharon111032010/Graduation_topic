@@ -1,0 +1,217 @@
+<div class="dashboard-container">
+    <!-- 左側導航 -->
+    <div class="sidebar">
+        <h2>管理後台</h2>
+        <div class="nav-link" [class.active]="activeSection === 'traffic'" (click)="showSection('traffic')">
+            📈 流量紀錄
+        </div>
+        <div class="nav-link" [class.active]="activeSection === 'faq'" (click)="showSection('faq')">
+            📂 FAQ 分類
+        </div>
+        <div class="nav-link" [class.active]="activeSection === 'success'" (click)="showSection('success')">
+            ✅ 成功率
+        </div>
+        <div class="nav-link" [class.active]="activeSection === 'unknown'" (click)="showSection('unknown')">
+            ❓ 未知問題
+        </div>
+        <div class="nav-link" [class.active]="activeSection === 'visitors'" (click)="showSection('visitors')">
+            👥 訪客統計
+        </div>
+    </div>
+
+    <!-- 右側內容 -->
+    <div class="main">
+        <div class="dashboard-header">
+            <span>📊 儀表板總覽</span>
+            <div class="user-info">管理員：{{ adminName }} | {{ currentDate }}</div>
+        </div>
+
+        <!-- 統計概覽 -->
+        <div class="stats-row">
+            <div class="stat-card" *ngFor="let card of statsCards">
+                <div class="stat-number">{{ card.number }}</div>
+                <div class="stat-label">{{ card.label }}</div>
+            </div>
+        </div>
+
+        <!-- 流量紀錄區塊 -->
+        <div class="card-grid">
+            <!-- 流量紀錄 -->
+            <div class="card">
+                <h3>📈 流量紀錄</h3>
+                <div class="tabs">
+                    <button class="tab" [class.active]="activeTab === 'daily'" (click)="showTab('daily')">
+                        每日使用
+                    </button>
+                    <button class="tab" [class.active]="activeTab === 'hourly'" (click)="showTab('hourly')">
+                        熱門時段
+                    </button>
+                </div>
+
+                <div *ngIf="activeTab === 'daily'" class="tab-content active">
+                    <div class="chart-placeholder">折線圖 - 每日使用次數趨勢</div>
+                    <div class="data-list">
+                        <div class="data-item" *ngFor="let item of dailyData">
+                            <span>{{ item.label }}</span>
+                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.value }}</strong>
+                            <ng-template #normalValue>
+                                <span>{{ item.value }}</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="activeTab === 'hourly'" class="tab-content active">
+                    <div class="chart-placeholder">長條圖 - 歷時使用趨勢</div>
+                    <div class="data-list">
+                        <div class="data-item" *ngFor="let item of hourlyData">
+                            <span>{{ item.label }}</span>
+                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.value }}</strong>
+                            <ng-template #normalValue>
+                                <span>{{ item.value }}</span>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 訪客統計 -->
+            <div class="card">
+                <h3>👥 訪客使用統計</h3>
+                <div class="chart-placeholder">長條圖 - 用戶身份分析</div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:15px 0;">
+                    <div style="text-align:center;padding:15px;background:#f8f9fa;border-radius:8px;">
+                        <div style="font-size:20px;font-weight:bold;color:var(--primary-color);">67%</div>
+                        <div style="font-size:14px;color:var(--text-secondary);">登入用戶</div>
+                    </div>
+                    <div style="text-align:center;padding:15px;background:#f8f9fa;border-radius:8px;">
+                        <div style="font-size:20px;font-weight:bold;color:var(--primary-color);">33%</div>
+                        <div style="font-size:14px;color:var(--text-secondary);">訪客用戶</div>
+                    </div>
+                </div>
+
+                <!-- <table>
+        <thead>
+            <tr>
+                <th>用戶身份</th>
+                <th>使用次數</th>
+                <th>平均時長</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let stat of visitorStats">
+                <td>{{ stat.identity }}</td>
+                <td>{{ stat.usageCount | number }}</td>
+                <td>{{ stat.averageDuration }}</td>
+            </tr>
+        </tbody>
+    </table> -->
+            </div>
+            <!-- FAQ 分類 -->
+            <div class="card">
+                <h3>📂 FAQ 分類管理</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>分類名稱</th>
+                            <th>問題數</th>
+                            <th>使用率</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let category of faqCategories">
+                            <td>{{ category.name }}</td>
+                            <td>{{ category.questionCount }}</td>
+                            <td>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" [style.width.%]="category.usageRate">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-secondary" (click)="onButtonClick('編輯')">
+                                    編輯
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" style="margin-top:15px;" (click)="onButtonClick('新增分類')">
+                    新增分類
+                </button>
+            </div>
+
+            <!-- 回答成功率 -->
+            <div class="card">
+                <h3>✅ 回答成功率追蹤</h3>
+                <div class="chart-placeholder">圓餅圖 - 成功率分析</div>
+                <div style="text-align:center;margin:15px 0;">
+                    <div class="stat-number" style="font-size:24px;">87%</div>
+                    <div class="stat-label">整體成功率</div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>問題類型</th>
+                            <th>成功率</th>
+                            <th>狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let rate of successRates">
+                            <td>{{ rate.type }}</td>
+                            <td>{{ rate.rate }}</td>
+                            <td>
+                                <span [ngClass]="getStatusBadgeClass(rate.status)">
+                                    {{ getStatusText(rate.status) }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 未知問題清單 -->
+            <div class="card">
+                <h3>❓ 未知問題收集</h3>
+                <div style="margin-bottom:15px;">
+                    <button class="btn btn-primary" (click)="onButtonClick('匯出清單')">
+                        匯出清單
+                    </button>
+                    <button class="btn btn-secondary" style="margin-left:8px;" (click)="onButtonClick('批次處理')">
+                        批次處理
+                    </button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>問題內容</th>
+                            <th>提問次數</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let question of unknownQuestions">
+                            <td>{{ question.content }}</td>
+                            <td>
+                                <span [ngClass]="getCountBadgeClass(question.count)">
+                                    {{ question.count }}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-secondary" (click)="onButtonClick('加入FAQ')">
+                                    加入FAQ
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,161 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+
+interface StatCard {
+  number: string;
+  label: string;
+}
+
+interface DataItem {
+  label: string;
+  value: string;
+  isHighlight?: boolean;
+}
+
+interface FaqCategory {
+  name: string;
+  questionCount: number;
+  usageRate: number;
+}
+
+interface SuccessRate {
+  type: string;
+  rate: string;
+  status: 'success' | 'warning' | 'error';
+}
+
+interface UnknownQuestion {
+  content: string;
+  count: number;
+}
+
+interface VisitorStat {
+  identity: string;
+  usageCount: number;
+  averageDuration: string;
+}
+
+
+@Component({
+  selector: 'app-back-ground',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './back-ground.component.html',
+  styleUrl: './back-ground.component.scss'
+})
+export class BackGroundComponent {
+  activeSection: string = 'traffic';
+  activeTab: string = 'daily';
+  currentDate: string = '2025/08/17';
+  adminName: string = '張教授';
+  
+  private updateInterval: any;
+
+  // 統計卡片數據
+  statsCards: StatCard[] = [
+    { number: '2,847', label: '今日使用次數' },
+    { number: '87%', label: '回答成功率' },
+    { number: '156', label: '活躍用戶' },
+    { number: '23', label: '待處理問題' }
+  ];
+
+  // 每日使用數據
+  dailyData: DataItem[] = [
+    { label: '今日 (8/17)', value: '2,847 次', isHighlight: true },
+    { label: '昨日 (8/16)', value: '2,634 次' },
+    { label: '8/15', value: '2,912 次' }
+  ];
+
+  // 熱門時段數據
+  hourlyData: DataItem[] = [
+    { label: '🔥 14:00-16:00', value: '458 次', isHighlight: true },
+    { label: '10:00-12:00', value: '392 次' },
+    { label: '20:00-22:00', value: '367 次' }
+  ];
+
+  // FAQ分類數據
+  faqCategories: FaqCategory[] = [
+    { name: '課程相關', questionCount: 45, usageRate: 85 },
+    { name: '宿舍生活', questionCount: 30, usageRate: 72 },
+    { name: '交通資訊', questionCount: 12, usageRate: 45 }
+  ];
+
+  // 成功率數據
+  successRates: SuccessRate[] = [
+    { type: '課程查詢', rate: '94.5%', status: 'success' },
+    { type: '校園導航', rate: '87.3%', status: 'warning' },
+    { type: '活動資訊', rate: '78.9%', status: 'error' }
+  ];
+
+  // 未知問題數據
+  unknownQuestions: UnknownQuestion[] = [
+    { content: '請問畢業典禮時間？', count: 5 },
+    { content: '圖書館週末是否開放？', count: 3 },
+    { content: '校園 Wi-Fi 如何申請？', count: 8 },
+    { content: '社團招生資訊？', count: 4 }
+  ];
+
+  // 訪客統計數據
+  visitorStats: VisitorStat[] = [
+    { identity: '🎓 在校學生', usageCount: 1892, averageDuration: '5分23秒' },
+    { identity: '🆕 新生', usageCount: 645, averageDuration: '8分15秒' },
+    { identity: '👤 訪客', usageCount: 234, averageDuration: '3分41秒' },
+    { identity: '👨‍🏫 教職員', usageCount: 76, averageDuration: '4分08秒' }
+  ];
+
+  ngOnInit(): void {
+    // 模擬數據更新
+    this.startDataUpdate();
+  }
+
+  ngOnDestroy(): void {
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
+    }
+  }
+
+  // 導航切換
+  showSection(sectionName: string): void {
+    this.activeSection = sectionName;
+    console.log('切換到：' + sectionName);
+  }
+
+  // 標籤頁切換
+  showTab(tabName: string): void {
+    this.activeTab = tabName;
+  }
+
+  // 按鈕點擊事件
+  onButtonClick(action: string): void {
+    alert(`${action} 功能開發中`);
+  }
+
+  // 獲取狀態徽章的CSS類別
+  getStatusBadgeClass(status: string): string {
+    return `status-badge status-${status}`;
+  }
+
+  // 獲取狀態文字
+  getStatusText(status: string): string {
+    const statusMap: { [key: string]: string } = {
+      'success': '優秀',
+      'warning': '良好',
+      'error': '待改善'
+    };
+    return statusMap[status] || status;
+  }
+
+  // 獲取問題計數的背景色類別
+  getCountBadgeClass(count: number): string {
+    return count >= 8 ? 'count-high' : 'count-normal';
+  }
+
+  // 開始數據更新
+  private startDataUpdate(): void {
+    this.updateInterval = setInterval(() => {
+      const currentCount = parseInt(this.statsCards[0].number.replace(',', ''));
+      const newCount = currentCount + Math.floor(Math.random() * 5);
+      this.statsCards[0].number = newCount.toLocaleString();
+    }, 30000);
+  }
+}
