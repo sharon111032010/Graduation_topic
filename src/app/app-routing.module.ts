@@ -9,6 +9,8 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { ChatPageComponent } from './chat-page/chat-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { TrafficLogComponent } from './backend/traffic-log/traffic-log.component';
+import { TrafficLogPageComponent } from './backend/traffic-log-page/traffic-log-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,6 +19,9 @@ const routes: Routes = [
   { path: 'chatPage', component: ChatPageComponent},
   { path: 'loginPage', component: LoginPageComponent},
   { path: 'registration', component: RegistrationPageComponent }, // ✅ 註冊頁面路由
+  { path: 'trafficLog', component: TrafficLogComponent}, // ✅ 流量紀錄頁面路由
+  { path: 'trafficLogPage',component: TrafficLogPageComponent}, // ✅ 流量紀錄頁面路由
+
   { 
     path: 'index', 
     component: IndexComponent,
