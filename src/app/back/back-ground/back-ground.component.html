@@ -41,10 +41,10 @@
                 <h3>📈 流量紀錄</h3>
                 <div class="tabs">
                     <button class="tab" [class.active]="activeTab === 'daily'" (click)="showTab('daily')">
-                        每日使用
+                        每日時段
                     </button>
                     <button class="tab" [class.active]="activeTab === 'hourly'" (click)="showTab('hourly')">
-                        熱門時段
+                        歷史使用
                     </button>
                 </div>
 
@@ -62,7 +62,7 @@
                 </div>
 
                 <div *ngIf="activeTab === 'hourly'" class="tab-content active">
-                    <div class="chart-placeholder">長條圖 - 歷時使用趨勢</div>
+                    <div class="chart-placeholder">長條圖 - 歷使使用趨勢</div>
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of hourlyData">
                             <span>{{ item.label }}</span>

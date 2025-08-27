@@ -20,9 +20,9 @@ export class TrafficLogPageComponent {
 
   // 統計卡片數據
   statsCards: StatCard[] = [
-    { number: '2,847', label: '今日使用次數' },
+    { number: '47', label: '今日使用次數' },
     { number: '87%', label: '回答成功率' },
-    { number: '156', label: '活躍用戶' },
+    { number: '4156', label: '目前總共次數' },
     { number: '23', label: '待處理問題' }
   ];
 
@@ -35,7 +35,7 @@ export class TrafficLogPageComponent {
 
   // 熱門時段數據
   hourlyData: DataItem[] = [
-    { label: '🔥 14:00-16:00', value: '458 次', isHighlight: true },
+    { label: '14:00-16:00', value: '458 次', isHighlight: true },
     { label: '10:00-12:00', value: '392 次' },
     { label: '20:00-22:00', value: '367 次' }
   ];
