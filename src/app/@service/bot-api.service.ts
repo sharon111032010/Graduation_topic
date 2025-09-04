@@ -20,7 +20,7 @@ export class BotAPIService {
     const url = this.baseUrl + "/Chat_test";
 
     const headers = new HttpHeaders({
-      'Connection': 'close',  // 👈 加這行
+      // 'Connection': 'close',  // 👈 加這行
       'Content-Type': 'application/json'
     });
 
@@ -28,7 +28,11 @@ export class BotAPIService {
   }
   chatTitle(chatMessage:IChatBorReq): Observable<IApiResult<IChatBorTitleData>> {
     const url = this.baseUrl + "/Chat_Title";
-    return this.http.post<IApiResult<IChatBorTitleData>>(url, chatMessage);
+    const headers = new HttpHeaders({
+      // 'Connection': 'close',  // 👈 加這行
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<IApiResult<IChatBorTitleData>>(url, chatMessage, { headers });
   }
 
 

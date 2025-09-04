@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild, OnInit, OnDestroy, inject, DestroyRef } from '@angular/core';
-import { Subject, takeUntil, finalize } from 'rxjs';
+import { Subject, takeUntil, finalize, of, concatMap, Observable, firstValueFrom, async, delay } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -97,7 +97,7 @@ export class ChatPageComponent implements OnInit {
     this.userInput = question;
   }
 
-  onGetUserName(){
+  onGetUserName() {
     this.userInfoService.getUserInfo({ userId: this.userId })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -321,8 +321,8 @@ export class ChatPageComponent implements OnInit {
             if (res?.isSuccess) {
               this.title = res.data.title; // 更新標題
               this.hasUpdatedTitle = true; // 標記已更新標題
-              
-              this.updateMenuTitle(this.title,this.menuId);
+
+              this.updateMenuTitle(this.title, this.menuId);
 
               const index = this.selectedHistoryIndex;
               if (index >= 0 && index < this.historyItems.length) {
@@ -366,26 +366,70 @@ export class ChatPageComponent implements OnInit {
       });
   }
 
-  private getBotResponse(userMessage: string): void {
-    this.botService.chatBot({ msg: userMessage })
-      .pipe(
-        finalize(() => this.isLoading = false),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe({
-        next: (res) => {
-          console.log('機器人回應:', res);
-          if (res?.isSuccess) {
-            this.handleBotResponse(res);
-            this.saveMessage(userMessage, true); // 儲存使用者訊息
-            this.saveMessage(res.data.answer, false);
-          } else {
-            console.warn('機器人回應格式錯誤');
-          }
-        },
-        error: (err) => this.handleError('獲取機器人回應失敗', err)
-      });
+  // private async getBotResponse(userMessage: string):Promise< void> {
+  //   this.botService.chatBot({ msg: userMessage })
+  //     .pipe(
+  //       finalize(() => this.isLoading = false),
+  //       takeUntilDestroyed(this.destroyRef)
+  //     )
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log('機器人回應:', res);
+  //         if (res?.isSuccess) {
+  //           this.handleBotResponse(res);
+
+  //         // 使用 concatMap 保證先後順序
+  //         await firstValueFrom(this.saveMessage(userMessage, true));
+
+  //     // 儲存機器人回覆（會再生成新的前端時間）
+  //     await firstValueFrom(this.saveMessage(res.data.answer, false));
+
+  //         // of(userMessage).pipe(
+  //         //   concatMap(async (msg) => this.saveMessage(msg, true)),  // 儲存使用者訊息
+  //         //   concatMap(async () => this.saveMessage(res.data.answer, false)) // 儲存機器人回覆
+  //         // ).subscribe({
+  //         //   next: () => console.log('訊息儲存完成'),
+  //         //   error: err => console.error('儲存訊息失敗', err)
+  //         // });
+  //         } else {
+  //           console.warn('機器人回應格式錯誤');
+  //         }
+  //       },
+  //       error: (err) => this.handleError('獲取機器人回應失敗', err)
+  //     });
+  // }
+  private async getBotResponse(userMessage: string): Promise<void> {
+    this.isLoading = true;
+    try {
+      const res = await firstValueFrom(
+        this.botService.chatBot({ msg: userMessage }).pipe(
+          takeUntilDestroyed(this.destroyRef)
+        )
+      );
+
+      console.log('機器人回應:', res);
+
+      if (res?.isSuccess) {
+        this.handleBotResponse(res);
+
+        // 儲存使用者訊息
+        await firstValueFrom(this.saveMessage(userMessage, true));
+        delay(1000);
+        // 儲存機器人訊息
+        await firstValueFrom(this.saveMessage(res.data.answer, false));
+
+        console.log('訊息儲存完成');
+      } else {
+        console.warn('機器人回應格式錯誤');
+      }
+
+    } catch (err) {
+      this.handleError('獲取機器人回應失敗', err);
+    } finally {
+      this.isLoading = false;
+    }
   }
+
 
   private handleBotResponse(res: any): void {
     if (res.isSuccess) {
@@ -403,9 +447,9 @@ export class ChatPageComponent implements OnInit {
     }
   }
 
-  private saveMessage(message: string, isUser: boolean): void {
+  private saveMessage(message: string, isUser: boolean) {
     if (!this.userId) {
-      return;
+      return of(null);
     }
 
     const saveMsgReq: ISaveMsgReq = {
@@ -416,18 +460,9 @@ export class ChatPageComponent implements OnInit {
       msgType: isUser
     };
 
-    this.logService.saveLogAPI(saveMsgReq)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (res) => {
-          if (res?.isSuccess) {
-            console.log('訊息已成功儲存');
-          } else {
-            console.warn('訊息儲存失敗: 回傳資料格式錯誤');
-          }
-        },
-        error: (err) => this.handleError('儲存訊息失敗', err)
-      });
+    return this.logService.saveLogAPI(saveMsgReq)
+      .pipe(takeUntilDestroyed(this.destroyRef)
+      );
   }
 
   // Utility Methods
@@ -447,6 +482,10 @@ export class ChatPageComponent implements OnInit {
       width: '400px',
       disableClose: true
     });
+  }
+  toISOString2Digits(date: Date): string {
+    const iso = date.toISOString(); // 例如 "2025-09-02T12:53:09.920Z"
+    return iso.replace(/\.(\d{2})\dZ$/, '.$1'); // 保留小數點後 2 位
   }
 }
 
