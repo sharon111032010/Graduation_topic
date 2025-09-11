@@ -10,8 +10,8 @@ import { IApiRes, IApiResult } from '../@interface/userAccount';
 export class BotAPIService {
 
   // baseUrl = "http://10.25.1.144:5002";
-  // baseUrl="http://10.6.0.7:5002";
-  baseUrl = "http://192.168.53.10:5002";
+  baseUrl="http://10.25.1.202:5002";
+  // baseUrl = "http://192.168.53.10:5002";
 
   constructor() { }
   http = inject(HttpClient);
