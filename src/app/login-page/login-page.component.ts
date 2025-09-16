@@ -13,11 +13,12 @@ import { MenuService } from '../@service/menu.service';
 import { LoginSystemService } from '../@service/login-system.service';
 import { ILoginReq } from '../@InterfaceAPI/ILoginSystem';
 import { GetIdService } from '../service/get-id.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [MatButtonModule, MatInputModule, MatIconModule, ReactiveFormsModule, CommonModule],
+  imports: [MatButtonModule, MatInputModule, MatIconModule, ReactiveFormsModule,RouterModule, CommonModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
@@ -148,7 +149,7 @@ export class LoginPageComponent implements OnInit {
 
   loginWithResgister() {
     this.loading = true;
-    this.router.navigate(['/registration']);
+    this.router.navigate(['/chatPage']);
     this.loading = false;
   }
 }
