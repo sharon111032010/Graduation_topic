@@ -320,7 +320,8 @@ export class ChatPageComponent implements OnInit {
           next: (res) => {
             if (res?.isSuccess) {
               this.title = res.data.title; // 更新標題
-              this.hasUpdatedTitle = true; // 標記已更新標題
+              //this.hasUpdatedTitle = true; // 標記已更新標題
+              // this.hasUpdatedTitle = false;
 
               this.updateMenuTitle(this.title, this.menuId);
 
