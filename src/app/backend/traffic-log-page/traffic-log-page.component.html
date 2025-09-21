@@ -92,8 +92,8 @@
                 <div *ngIf="activeTab === 'hourly'" class="tab-content active">
                     <div class="chart-placeholder">
                         長條圖 - 歷時使用趨勢
-                        <canvas id="myChart"></canvas>
                     </div>
+                    <canvas id="myChart"></canvas>
                     <!-- 折線圖 canvas -->
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of hourlyData">
