@@ -93,7 +93,7 @@
                     <div class="chart-placeholder">長條圖 - 歷時使用趨勢</div>
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of hourlyData">
-                            <span>{{ item.login_date}}</span>
+                            <span>{{ item.login_date.split('T')[0] }}</span>
                             <strong *ngIf="item.isHighlight; else normalValue">{{ item.login_count }}</strong>
                             <ng-template #normalValue>
                                 <span>{{ item.login_count }}</span>
