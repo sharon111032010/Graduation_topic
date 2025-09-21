@@ -125,6 +125,7 @@ export class TrafficLogPageComponent {
     this.startDataUpdate();
     this.getCount();
     this.getNuneQA();
+    this.getFaqCategory();
   }
 
   ngOnDestroy(): void {
