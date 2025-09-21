@@ -93,6 +93,7 @@ export class TrafficLogPageComponent {
   ngOnInit(): void {
     // 模擬數據更新
     this.startDataUpdate();
+    this.getCount();
   }
 
   ngOnDestroy(): void {
