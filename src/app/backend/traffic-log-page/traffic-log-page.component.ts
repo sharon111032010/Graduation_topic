@@ -76,11 +76,26 @@ export class TrafficLogPageComponent {
 
   // 未知問題數據
   unknownQuestions: UnknownQuestion[] = [
-    { content: '請問畢業典禮時間？', count: 5 },
-    { content: '圖書館週末是否開放？', count: 3 },
-    { content: '校園 Wi-Fi 如何申請？', count: 8 },
-    { content: '社團招生資訊？', count: 4 }
+    { msg: '請問畢業典禮時間？', count: 5 },
+    { msg: '圖書館週末是否開放？', count: 3 },
+    { msg: '校園 Wi-Fi 如何申請？', count: 8 },
+    { msg: '社團招生資訊？', count: 4 }
   ];
+
+  getNuneQA(){
+    this.trafficService.getNuneQA().subscribe({
+      next: (res) => {
+        if(res.isSuccess){
+          this.unknownQuestions = res.data;
+        } else {
+          console.error('API 回傳失敗:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('API 請求錯誤:', err);
+      }
+    });
+  }
 
   // 訪客統計數據
   visitorStats: VisitorStat[] = [
@@ -94,6 +109,7 @@ export class TrafficLogPageComponent {
     // 模擬數據更新
     this.startDataUpdate();
     this.getCount();
+    this.getNuneQA();
   }
 
   ngOnDestroy(): void {

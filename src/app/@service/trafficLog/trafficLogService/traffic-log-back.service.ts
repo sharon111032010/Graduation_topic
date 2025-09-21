@@ -13,7 +13,13 @@ export class TrafficLogBackService {
   private baseUrl = 'https://localhost:7000';
   
   getCount() :Observable<IApiRes<any>>{
-    const url = this.baseUrl + '/api/getCount'; // 未完
+    const url = this.baseUrl + '/api/getCount'; 
+    return this.http.get<any>(url);
+  }
+
+  //未知問題收集
+  getNuneQA():Observable<IApiRes<any>>{
+    const url = this.baseUrl + '/api/getCategoriesIdMsg?categoryId=20'; 
     return this.http.get<any>(url);
   }
 }

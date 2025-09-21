@@ -22,7 +22,7 @@ export interface SuccessRate {
 }
 
 export interface UnknownQuestion {
-    content: string;
+    msg: string;
     count: number;
 }
 
