@@ -73,7 +73,7 @@ export class LoginPageComponent implements OnInit {
       next: (res) => {
         if(res.isSuccess){
           const account = res.data;
-          this.loginService.LoginAPI({acccount:account,password:account}).subscribe({
+          this.loginService.LoginAPI({acccount:account,password:"12345678"}).subscribe({
             next: (result) => {
               if (result.isSuccess) {
                 this.dialog.open(LoginSuccessfulDialogComponent, {}).afterClosed().subscribe(() => {
