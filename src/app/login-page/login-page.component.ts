@@ -67,6 +67,41 @@ export class LoginPageComponent implements OnInit {
     // });
   }
 
+  visterLoginAPI(){
+    // const url = this.baseUrl + '/api/VisitorLogin' // 沒填完 !!
+    this.loginService.visterRegisterAPI().subscribe({
+      next: (res) => {
+        if(res.isSuccess){
+          const account = res.data;
+          this.loginService.LoginAPI({acccount:account,password:account}).subscribe({
+            next: (result) => {
+              if (result.isSuccess) {
+                this.dialog.open(LoginSuccessfulDialogComponent, {}).afterClosed().subscribe(() => {
+                  this.getIdService.setUser(result.data);
+                  this.router.navigate(['/chatPage'], {
+                    state: result.data
+                  });
+                });
+              } else {
+                // this.dialog.open(LoginFailedDialogComponent, {});
+                console.error('訪客登入失敗:', res.message);
+              }
+            },
+            error: () => {
+              // this.dialog.open(LoginFailedDialogComponent, {});
+              //可以改別的錯誤匡
+              console.error('訪客登入失敗:', res.message);
+            }
+          });
+        } else {
+          console.error('訪客註冊失敗:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('API 請求錯誤:', err);
+      }
+    });
+  }
 
   loginApiOnClick() {
     this.submitted = true;

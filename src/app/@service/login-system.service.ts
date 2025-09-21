@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IDeleteReq, ILoginDataRes, ILoginReq, IRegisterReq } from '../@InterfaceAPI/ILoginSystem';
-import { Observable } from 'rxjs';
+import { count, Observable } from 'rxjs';
 import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { IApiRes } from '../@InterfaceAPI/IReqTemplate';
 })
 export class LoginSystemService {
 
+  account ="";
   constructor(
   ) { }
   http = inject(HttpClient);
@@ -30,4 +31,8 @@ export class LoginSystemService {
     return this.http.post<any>(url,DeleteInterFace);
   }
 
+  visterRegisterAPI(){
+    const url = this.baseUrl + '/api/visitorRegister' 
+    return this.http.post<any>(url,null);
+  }
 }
