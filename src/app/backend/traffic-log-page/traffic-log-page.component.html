@@ -80,10 +80,10 @@
                     <div class="chart-placeholder">折線圖 - 每日使用次數趨勢</div>
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of dailyData">
-                            <span>{{ item.label }}</span>
-                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.value }}</strong>
+                            <span>{{ item.login_date }}</span>
+                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.login_count }}</strong>
                             <ng-template #normalValue>
-                                <span>{{ item.value }}</span>
+                                <span>{{ item.login_count }}</span>
                             </ng-template>
                         </div>
                     </div>
@@ -93,10 +93,10 @@
                     <div class="chart-placeholder">長條圖 - 歷時使用趨勢</div>
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of hourlyData">
-                            <span>{{ item.label }}</span>
-                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.value }}</strong>
+                            <span>{{ item.login_date}}</span>
+                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.login_count }}</strong>
                             <ng-template #normalValue>
-                                <span>{{ item.value }}</span>
+                                <span>{{ item.login_count }}</span>
                             </ng-template>
                         </div>
                     </div>

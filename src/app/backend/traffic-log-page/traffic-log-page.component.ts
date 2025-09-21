@@ -48,17 +48,32 @@ export class TrafficLogPageComponent {
 
   // 每日使用數據
   dailyData: DataItem[] = [
-    { label: '今日 (8/17)', value: '2,847 次', isHighlight: true },
-    { label: '昨日 (8/16)', value: '2,634 次' },
-    { label: '8/15', value: '2,912 次' }
+    { login_date: '今日 (8/17)', login_count: '2,847 次', isHighlight: true },
+    { login_date: '昨日 (8/16)', login_count: '2,634 次' },
+    { login_date: '8/15', login_count: '2,912 次' }
   ];
 
-  // 熱門時段數據
+  // 時段數據
   hourlyData: DataItem[] = [
-    { label: '14:00-16:00', value: '458 次', isHighlight: true },
-    { label: '10:00-12:00', value: '392 次' },
-    { label: '20:00-22:00', value: '367 次' }
+    { login_date: '14:00-16:00', login_count: '458 次', isHighlight: true },
+    { login_date: '10:00-12:00', login_count: '392 次' },
+    { login_date: '20:00-22:00', login_count: '367 次' }
   ];
+  getHistory(){
+    this.trafficService.getHistory().subscribe({
+      next: (res) => {
+        if(res.isSuccess){
+          this.hourlyData = res.data;
+        } else {
+          console.error('API 回傳失敗:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('API 請求錯誤:', err);
+      }
+    });
+  }
+
 
   // FAQ分類數據
   faqCategories: FaqCategory[] = [

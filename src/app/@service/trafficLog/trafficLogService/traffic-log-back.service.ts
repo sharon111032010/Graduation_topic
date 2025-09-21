@@ -26,4 +26,9 @@ export class TrafficLogBackService {
     const url = this.baseUrl + '/api/Categories'; 
     return this.http.post<any>(url,null);
   }
+
+  getHistory():Observable<IApiRes<any>>{
+    const url = this.baseUrl + '/daily-login'; 
+    return this.http.get<any>(url);
+  }
 }

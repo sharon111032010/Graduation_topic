@@ -4,8 +4,8 @@ export interface StatCard {
 }
 
 export interface DataItem {
-    label: string;
-    value: string;
+    login_date: string;
+    login_count: string;
     isHighlight?: boolean;
 }
 
