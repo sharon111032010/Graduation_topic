@@ -159,7 +159,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let question of unknownQuestions">
-                            <td>{{ question.content }}</td>
+                            <td>{{ question.msg }}</td>
                             <td>
                                 <button class="btn btn-secondary" (click)="onButtonClick('加入FAQ')">FAQ</button>
                             </td>
