@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DataItem, FaqCategory, StatCard, SuccessRate, UnknownQuestion, VisitorStat } from 'src/app/@service/trafficLog/traffic-log-page.model';
 import { CommonModule } from '@angular/common';
+import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogService/traffic-log-back.service';
 
 @Component({
   selector: 'app-traffic-log-page',
@@ -15,16 +16,35 @@ export class TrafficLogPageComponent {
   activeTab: string = 'daily';
   currentDate: string = '2025/08/20';
   adminName: string = 'superadmin';
+
+  trafficService = inject(TrafficLogBackService);
   
   private updateInterval: any;
 
   // 統計卡片數據
   statsCards: StatCard[] = [
     { number: '47', label: '今日使用次數' },
-    { number: '87%', label: '回答成功率' },
+    // { number: '87%', label: '回答成功率' },
     { number: '4156', label: '目前總共次數' },
     { number: '23', label: '待處理問題' }
   ];
+  getCount(){
+    this.trafficService.getCount().subscribe({
+      next: (res) => {
+        if(res.isSuccess){
+          this.statsCards[0].number = res.data.todayCount;
+          this.statsCards[1].number = res.data.msgType1Count;
+          this.statsCards[2].number = res.data.category20Count;
+        } else {
+          console.error('API 回傳失敗:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('API 請求錯誤:', err);
+      }
+    });
+
+  }
 
   // 每日使用數據
   dailyData: DataItem[] = [
