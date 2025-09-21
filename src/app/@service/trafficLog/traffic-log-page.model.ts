@@ -10,8 +10,8 @@ export interface DataItem {
 }
 
 export interface FaqCategory {
-    name: string;
-    questionCount: number;
+    categoryName: string;
+    itemCount: number;
     usageRate: number;
 }
 

@@ -62,10 +62,25 @@ export class TrafficLogPageComponent {
 
   // FAQ分類數據
   faqCategories: FaqCategory[] = [
-    { name: '課程相關', questionCount: 45, usageRate: 85 },
-    { name: '宿舍生活', questionCount: 30, usageRate: 72 },
-    { name: '交通資訊', questionCount: 12, usageRate: 45 }
+    { categoryName: '課程相關', itemCount: 45, usageRate: 85 },
+    { categoryName: '宿舍生活', itemCount: 30, usageRate: 72 },
+    { categoryName: '交通資訊', itemCount: 12, usageRate: 45 }
   ];
+
+  getFaqCategory(){
+    this.trafficService.getFaqCategory().subscribe({
+      next: (res) => {
+        if(res.isSuccess){
+          this.faqCategories = res.data;
+        } else {
+          console.error('API 回傳失敗:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('API 請求錯誤:', err);
+      }
+    });
+  }
 
   // 成功率數據
   successRates: SuccessRate[] = [

@@ -117,8 +117,8 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let category of faqCategories">
-                            <td>{{ category.name }}</td>
-                            <td>{{ category.questionCount }}</td>
+                            <td>{{ category.categoryName }}</td>
+                            <td>{{ category.itemCount }}</td>
                             <td>
                                 <div class="progress-bar">
                                     <div class="progress-fill" [style.width.%]="category.usageRate"></div>
