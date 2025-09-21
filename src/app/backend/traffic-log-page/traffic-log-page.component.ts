@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { DataItem, FaqCategory, StatCard, SuccessRate, UnknownQuestion, VisitorStat } from 'src/app/@service/trafficLog/traffic-log-page.model';
 import { CommonModule } from '@angular/common';
 import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogService/traffic-log-back.service';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-traffic-log-page',
@@ -59,6 +60,44 @@ export class TrafficLogPageComponent {
     { login_date: '10:00-12:00', login_count: '392 次' },
     { login_date: '20:00-22:00', login_count: '367 次' }
   ];
+
+  ngAfterViewInit(): void {
+    this.renderChart();
+  }
+
+  renderChart(): void {
+    const labels = this.hourlyData.map(item =>
+      item.login_date.split('T')[0]   // 只取日期
+    );
+
+    const dataValues = this.hourlyData.map(item =>
+      Number(item.login_count)        // 轉成數字
+    );
+
+    new Chart('myChart', {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '登入人數',
+          data: dataValues,
+          borderColor: 'blue',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          fill: true,
+          tension: 0.2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
+          }
+        }
+      }
+    });
+  }
+  
   getHistory(){
     this.trafficService.getHistory().subscribe({
       next: (res) => {

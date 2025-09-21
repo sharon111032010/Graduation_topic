@@ -90,11 +90,15 @@
                 </div>
 
                 <div *ngIf="activeTab === 'hourly'" class="tab-content active">
-                    <div class="chart-placeholder">長條圖 - 歷時使用趨勢</div>
+                    <div class="chart-placeholder">
+                        長條圖 - 歷時使用趨勢
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <!-- 折線圖 canvas -->
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of hourlyData">
                             <span>{{ item.login_date.split('T')[0] }}</span>
-                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.login_count }}</strong>
+                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.login_count }}次</strong>
                             <ng-template #normalValue>
                                 <span>{{ item.login_count }}</span>
                             </ng-template>
