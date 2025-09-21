@@ -1,5 +1,5 @@
 export interface ILoginReq {
-    acccount : string;
+    account : string;
     password: string;
 }
 export interface ILoginDataRes{
