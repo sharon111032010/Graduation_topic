@@ -1,9 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { DataItem, FaqCategory, StatCard, SuccessRate, UnknownQuestion, VisitorStat } from 'src/app/@service/trafficLog/traffic-log-page.model';
 import { CommonModule } from '@angular/common';
 import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogService/traffic-log-back.service';
-import { Chart } from 'chart.js';
-
+import * as echarts from 'echarts/core';
+import { LineChart } from 'echarts/charts';
+import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
 @Component({
   selector: 'app-traffic-log-page',
   standalone: true,
@@ -13,13 +16,16 @@ import { Chart } from 'chart.js';
 })
 export class TrafficLogPageComponent {
 
+  // @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chart') chartElement!: ElementRef;
+  // @ViewChild('chartContainer', { static: false }) chartElement!: ElementRef;
   activeSection: string = 'traffic';
   activeTab: string = 'daily';
   currentDate: string = '2025/08/20';
   adminName: string = 'superadmin';
 
   trafficService = inject(TrafficLogBackService);
-  
+
   private updateInterval: any;
 
   // 統計卡片數據
@@ -29,10 +35,10 @@ export class TrafficLogPageComponent {
     { number: '4156', label: '目前總共次數' },
     { number: '23', label: '待處理問題' }
   ];
-  getCount(){
+  getCount() {
     this.trafficService.getCount().subscribe({
       next: (res) => {
-        if(res.isSuccess){
+        if (res.isSuccess) {
           this.statsCards[0].number = res.data.todayCount;
           this.statsCards[1].number = res.data.msgType1Count;
           this.statsCards[2].number = res.data.category20Count;
@@ -54,65 +60,118 @@ export class TrafficLogPageComponent {
     { login_date: '8/15', login_count: '2,912 次' }
   ];
 
-  // 時段數據
+
+// -------------------------------------------------------------------
+@ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
+
   hourlyData: DataItem[] = [
     { login_date: '14:00-16:00', login_count: '458 次', isHighlight: true },
     { login_date: '10:00-12:00', login_count: '392 次' },
     { login_date: '20:00-22:00', login_count: '367 次' }
   ];
 
+  private myChart!: echarts.ECharts;
+
+  // ngOnInit(): void {}
+
   ngAfterViewInit(): void {
-    this.renderChart();
+    this.initChart();
   }
 
-  renderChart(): void {
-    const labels = this.hourlyData.map(item =>
-      item.login_date.split('T')[0]   // 只取日期
-    );
+  initChart(): void {
+    this.myChart = echarts.init(this.chartContainer.nativeElement);
 
-    const dataValues = this.hourlyData.map(item =>
-      Number(item.login_count)        // 轉成數字
-    );
-
-    new Chart('myChart', {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: '登入人數',
-          data: dataValues,
-          borderColor: 'blue',
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          fill: true,
-          tension: 0.2
-        }]
+    const option = {
+      title: {
+        text: '各時段登入次數'
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top'
+      tooltip: {},
+      xAxis: {
+        type: 'category',
+        data: this.hourlyData.map(item => item.login_date)
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: '登入次數',
+          type: 'bar',
+          data: this.hourlyData.map(item => parseInt(item.login_count)),
+          itemStyle: {
+            color: (params: any) => {
+              return this.hourlyData[params.dataIndex].isHighlight ? '#ff7f50' : '#3398DB';
+            }
           }
         }
-      }
-    });
-  }
-  
-  getHistory(){
-    this.trafficService.getHistory().subscribe({
-      next: (res) => {
-        if(res.isSuccess){
-          this.hourlyData = res.data;
-        } else {
-          console.error('API 回傳失敗:', res.message);
-        }
-      },
-      error: (err) => {
-        console.error('API 請求錯誤:', err);
-      }
-    });
+      ]
+    };
+
+    this.myChart.setOption(option);
   }
 
+  // 時段數據
+  // hourlyData: DataItem[] = [
+  //   { login_date: '14:00-16:00', login_count: '458 次', isHighlight: true },
+  //   { login_date: '10:00-12:00', login_count: '392 次' },
+  //   { login_date: '20:00-22:00', login_count: '367 次' }
+  // ];
+
+  // getHistory(){
+  //   this.trafficService.getHistory().subscribe({
+  //     next: (res) => {
+  //       if(res.isSuccess){
+  //         this.hourlyData = res.data;
+  //       } else {
+  //         console.error('API 回傳失敗:', res.message);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error('API 請求錯誤:', err);
+  //     }
+  //   });
+  // }
+
+  // ngAfterViewInit() {
+  //   this.getHistory();
+  //   this.renderChart();
+  // }
+
+  // getHistory() {
+  //   this.trafficService.getHistory().subscribe({
+  //     next: (res) => {
+  //       if (res.isSuccess) {
+  //         this.hourlyData = res.data;
+  //         this.renderChart();
+  //       } else {
+  //         console.error('API 回傳失敗:', res.message);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error('API 請求錯誤:', err);
+  //     }
+  //   });
+  // }
+
+  // renderChart() {
+  //   if (!this.chartElement) {
+  //     console.error('chartElement 尚未初始化');
+  //     return;
+  //   }
+  //   const chart = echarts.init(this.chartElement.nativeElement);
+  //   chart.setOption({
+  //     title: { text: '時段登入次數' },
+  //     tooltip: { trigger: 'axis' },
+  //     xAxis: { type: 'category', data: this.hourlyData.map(d => d.login_date) },
+  //     yAxis: { type: 'value' },
+  //     series: [
+  //       {
+  //         type: 'line',
+  //         data: this.hourlyData.map(d => parseInt(d.login_count.replace(/\D/g, ''), 10))
+  //       }
+  //     ]
+  //   });
+  // }
 
   // FAQ分類數據
   faqCategories: FaqCategory[] = [
@@ -121,10 +180,10 @@ export class TrafficLogPageComponent {
     { categoryName: '交通資訊', itemCount: 12, usageRate: 45 }
   ];
 
-  getFaqCategory(){
+  getFaqCategory() {
     this.trafficService.getFaqCategory().subscribe({
       next: (res) => {
-        if(res.isSuccess){
+        if (res.isSuccess) {
           this.faqCategories = res.data;
         } else {
           console.error('API 回傳失敗:', res.message);
@@ -151,10 +210,10 @@ export class TrafficLogPageComponent {
     { msg: '社團招生資訊？', count: 4 }
   ];
 
-  getNuneQA(){
+  getNuneQA() {
     this.trafficService.getNuneQA().subscribe({
       next: (res) => {
-        if(res.isSuccess){
+        if (res.isSuccess) {
           this.unknownQuestions = res.data;
         } else {
           console.error('API 回傳失敗:', res.message);
@@ -180,7 +239,8 @@ export class TrafficLogPageComponent {
     this.getCount();
     this.getNuneQA();
     this.getFaqCategory();
-    this.getHistory();
+    // this.getHistory();
+
   }
 
   ngOnDestroy(): void {
