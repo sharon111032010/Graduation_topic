@@ -111,9 +111,9 @@ export class TrafficLogPageComponent {
   @ViewChild('chartContainer2', { static: true }) chartContainer2!: ElementRef;
 
   hourlyData: DataItem[] = [
-    { login_date: '14:00-16:00', login_count: '458 次', isHighlight: true },
-    { login_date: '10:00-12:00', login_count: '392 次' },
-    { login_date: '20:00-22:00', login_count: '367 次' }
+    { login_date: '2025-09-10', login_count: '458' },
+    { login_date: '2025-09-11', login_count: '392' },
+    { login_date: '2025-09-12', login_count: '367' }
   ];
   // <<<<<<< HEAD
   getHistory() {
@@ -144,7 +144,10 @@ export class TrafficLogPageComponent {
   
     // 轉換資料
     const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
-    const yData = this.hourlyData.map(item => Number(item.login_count.replace(/,/g, ''))); // y 軸數字
+    const yData = this.hourlyData.map(item => {
+      // item.login_count 已經是 number，就直接用
+      return typeof item.login_count === 'number' ? item.login_count : Number(String(item.login_count).replace(/\D/g, ''));
+    });
   
     const option: echarts.EChartsCoreOption = {
       xAxis: {
