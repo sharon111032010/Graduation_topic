@@ -7,6 +7,7 @@ import { LineChart } from 'echarts/charts';
 import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
+type EChartsOption = echarts.EChartsCoreOption;
 @Component({
   selector: 'app-traffic-log-page',
   standalone: true,
@@ -61,6 +62,37 @@ export class TrafficLogPageComponent {
   ];
 
 
+
+
+
+  private myChart!: echarts.ECharts;
+
+  ngAfterViewInit(): void {
+    const chartDom = document.getElementById('chartContainer')!;
+    this.myChart = echarts.init(chartDom);
+
+    const option: echarts.EChartsCoreOption = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [150, 230, 224, 218, 135, 147, 260],
+          type: 'line'
+        }
+      ]
+    };
+
+    this.myChart.setOption(option);
+  }
+
+  
+
+
 // -------------------------------------------------------------------
 @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
 
@@ -70,13 +102,16 @@ export class TrafficLogPageComponent {
     { login_date: '20:00-22:00', login_count: '367 次' }
   ];
 
-  private myChart!: echarts.ECharts;
+  // private myChart!: echarts.ECharts;
 
   // ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-    this.initChart();
-  }
+  // ngAfterViewInit(): void {
+  //   this.initChart();
+  // }
+
+
+  
 
   initChart(): void {
     this.myChart = echarts.init(this.chartContainer.nativeElement);
@@ -246,6 +281,9 @@ export class TrafficLogPageComponent {
   ngOnDestroy(): void {
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
+    }
+     if (this.myChart) {
+      this.myChart.dispose(); // 銷毀，避免 memory leak
     }
   }
 

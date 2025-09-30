@@ -77,8 +77,8 @@
                 </div>
 
                 <div *ngIf="activeTab === 'daily'" class="tab-content active">
-                    <div class="chart-placeholder">折線圖 - 每日使用次數趨勢</div>
-                    <div #chartContainer class="chart-placeholder" style="width:100%; height:400px;"></div>
+                    <!-- <div class="chart-placeholder">折線圖 - 每日使用次數趨勢</div> -->
+                    <div id="chartContainer" class="chart-placeholder" style="width:100%; height:400px;"></div>
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of dailyData">
                             <span>{{ item.login_date }}</span>
