@@ -29,7 +29,8 @@ export class TrafficLogPageComponent {
   trafficService = inject(TrafficLogBackService);
 
   private updateInterval: any;
-
+  //圖表
+  private myChart!: echarts.ECharts;
   // 統計卡片數據
   statsCards: StatCard[] = [
     { number: '47', label: '今日使用次數' },
@@ -63,11 +64,19 @@ export class TrafficLogPageComponent {
   ];
 
 
-  private myChart!: echarts.ECharts;
 
+  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
   ngAfterViewInit(): void {
     this.getEchartData();
   }
+
+  showDailyTab() {
+    this.activeTab = 'daily';
+    setTimeout(() => {
+      this.getEchartData();
+    });
+  }
+
   getEchartData() {
     const chartDom = document.getElementById('chartContainer')!;
     this.myChart = echarts.init(chartDom);
@@ -99,7 +108,7 @@ export class TrafficLogPageComponent {
 
 
   // -------------------------------------------------------------------
-  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
+  @ViewChild('chartContainer2', { static: true }) chartContainer2!: ElementRef;
 
   hourlyData: DataItem[] = [
     { login_date: '14:00-16:00', login_count: '458 次', isHighlight: true },
@@ -120,6 +129,40 @@ export class TrafficLogPageComponent {
         console.error('API 請求錯誤:', err);
       }
     });
+  }
+
+  showDailyTabHourly() {
+    this.activeTab = 'hourly';
+    setTimeout(() => {
+      this.getEchartHistory();
+    });
+  }
+
+  getEchartHistory() {
+    const chartDom = document.getElementById('chartContainer2')!;
+    this.myChart = echarts.init(chartDom);
+  
+    // 轉換資料
+    const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
+    const yData = this.hourlyData.map(item => Number(item.login_count.replace(/,/g, ''))); // y 軸數字
+  
+    const option: echarts.EChartsCoreOption = {
+      xAxis: {
+        type: 'category',
+        data: xData
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: yData,
+          type: 'line'
+        }
+      ]
+    };
+  
+    this.myChart.setOption(option);
   }
 
   // FAQ分類數據
