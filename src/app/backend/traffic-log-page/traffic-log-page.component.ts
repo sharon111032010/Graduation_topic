@@ -143,7 +143,8 @@ export class TrafficLogPageComponent {
     this.myChart = echarts.init(chartDom);
   
     // 轉換資料
-    const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
+    // const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
+    const xData = this.dailyData.map(item => item.login_date.split('T')[0].slice(5));
     const yData = this.hourlyData.map(item => {
       // item.login_count 已經是 number，就直接用
       return typeof item.login_count === 'number' ? item.login_count : Number(String(item.login_count).replace(/\D/g, ''));
