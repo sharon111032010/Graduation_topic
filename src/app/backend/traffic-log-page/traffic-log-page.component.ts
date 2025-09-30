@@ -2,6 +2,7 @@ import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { DataItem, FaqCategory, StatCard, SuccessRate, UnknownQuestion, VisitorStat } from 'src/app/@service/trafficLog/traffic-log-page.model';
 import { CommonModule } from '@angular/common';
 import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogService/traffic-log-back.service';
+<<<<<<< HEAD
 
 // import * as echarts from 'echarts/core';
 // import { LineChart } from 'echarts/charts';
@@ -9,6 +10,14 @@ import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogSer
 // import { CanvasRenderer } from 'echarts/renderers';
 // echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
 // >>>>>>> abac0f0b6d1bb0117219fdcd1ef31a08ef5bf7f6
+=======
+import * as echarts from 'echarts/core';
+import { LineChart } from 'echarts/charts';
+import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
+type EChartsOption = echarts.EChartsCoreOption;
+>>>>>>> a486ad4af5d6a096775e67f6e997dd9ea4069dd4
 @Component({
   selector: 'app-traffic-log-page',
   standalone: true,
@@ -63,6 +72,37 @@ export class TrafficLogPageComponent {
   ];
 
 
+
+
+
+  private myChart!: echarts.ECharts;
+
+  ngAfterViewInit(): void {
+    const chartDom = document.getElementById('chartContainer')!;
+    this.myChart = echarts.init(chartDom);
+
+    const option: echarts.EChartsCoreOption = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [150, 230, 224, 218, 135, 147, 260],
+          type: 'line'
+        }
+      ]
+    };
+
+    this.myChart.setOption(option);
+  }
+
+  
+
+
 // -------------------------------------------------------------------
 @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
 
@@ -95,6 +135,12 @@ export class TrafficLogPageComponent {
   // ngAfterViewInit(): void {
   //   this.initChart();
   // }
+<<<<<<< HEAD
+=======
+
+
+  
+>>>>>>> a486ad4af5d6a096775e67f6e997dd9ea4069dd4
 
   // initChart(): void {
   //   this.myChart = echarts.init(this.chartContainer.nativeElement);
@@ -264,6 +310,9 @@ export class TrafficLogPageComponent {
   ngOnDestroy(): void {
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
+    }
+     if (this.myChart) {
+      this.myChart.dispose(); // 銷毀，避免 memory leak
     }
   }
 
