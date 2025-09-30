@@ -78,6 +78,7 @@
 
                 <div *ngIf="activeTab === 'daily'" class="tab-content active">
                     <div class="chart-placeholder">折線圖 - 每日使用次數趨勢</div>
+                    <div #chartContainer class="chart-placeholder" style="width:100%; height:400px;"></div>
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of dailyData">
                             <span>{{ item.login_date }}</span>
@@ -90,10 +91,17 @@
                 </div>
 
                 <div *ngIf="activeTab === 'hourly'" class="tab-content active">
-                    <div class="chart-placeholder">
+                    <!-- <div class="chart-placeholder">
                         長條圖 - 歷時使用趨勢
-                    </div>
-                    <canvas id="myChart"></canvas>
+                    </div> -->
+                    <!-- <div #chart class="chart-placeholder" style="width: 100%; height: 400px;"> -->
+                        <!-- 這裡會被 ECharts 渲染 -->
+                    <!-- </div> -->
+                    <!-- <div #chartContainer style="width: 100%; height: 400px;"></div> -->
+                    <div #chartContainer class="chart-placeholder" style="width:100%; height:400px;"></div>
+
+                    <!-- <canvas id="myChart"></canvas> -->
+                    <!-- <canvas #myChart></canvas> -->
                     <!-- 折線圖 canvas -->
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of hourlyData">
