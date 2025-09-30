@@ -3,10 +3,17 @@ import { DataItem, FaqCategory, StatCard, SuccessRate, UnknownQuestion, VisitorS
 import { CommonModule } from '@angular/common';
 import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogService/traffic-log-back.service';
 
-import * as echarts from 'echarts/core';
+// import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
+import { GridComponent } from 'echarts/components';
+import * as echarts from 'echarts/core';
+import { PieChart } from 'echarts/charts';
+import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
+
+// 註冊要用到的組件
+echarts.use([PieChart, TitleComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
+
 echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
 type EChartsOption = echarts.EChartsCoreOption;
 @Component({
@@ -31,6 +38,11 @@ export class TrafficLogPageComponent {
   private updateInterval: any;
   //圖表
   private myChart!: echarts.ECharts;
+  private visterChart!: echarts.ECharts;
+
+  private dailyChart!: echarts.ECharts;
+// private visterChart!: echarts.ECharts;
+
   // 統計卡片數據
   statsCards: StatCard[] = [
     { number: '47', label: '今日使用次數' },
@@ -63,11 +75,61 @@ export class TrafficLogPageComponent {
     { login_date: '2025-09-12', login_count: '2,912' }
   ];
 
+  @ViewChild('chartVister', { static: true }) chartVister!: ElementRef;
+  getVisterEChart(){
+    const chartDom = document.getElementById('chartVister')!;
+    this.visterChart = echarts.init(chartDom);
+
+    const option : echarts.EChartsCoreOption  = {
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 40,
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: 1048, name: 'Search Engine' },
+            { value: 735, name: 'Direct' }
+          ]
+        }
+      ]
+    };
+    this.visterChart.setOption(option);
+
+  }
+
 
 
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
   ngAfterViewInit(): void {
     this.getEchartData();
+    this.getVisterEChart();
   }
 
   showDailyTab() {
@@ -198,12 +260,73 @@ export class TrafficLogPageComponent {
     });
   }
 
+
+
   // 成功率數據
   successRates: SuccessRate[] = [
     { type: '課程查詢', rate: '94.5%', status: 'success' },
     { type: '校園導航', rate: '87.3%', status: 'warning' },
     { type: '活動資訊', rate: '78.9%', status: 'error' }
   ];
+
+
+  getMeetingChart() {
+    const chartDom = document.getElementById('meetingChart')!;
+    const myChart = echarts.init(chartDom);
+  
+    const option: echarts.EChartsCoreOption = {
+      title: {
+        text: '94%',            // 中心大字
+        subtext: '整體遇時率',
+        left: 'center',
+        top: 'center',
+        textStyle: {
+          fontSize: 40,
+          fontWeight: 'bold'
+        },
+        subtextStyle: {
+          fontSize: 16,
+          color: '#666'
+        }
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        bottom: '0',
+        left: 'center'
+      },
+      series: [
+        {
+          name: '遇時次數',
+          type: 'pie',
+          radius: ['50%', '70%'],   // 圓環
+          avoidLabelOverlap: false,
+          label: {
+            show: false
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 18,
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: 40, name: '上午' },
+            { value: 25, name: '下午' },
+            { value: 20, name: '晚上' },
+            { value: 15, name: '其他' }
+          ]
+        }
+      ]
+    };
+  
+    myChart.setOption(option);
+  }
 
   // 未知問題數據
   unknownQuestions: UnknownQuestion[] = [
