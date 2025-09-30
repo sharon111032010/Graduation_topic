@@ -141,7 +141,7 @@ export class TrafficLogPageComponent {
     this.activeTab = 'hourly';
     setTimeout(() => {
       this.getEchartHistory();
-    });
+    }, 1000); // 1000 = 1 秒
   }
 
   // xDatao = this.dailyData.map(item => item.login_date.split('T')[0]);
