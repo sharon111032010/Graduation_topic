@@ -3,12 +3,6 @@ import { DataItem, FaqCategory, StatCard, SuccessRate, UnknownQuestion, VisitorS
 import { CommonModule } from '@angular/common';
 import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogService/traffic-log-back.service';
 
-// import * as echarts from 'echarts/core';
-// import { LineChart } from 'echarts/charts';
-// import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
-// import { CanvasRenderer } from 'echarts/renderers';
-// echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
-// >>>>>>> abac0f0b6d1bb0117219fdcd1ef31a08ef5bf7f6
 import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
@@ -63,57 +57,60 @@ export class TrafficLogPageComponent {
 
   // 每日使用數據
   dailyData: DataItem[] = [
-    { login_date: '今日 (8/17)', login_count: '2,847 次', isHighlight: true },
-    { login_date: '昨日 (8/16)', login_count: '2,634 次' },
-    { login_date: '8/15', login_count: '2,912 次' }
+    { login_date: '2025-09-10', login_count: '2,847' },
+    { login_date: '2025-09-11', login_count: '2,634' },
+    { login_date: '2025-09-12', login_count: '2,912' }
   ];
-
-
-
 
 
   private myChart!: echarts.ECharts;
 
   ngAfterViewInit(): void {
-  // getEchart(){
+    this.getEchart();
+  }
+  getEchart() {
     const chartDom = document.getElementById('chartContainer')!;
     this.myChart = echarts.init(chartDom);
-
+  
+    // 轉換資料
+    const xData = this.dailyData.map(item => item.login_date); // x 軸用日期
+    const yData = this.dailyData.map(item => Number(item.login_count.replace(/,/g, ''))); // y 軸數字
+  
     const option: echarts.EChartsCoreOption = {
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: xData
       },
       yAxis: {
         type: 'value'
       },
       series: [
         {
-          data: [150, 230, 224, 218, 135, 147, 260],
+          data: yData,
           type: 'line'
         }
       ]
     };
-
+  
     this.myChart.setOption(option);
   }
 
-  
 
 
-// -------------------------------------------------------------------
-@ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
+
+  // -------------------------------------------------------------------
+  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
 
   hourlyData: DataItem[] = [
     { login_date: '14:00-16:00', login_count: '458 次', isHighlight: true },
     { login_date: '10:00-12:00', login_count: '392 次' },
     { login_date: '20:00-22:00', login_count: '367 次' }
   ];
-// <<<<<<< HEAD
-  getHistory(){
+  // <<<<<<< HEAD
+  getHistory() {
     this.trafficService.getHistory().subscribe({
       next: (res) => {
-        if(res.isSuccess){
+        if (res.isSuccess) {
           this.hourlyData = res.data;
         } else {
           console.error('API 回傳失敗:', res.message);
@@ -124,110 +121,6 @@ export class TrafficLogPageComponent {
       }
     });
   }
-// =======
-
-  // private myChart!: echarts.ECharts;
-
-  // ngOnInit(): void {}
-
-  // ngAfterViewInit(): void {
-  //   this.initChart();
-  // }
-
-  // initChart(): void {
-  //   this.myChart = echarts.init(this.chartContainer.nativeElement);
-
-  //   const option = {
-  //     title: {
-  //       text: '各時段登入次數'
-  //     },
-  //     tooltip: {},
-  //     xAxis: {
-  //       type: 'category',
-  //       data: this.hourlyData.map(item => item.login_date)
-  //     },
-  //     yAxis: {
-  //       type: 'value'
-  //     },
-  //     series: [
-  //       {
-  //         name: '登入次數',
-  //         type: 'bar',
-  //         data: this.hourlyData.map(item => parseInt(item.login_count)),
-  //         itemStyle: {
-  //           color: (params: any) => {
-  //             return this.hourlyData[params.dataIndex].isHighlight ? '#ff7f50' : '#3398DB';
-  //           }
-  //         }
-  //       }
-  //     ]
-  //   };
-
-  //   this.myChart.setOption(option);
-  // }
-
-  // 時段數據
-  // hourlyData: DataItem[] = [
-  //   { login_date: '14:00-16:00', login_count: '458 次', isHighlight: true },
-  //   { login_date: '10:00-12:00', login_count: '392 次' },
-  //   { login_date: '20:00-22:00', login_count: '367 次' }
-  // ];
-
-  // getHistory(){
-  //   this.trafficService.getHistory().subscribe({
-  //     next: (res) => {
-  //       if(res.isSuccess){
-  //         this.hourlyData = res.data;
-  //       } else {
-  //         console.error('API 回傳失敗:', res.message);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('API 請求錯誤:', err);
-  //     }
-  //   });
-  // }
-
-  // ngAfteriewInit() {
-  //   // this.getHistory();
-  //   // this.getEchart();
-  // }
-
-  // getHistory() {
-  //   this.trafficService.getHistory().subscribe({
-  //     next: (res) => {
-  //       if (res.isSuccess) {
-  //         this.hourlyData = res.data;
-  //         this.renderChart();
-  //       } else {
-  //         console.error('API 回傳失敗:', res.message);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('API 請求錯誤:', err);
-  //     }
-  //   });
-  // }
-
-  // renderChart() {
-  //   if (!this.chartElement) {
-  //     console.error('chartElement 尚未初始化');
-  //     return;
-  //   }
-  //   const chart = echarts.init(this.chartElement.nativeElement);
-  //   chart.setOption({
-  //     title: { text: '時段登入次數' },
-  //     tooltip: { trigger: 'axis' },
-  //     xAxis: { type: 'category', data: this.hourlyData.map(d => d.login_date) },
-  //     yAxis: { type: 'value' },
-  //     series: [
-  //       {
-  //         type: 'line',
-  //         data: this.hourlyData.map(d => parseInt(d.login_count.replace(/\D/g, ''), 10))
-  //       }
-  //     ]
-  //   });
-  // }
 
   // FAQ分類數據
   faqCategories: FaqCategory[] = [
@@ -296,14 +189,13 @@ export class TrafficLogPageComponent {
     this.getNuneQA();
     this.getFaqCategory();
     this.getHistory();
-
   }
 
   ngOnDestroy(): void {
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
     }
-     if (this.myChart) {
+    if (this.myChart) {
       this.myChart.dispose(); // 銷毀，避免 memory leak
     }
   }
