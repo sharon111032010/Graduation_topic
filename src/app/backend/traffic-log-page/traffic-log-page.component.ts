@@ -120,7 +120,13 @@ export class TrafficLogPageComponent {
     this.trafficService.getHistory().subscribe({
       next: (res) => {
         if (res.isSuccess) {
-          this.hourlyData = res.data;
+          this.hourlyData = res.data.map((item: any) => ({
+            ...item,
+            // 只保留日期部分 YYYY-MM-DD
+            login_date: item.login_date.split('T')[0]
+            // 如果只要 MM-DD 可以改成 slice(5)
+            // login_date: item.login_date.split('T')[0].slice(5)
+          }));
         } else {
           console.error('API 回傳失敗:', res.message);
         }
@@ -138,14 +144,14 @@ export class TrafficLogPageComponent {
     });
   }
 
-  xDatao = this.dailyData.map(item => item.login_date.split('T')[0]);
+  // xDatao = this.dailyData.map(item => item.login_date.split('T')[0]);
   getEchartHistory() {
     const chartDom = document.getElementById('chartContainer2')!;
     this.myChart = echarts.init(chartDom);
   
     // 轉換資料
-    // const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
-    const xData = this.xDatao // x 軸用日期
+    const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
+    // const xData = this.xDatao // x 軸用日期
     const yData = this.hourlyData.map(item => {
       // item.login_count 已經是 number，就直接用
       return typeof item.login_count === 'number' ? item.login_count : Number(String(item.login_count).replace(/\D/g, ''));
