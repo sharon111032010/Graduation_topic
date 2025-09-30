@@ -188,10 +188,10 @@ export class TrafficLogPageComponent {
   //   });
   // }
 
-  ngAfteriewInit() {
-    // this.getHistory();
-    // this.getEchart();
-  }
+  // ngAfteriewInit() {
+  //   // this.getHistory();
+  //   // this.getEchart();
+  // }
 
   // getHistory() {
   //   this.trafficService.getHistory().subscribe({
@@ -295,7 +295,7 @@ export class TrafficLogPageComponent {
     this.getCount();
     this.getNuneQA();
     this.getFaqCategory();
-    // this.getHistory();
+    this.getHistory();
 
   }
 
