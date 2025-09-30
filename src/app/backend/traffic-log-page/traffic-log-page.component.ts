@@ -104,18 +104,20 @@ export class TrafficLogPageComponent {
             position: 'center'
           },
           emphasis: {
+            scale: true,       // 啟用縮放
+            scaleSize: -5,     // 負數就是縮小（例如 -5 表示縮小 5px）
             label: {
               show: true,
-              fontSize: 40,
-              fontWeight: 'bold'
+              fontSize: 25,
+              fontWeight: 'lighter'
             }
           },
           labelLine: {
             show: false
           },
           data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' }
+            { value: 708, name: '訪客用戶' },
+            { value: 1048, name: '登入用戶' }
           ]
         }
       ]
@@ -130,6 +132,7 @@ export class TrafficLogPageComponent {
   ngAfterViewInit(): void {
     this.getEchartData();
     this.getVisterEChart();
+    this.getMeetingChart();
   }
 
   showDailyTab() {
