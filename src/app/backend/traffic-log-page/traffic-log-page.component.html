@@ -68,7 +68,7 @@
             <div class="card" id="card-traffic">
                 <h3>📈 流量紀錄</h3>
                 <div class="tabs">
-                    <button class="tab" [class.active]="activeTab === 'daily'" (click)="showTab('daily')">
+                    <button class="tab" [class.active]="activeTab === 'daily'" (click)="showTab('daily') ;getEchartData()"  >
                         每日使用
                     </button>
                     <button class="tab" [class.active]="activeTab === 'hourly'" (click)="showTab('hourly')">

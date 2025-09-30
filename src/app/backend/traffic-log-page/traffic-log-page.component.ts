@@ -66,9 +66,9 @@ export class TrafficLogPageComponent {
   private myChart!: echarts.ECharts;
 
   ngAfterViewInit(): void {
-    this.getEchart();
+    this.getEchartData();
   }
-  getEchart() {
+  getEchartData() {
     const chartDom = document.getElementById('chartContainer')!;
     this.myChart = echarts.init(chartDom);
   
