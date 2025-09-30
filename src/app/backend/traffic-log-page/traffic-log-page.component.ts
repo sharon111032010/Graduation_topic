@@ -2,7 +2,6 @@ import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { DataItem, FaqCategory, StatCard, SuccessRate, UnknownQuestion, VisitorStat } from 'src/app/@service/trafficLog/traffic-log-page.model';
 import { CommonModule } from '@angular/common';
 import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogService/traffic-log-back.service';
-<<<<<<< HEAD
 
 // import * as echarts from 'echarts/core';
 // import { LineChart } from 'echarts/charts';
@@ -10,14 +9,12 @@ import { TrafficLogBackService } from 'src/app/@service/trafficLog/trafficLogSer
 // import { CanvasRenderer } from 'echarts/renderers';
 // echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
 // >>>>>>> abac0f0b6d1bb0117219fdcd1ef31a08ef5bf7f6
-=======
 import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
 type EChartsOption = echarts.EChartsCoreOption;
->>>>>>> a486ad4af5d6a096775e67f6e997dd9ea4069dd4
 @Component({
   selector: 'app-traffic-log-page',
   standalone: true,
@@ -52,7 +49,7 @@ export class TrafficLogPageComponent {
         if (res.isSuccess) {
           this.statsCards[0].number = res.data.todayCount;
           this.statsCards[1].number = res.data.msgType1Count;
-          this.statsCards[2].number = res.data.category20Count;
+          this.statsCards[2].number = (res.data.category20Count / 2).toString();
         } else {
           console.error('API 回傳失敗:', res.message);
         }
@@ -78,6 +75,7 @@ export class TrafficLogPageComponent {
   private myChart!: echarts.ECharts;
 
   ngAfterViewInit(): void {
+  // getEchart(){
     const chartDom = document.getElementById('chartContainer')!;
     this.myChart = echarts.init(chartDom);
 
@@ -135,12 +133,6 @@ export class TrafficLogPageComponent {
   // ngAfterViewInit(): void {
   //   this.initChart();
   // }
-<<<<<<< HEAD
-=======
-
-
-  
->>>>>>> a486ad4af5d6a096775e67f6e997dd9ea4069dd4
 
   // initChart(): void {
   //   this.myChart = echarts.init(this.chartContainer.nativeElement);
@@ -196,10 +188,10 @@ export class TrafficLogPageComponent {
   //   });
   // }
 
-  // ngAfterViewInit() {
-  //   this.getHistory();
-  //   this.renderChart();
-  // }
+  ngAfteriewInit() {
+    // this.getHistory();
+    // this.getEchart();
+  }
 
   // getHistory() {
   //   this.trafficService.getHistory().subscribe({
