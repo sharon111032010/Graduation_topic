@@ -42,7 +42,7 @@ export class TrafficLogPageComponent {
 
   private dailyChart!: echarts.ECharts;
 // private visterChart!: echarts.ECharts;
-faqLimit: number = 1; // 初始只顯示 5 筆 FAQ
+faqLimit: number = 5; // 初始只顯示 5 筆 FAQ
 
   // 統計卡片數據
   statsCards: StatCard[] = [
@@ -249,21 +249,46 @@ faqLimit: number = 1; // 初始只顯示 5 筆 FAQ
     { categoryName: '交通資訊', itemCount: 12, usageRate: 45 }
   ];
 
-  getFaqCategory() {
-    this.trafficService.getFaqCategory().subscribe({
-      next: (res) => {
-        if (res.isSuccess) {
-          this.faqCategories = res.data;
-        } else {
-          console.error('API 回傳失敗:', res.message);
-        }
-      },
-      error: (err) => {
-        console.error('API 請求錯誤:', err);
-      }
-    });
-  }
+  // getFaqCategory() {
+  //   this.trafficService.getFaqCategory().subscribe({
+  //     next: (res) => {
+  //       if (res.isSuccess) {
+  //         this.faqCategories = res.data;
+  //       } else {
+  //         console.error('API 回傳失敗:', res.message);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error('API 請求錯誤:', err);
+  //     }
+  //   });
+  // }
 
+
+  // faqCategories: FaqCategory[] = [];       // 後端回來的完整資料
+faqCategoriesDisplay: FaqCategory[] = []; // 畫面上顯示的資料
+// faqLimit = 5;
+
+getFaqCategory() {
+  this.trafficService.getFaqCategory().subscribe({
+    next: (res) => {
+      if (res.isSuccess) {
+        this.faqCategories = res.data;
+        this.faqCategoriesDisplay = this.faqCategories.slice(0, this.faqLimit);
+      }else {
+        console.error('API 回傳失敗:', res.message);
+      }
+    },
+    error: (err) => {
+      console.error('API 請求錯誤:', err);
+    }
+  });
+}
+
+showMoreFaq() {
+  this.faqLimit += 5;
+  this.faqCategoriesDisplay = this.faqCategories.slice(0, this.faqLimit);
+}
 
 
   // 成功率數據

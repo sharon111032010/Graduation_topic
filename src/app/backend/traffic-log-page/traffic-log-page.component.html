@@ -69,7 +69,7 @@
                 <h3>📈 流量紀錄</h3>
                 <div class="tabs">
                     <!-- <button class="tab" [class.active]="activeTab === 'daily'" (click)="showTab('daily') ;getEchartData()"  > -->
-                    <button class="tab" [class.active]="activeTab === 'daily'" (click)="showDailyTab()"  >
+                    <button class="tab" [class.active]="activeTab === 'daily'" (click)="showDailyTab()">
                         每日使用
                     </button>
                     <button class="tab" [class.active]="activeTab === 'hourly'" (click)="showDailyTabHourly()">
@@ -118,7 +118,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let category of faqCategories">
+                        <tr *ngFor="let category of faqCategoriesDisplay">
                             <td>{{ category.categoryName }}</td>
                             <td>{{ category.itemCount }}</td>
                             <td>
@@ -130,48 +130,52 @@
                                 <button class="btn btn-secondary" (click)="onButtonClick('編輯')">編輯</button>
                             </td>
                         </tr>
+
+                        <div class="btn-group" *ngIf="faqCategories.length > faqCategoriesDisplay.length">
+                            <button class="btn btn-primary" (click)="showMoreFaq()">顯示更多</button>
+                        </div>
                     </tbody>
                 </table>
-                <div class="btn-group" *ngIf="faqCategories.length > faqLimit">
-                    <button class="btn btn-primary" (click)="faqLimit = faqLimit + 5">顯示更多</button>
-                </div>
-            </div>
-
-            <!-- 成功率 -->
-            <div class="card" id="card-success">
-                <h3>🕛回答遇時次數追蹤</h3>
-                <div class="chart-placeholder" id="meetingChart">折線圖 - 遇時次數分析</div>
-                <div class="success-rate">
-                    <div class="grid-box">
-                        <div class="grid-number">94%</div>
-                        <div class="grid-label">整體遇時率</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 未知問題 -->
-            <div class="card" id="card-unknown">
-                <h3>❓ 未知問題收集</h3>
-                <div class="btn-group">
-                    <button class="btn btn-primary" (click)="onButtonClick('匯出清單')">匯出清單</button>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>問題內容</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let question of unknownQuestions">
-                            <td>{{ question.msg }}</td>
-                            <td>
-                                <button class="btn btn-secondary" (click)="onButtonClick('加入FAQ')">FAQ</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- <div class="btn-group" *ngIf="faqCategories.length > faqLimit">
+                    <button class="btn btn-primary" (click)="faqLimit = faqLimit + 5">顯示更多</button> -->
             </div>
         </div>
+
+        <!-- 成功率 -->
+        <div class="card" id="card-success">
+            <h3>🕛回答遇時次數追蹤</h3>
+            <div class="chart-placeholder" id="meetingChart">折線圖 - 遇時次數分析</div>
+            <div class="success-rate">
+                <div class="grid-box">
+                    <div class="grid-number">94%</div>
+                    <div class="grid-label">整體遇時率</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 未知問題 -->
+        <div class="card" id="card-unknown">
+            <h3>❓ 未知問題收集</h3>
+            <div class="btn-group">
+                <button class="btn btn-primary" (click)="onButtonClick('匯出清單')">匯出清單</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>問題內容</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let question of unknownQuestions">
+                        <td>{{ question.msg }}</td>
+                        <td>
+                            <button class="btn btn-secondary" (click)="onButtonClick('加入FAQ')">FAQ</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 </div>
