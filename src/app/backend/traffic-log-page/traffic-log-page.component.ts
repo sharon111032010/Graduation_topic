@@ -29,7 +29,7 @@ export class TrafficLogPageComponent {
   @ViewChild('chart') chartElement!: ElementRef;
   // @ViewChild('chartContainer', { static: false }) chartElement!: ElementRef;
   activeSection: string = 'traffic';
-  activeTab: string = 'daily';
+  activeTab: string = 'hourly';
   currentDate: string = '2025/08/20';
   adminName: string = 'superadmin';
 
@@ -209,7 +209,7 @@ export class TrafficLogPageComponent {
 hourlyDataDisplay: DataItem[] = [];
 
 // 限制筆數
-hourlyLimit: number = 10; // 預設先顯示 10 筆
+hourlyLimit: number = 5; // 預設先顯示 10 筆
 
 getHourlyData() {
     this.trafficService.getHistory().subscribe({
@@ -228,7 +228,7 @@ getHourlyData() {
 }
 
 showMoreHourly() {
-  this.hourlyLimit += 10; // 每次多顯示 10 筆
+  this.hourlyLimit += 5; // 每次多顯示 10 筆
   this.hourlyDataDisplay = this.hourlyData.slice(0, this.hourlyLimit);
 }
 
