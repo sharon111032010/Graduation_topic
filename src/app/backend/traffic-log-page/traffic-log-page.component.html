@@ -90,9 +90,8 @@
                     </div>
                 </div>
 
-                <div *ngIf="activeTab === 'hourly'" class="tab-content active">
+                <!-- <div *ngIf="activeTab === 'hourly'" class="tab-content active">
                     <div id="chartContainer2" class="chart-placeholder" style="width:100%; height:400px;"></div>
-                    <!-- 折線圖 canvas -->
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of hourlyData">
                             <span>{{ item.login_date.split('T')[0] }}</span>
@@ -101,6 +100,25 @@
                                 <span>{{ item.login_count }}</span>
                             </ng-template>
                         </div>
+                    </div>
+                </div> -->
+                <div *ngIf="activeTab === 'hourly'" class="tab-content active">
+                    <div id="chartContainer2" class="chart-placeholder" style="width:100%; height:400px;"></div>
+
+                    <!-- 歷史紀錄列表 -->
+                    <div class="data-list">
+                        <div class="data-item" *ngFor="let item of hourlyDataDisplay">
+                            <span>{{ item.login_date.split('T')[0] }}</span>
+                            <strong *ngIf="item.isHighlight; else normalValue">{{ item.login_count }}次</strong>
+                            <ng-template #normalValue>
+                                <span>{{ item.login_count }}</span>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <!-- 顯示更多按鈕 -->
+                    <div class="btn-group" *ngIf="hourlyData.length > hourlyDataDisplay.length">
+                        <button class="btn btn-primary" (click)="showMoreHourly()">顯示更多</button>
                     </div>
                 </div>
             </div>

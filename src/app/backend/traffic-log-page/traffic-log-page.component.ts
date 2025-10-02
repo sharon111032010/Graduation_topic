@@ -42,7 +42,6 @@ export class TrafficLogPageComponent {
 
   private dailyChart!: echarts.ECharts;
 // private visterChart!: echarts.ECharts;
-faqLimit: number = 5; // 初始只顯示 5 筆 FAQ
 
   // 統計卡片數據
   statsCards: StatCard[] = [
@@ -182,26 +181,57 @@ faqLimit: number = 5; // 初始只顯示 5 筆 FAQ
     { login_date: '2025-09-12', login_count: '367' }
   ];
   // <<<<<<< HEAD
-  getHistory() {
+  // getHistory() {
+  //   this.trafficService.getHistory().subscribe({
+  //     next: (res) => {
+  //       if (res.isSuccess) {
+  //         this.hourlyData = res.data.map((item: any) => ({
+  //           ...item,
+  //           // 只保留日期部分 YYYY-MM-DD
+  //           login_date: item.login_date.split('T')[0]
+  //           // 如果只要 MM-DD 可以改成 slice(5)
+  //           // login_date: item.login_date.split('T')[0].slice(5)
+  //         }));
+  //       } else {
+  //         console.error('API 回傳失敗:', res.message);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error('API 請求錯誤:', err);
+  //     }
+  //   });
+  // }
+
+  // 歷史紀錄完整資料（後端 API 回來的）
+// hourlyData: DataItem[] = [];
+
+// 畫面上要顯示的資料（控制分批顯示）
+hourlyDataDisplay: DataItem[] = [];
+
+// 限制筆數
+hourlyLimit: number = 10; // 預設先顯示 10 筆
+
+getHourlyData() {
     this.trafficService.getHistory().subscribe({
-      next: (res) => {
-        if (res.isSuccess) {
-          this.hourlyData = res.data.map((item: any) => ({
-            ...item,
-            // 只保留日期部分 YYYY-MM-DD
-            login_date: item.login_date.split('T')[0]
-            // 如果只要 MM-DD 可以改成 slice(5)
-            // login_date: item.login_date.split('T')[0].slice(5)
-          }));
-        } else {
-          console.error('API 回傳失敗:', res.message);
-        }
-      },
-      error: (err) => {
-        console.error('API 請求錯誤:', err);
+    next: (res) => {
+      if (res.isSuccess) {
+        this.hourlyData = res.data;
+        this.hourlyDataDisplay = this.hourlyData.slice(0, this.hourlyLimit);
+      } else {
+        console.error('API 回傳失敗:', res.message);
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error('API 請求錯誤:', err);
+    }
+  });
+}
+
+showMoreHourly() {
+  this.hourlyLimit += 10; // 每次多顯示 10 筆
+  this.hourlyDataDisplay = this.hourlyData.slice(0, this.hourlyLimit);
+}
+
 
   showDailyTabHourly() {
     this.activeTab = 'hourly';
@@ -249,25 +279,9 @@ faqLimit: number = 5; // 初始只顯示 5 筆 FAQ
     { categoryName: '交通資訊', itemCount: 12, usageRate: 45 }
   ];
 
-  // getFaqCategory() {
-  //   this.trafficService.getFaqCategory().subscribe({
-  //     next: (res) => {
-  //       if (res.isSuccess) {
-  //         this.faqCategories = res.data;
-  //       } else {
-  //         console.error('API 回傳失敗:', res.message);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('API 請求錯誤:', err);
-  //     }
-  //   });
-  // }
 
-
-  // faqCategories: FaqCategory[] = [];       // 後端回來的完整資料
+faqLimit: number = 5; // 初始只顯示 5 筆 FAQ
 faqCategoriesDisplay: FaqCategory[] = []; // 畫面上顯示的資料
-// faqLimit = 5;
 
 getFaqCategory() {
   this.trafficService.getFaqCategory().subscribe({
@@ -394,7 +408,8 @@ showMoreFaq() {
     this.getCount();
     this.getNuneQA();
     this.getFaqCategory();
-    this.getHistory();
+    // this.getHistory();
+    this.getHourlyData();
   }
 
   ngOnDestroy(): void {
