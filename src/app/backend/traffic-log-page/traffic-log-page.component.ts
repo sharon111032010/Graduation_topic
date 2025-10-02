@@ -42,6 +42,7 @@ export class TrafficLogPageComponent {
 
   private dailyChart!: echarts.ECharts;
 // private visterChart!: echarts.ECharts;
+faqLimit: number = 1; // 初始只顯示 5 筆 FAQ
 
   // 統計卡片數據
   statsCards: StatCard[] = [

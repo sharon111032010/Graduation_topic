@@ -132,6 +132,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="btn-group" *ngIf="faqCategories.length > faqLimit">
+                    <button class="btn btn-primary" (click)="faqLimit = faqLimit + 5">顯示更多</button>
+                </div>
             </div>
 
             <!-- 成功率 -->
