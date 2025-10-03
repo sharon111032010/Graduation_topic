@@ -89,15 +89,16 @@
                         </div>
                     </div>
 
-                   
-                </div>
-                     <!-- 顯示更多按鈕 -->
+                    <!-- 顯示更多按鈕 -->
                     <div class="btn-group" *ngIf="hourlyData.length > hourlyDataDisplay.length">
                         <button class="btn btn-primary" (click)="showMoreHourly()">顯示更多</button>
                     </div>
+                </div>
+
 
                 <div *ngIf="activeTab === 'daily'" class="tab-content active">
-                    <div id="chartContainer" class="chart-placeholder" style="width:100%; height:400px;">折線圖 - 遇時次數分析</div>
+                    <div id="chartContainer" class="chart-placeholder" style="width:100%; height:400px;">折線圖 - 遇時次數分析
+                    </div>
                     <div class="data-list">
                         <div class="data-item" *ngFor="let item of dailyData">
                             <span>{{ item.login_date }}</span>
@@ -109,7 +110,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
 
             <!-- FAQ 分類 -->
@@ -140,9 +141,9 @@
 
                     </tbody>
                 </table>
-                        <div class="btn-group" *ngIf="faqCategories.length > faqCategoriesDisplay.length">
-                            <button class="btn btn-primary" (click)="showMoreFaq()">顯示更多</button>
-                        </div>
+                <div class="btn-group" *ngIf="faqCategories.length > faqCategoriesDisplay.length">
+                    <button class="btn btn-primary" (click)="showMoreFaq()">顯示更多</button>
+                </div>
                 <!-- <div class="btn-group" *ngIf="faqCategories.length > faqLimit">
                     <button class="btn btn-primary" (click)="faqLimit = faqLimit + 5">顯示更多</button> -->
             </div>

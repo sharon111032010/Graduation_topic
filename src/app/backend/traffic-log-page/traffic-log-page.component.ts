@@ -133,6 +133,7 @@ export class TrafficLogPageComponent {
     this.getEchartData();
     this.getVisterEChart();
     this.getMeetingChart();
+    this.showDailyTabHourly();
   }
 
   showDailyTab() {
