@@ -410,6 +410,12 @@ showMoreFaq() {
     this.getFaqCategory();
     // this.getHistory();
     this.getHourlyData();
+
+    this.getMeetingChart();
+    this.getVisterEChart();
+    // this.getHourlyData();  // 回答遇時次數追蹤
+  // this.getVisitorStats(); // 訪客使用統計
+  // this.getTrafficData();  // 流量紀錄
   }
 
   ngOnDestroy(): void {
