@@ -77,8 +77,8 @@ export class TrafficLogPageComponent {
 
   @ViewChild('chartVister', { static: true }) chartVister!: ElementRef;
   getVisterEChart(){
-    // const chartDom = document.getElementById('chartVister')!;
-    // this.visterChart = echarts.init(chartDom);
+    const chartDom = document.getElementById('chartVister')!;
+    this.visterChart = echarts.init(chartDom);
 
     const option : echarts.EChartsCoreOption  = {
       tooltip: {
@@ -127,7 +127,6 @@ export class TrafficLogPageComponent {
   }
 
 
-
   @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef;
   ngAfterViewInit(): void {
     this.getEchartData();
@@ -146,8 +145,8 @@ export class TrafficLogPageComponent {
   }
 
   getEchartData() {
-    // const chartDom = document.getElementById('chartContainer')!;
-    // this.myChart = echarts.init(chartDom);
+    const chartDom = document.getElementById('chartContainer')!;
+    this.myChart = echarts.init(chartDom);
   
     // 轉換資料
     const xData = this.dailyData.map(item => item.login_date); // x 軸用日期
@@ -172,9 +171,6 @@ export class TrafficLogPageComponent {
     this.myChart.setOption(option);
   }
 
-
-
-
   // -------------------------------------------------------------------
   @ViewChild('chartContainer2', { static: true }) chartContainer2!: ElementRef;
 
@@ -183,30 +179,6 @@ export class TrafficLogPageComponent {
     { login_date: '2025-09-11', login_count: '392' },
     { login_date: '2025-09-12', login_count: '367' }
   ];
-  // <<<<<<< HEAD
-  // getHistory() {
-  //   this.trafficService.getHistory().subscribe({
-  //     next: (res) => {
-  //       if (res.isSuccess) {
-  //         this.hourlyData = res.data.map((item: any) => ({
-  //           ...item,
-  //           // 只保留日期部分 YYYY-MM-DD
-  //           login_date: item.login_date.split('T')[0]
-  //           // 如果只要 MM-DD 可以改成 slice(5)
-  //           // login_date: item.login_date.split('T')[0].slice(5)
-  //         }));
-  //       } else {
-  //         console.error('API 回傳失敗:', res.message);
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.error('API 請求錯誤:', err);
-  //     }
-  //   });
-  // }
-
-  // 歷史紀錄完整資料（後端 API 回來的）
-// hourlyData: DataItem[] = [];
 
 // 畫面上要顯示的資料（控制分批顯示）
 hourlyDataDisplay: DataItem[] = [];
@@ -245,8 +217,8 @@ showMoreHourly() {
 
   // xDatao = this.dailyData.map(item => item.login_date.split('T')[0]);
   getEchartHistory() {
-    // const chartDom = document.getElementById('chartContainer2')!;
-    // this.myChart = echarts.init(chartDom);
+    const chartDom = document.getElementById('chartContainer2')!;
+    this.myChart = echarts.init(chartDom);
   
     // 轉換資料
     const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
@@ -317,8 +289,8 @@ showMoreFaq() {
 
 
   getMeetingChart() {
-    // const chartDom = document.getElementById('meetingChart')!;
-    // const myChart = echarts.init(chartDom);
+    const chartDom = document.getElementById('meetingChart')!;
+    const myChart = echarts.init(chartDom);
   
     const option: echarts.EChartsCoreOption = {
       title: {
@@ -371,7 +343,7 @@ showMoreFaq() {
       ]
     };
   
-    this.myChart.setOption(option);
+    myChart.setOption(option);
   }
 
   // 未知問題數據
