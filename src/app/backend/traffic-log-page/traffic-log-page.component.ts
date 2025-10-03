@@ -77,8 +77,8 @@ export class TrafficLogPageComponent {
 
   @ViewChild('chartVister', { static: true }) chartVister!: ElementRef;
   getVisterEChart(){
-    const chartDom = document.getElementById('chartVister')!;
-    this.visterChart = echarts.init(chartDom);
+    // const chartDom = document.getElementById('chartVister')!;
+    // this.visterChart = echarts.init(chartDom);
 
     const option : echarts.EChartsCoreOption  = {
       tooltip: {
@@ -146,8 +146,8 @@ export class TrafficLogPageComponent {
   }
 
   getEchartData() {
-    const chartDom = document.getElementById('chartContainer')!;
-    this.myChart = echarts.init(chartDom);
+    // const chartDom = document.getElementById('chartContainer')!;
+    // this.myChart = echarts.init(chartDom);
   
     // 轉換資料
     const xData = this.dailyData.map(item => item.login_date); // x 軸用日期
@@ -245,8 +245,8 @@ showMoreHourly() {
 
   // xDatao = this.dailyData.map(item => item.login_date.split('T')[0]);
   getEchartHistory() {
-    const chartDom = document.getElementById('chartContainer2')!;
-    this.myChart = echarts.init(chartDom);
+    // const chartDom = document.getElementById('chartContainer2')!;
+    // this.myChart = echarts.init(chartDom);
   
     // 轉換資料
     const xData = this.hourlyData.map(item => item.login_date); // x 軸用日期
@@ -317,8 +317,8 @@ showMoreFaq() {
 
 
   getMeetingChart() {
-    const chartDom = document.getElementById('meetingChart')!;
-    const myChart = echarts.init(chartDom);
+    // const chartDom = document.getElementById('meetingChart')!;
+    // const myChart = echarts.init(chartDom);
   
     const option: echarts.EChartsCoreOption = {
       title: {
@@ -371,7 +371,7 @@ showMoreFaq() {
       ]
     };
   
-    myChart.setOption(option);
+    this.myChart.setOption(option);
   }
 
   // 未知問題數據
