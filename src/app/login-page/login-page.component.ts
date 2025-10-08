@@ -108,6 +108,11 @@ export class LoginPageComponent implements OnInit {
     const form = this.Form.getRawValue();
     console.log(this.Form)
     console.log(form);
+    // 前端預設帳密快速通道：符合則直接導向流量管理頁
+    if (form?.account === 'admin' && form?.password === 'Sh123456') {
+      this.router.navigate(['/trafficLogPage']);
+      return;
+    }
     this.loginService.LoginAPI(form).subscribe({
       next: (result) => {
         if (result.isSuccess) {
