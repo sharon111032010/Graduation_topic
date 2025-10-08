@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild, OnInit, OnDestroy, inject, DestroyRef } from '@angular/core';
 import { Subject, takeUntil, finalize, of, concatMap, Observable, firstValueFrom, async, delay } from 'rxjs';
+import { timeout, catchError } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -402,8 +403,16 @@ export class ChatPageComponent implements OnInit {
   private async getBotResponse(userMessage: string): Promise<void> {
     this.isLoading = true;
     try {
+      const TIMEOUT_MS = 15000; // 15 秒逾時
+      const FALLBACK_RESPONSE = '目前系統繁忙，已提供暫時回覆。請稍後再試。';
+
       const res = await firstValueFrom(
         this.botService.chatBot({ msg: userMessage }).pipe(
+          timeout(TIMEOUT_MS),
+          catchError((err) => {
+            // 逾時或網路異常時回傳預設回覆
+            return of({ isSuccess: true, data: { answer: FALLBACK_RESPONSE }, isFallback: true });
+          }),
           takeUntilDestroyed(this.destroyRef)
         )
       );
