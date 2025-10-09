@@ -39,6 +39,7 @@ export class ChatPageComponent implements OnInit {
   private userId: string | null | undefined = null;
   private isNewChatInProgress = false;
   private hasUpdatedTitle = false;//標題更新
+  private offlineMode = true; // 無後端時啟用離線模式，放寬驗證並建立本地 menuId
 
   // Public properties
   menuId = '';
@@ -87,7 +88,9 @@ export class ChatPageComponent implements OnInit {
 
   // UI Controls
   toggleSidebar(): void {
+    // 行動裝置沿用 active；桌面採用 collapsed 寬度 0 方案
     this.sidebarRef.nativeElement.classList.toggle('active');
+    this.sidebarRef.nativeElement.classList.toggle('collapsed');
   }
 
   closeSidebar(): void {
@@ -96,6 +99,24 @@ export class ChatPageComponent implements OnInit {
 
   onQuickAskClick(question: string): void {
     this.userInput = question;
+  }
+
+  onChatKeyDown(event: KeyboardEvent): void {
+    // Shift + Enter 送出
+    if (event.key === 'Enter' && event.shiftKey) {
+      event.preventDefault();
+      this.onSendClick();
+    }
+  }
+
+  autoResize(event: Event): void {
+    const textarea = event.target as HTMLTextAreaElement;
+    const maxRows = 4;
+    const lineHeight = 20; // 對應 font-size 14px 約略行高
+    textarea.style.height = 'auto';
+    const maxHeight = maxRows * lineHeight;
+    textarea.style.height = Math.min(textarea.scrollHeight, maxHeight) + 'px';
+    textarea.style.overflowY = textarea.scrollHeight > maxHeight ? 'auto' : 'hidden';
   }
 
   onGetUserName() {
@@ -133,6 +154,19 @@ export class ChatPageComponent implements OnInit {
   }
 
   private createNewChatMenu(): void {
+    // 離線模式：先本地建立 menuId 與歷史項目，允許後續傳送訊息
+    if (this.offlineMode) {
+      const localMenuId = `local-${Date.now()}`;
+      this.menuId = localMenuId;
+      this.selectedHistoryIndex = this.historyItems.length;
+      this.historyItems.push({
+        menuId: localMenuId,
+        title: this.title || '新聊天',
+        createtime: this.formatTime(new Date().toISOString())
+      });
+      return;
+    }
+
     if (!this.userId) {
       console.error('User ID is required to create new chat');
       return;
@@ -267,6 +301,9 @@ export class ChatPageComponent implements OnInit {
   }
 
   private validateChatState(): boolean {
+    if (this.offlineMode) {
+      return true;
+    }
     if (!this.userId) {
       console.error('User ID is required to send message');
       return false;
@@ -316,7 +353,11 @@ export class ChatPageComponent implements OnInit {
 
     if (isFirstMessage) {
       this.botService.chatTitle({ msg: userMessage })
-        .pipe(takeUntilDestroyed(this.destroyRef))
+        .pipe(
+          timeout(10000), // 10 秒逾時
+          catchError(() => of({ isSuccess: true, data: { title: '新聊天' }, isFallback: true })),
+          takeUntilDestroyed(this.destroyRef)
+        )
         .subscribe({
           next: (res) => {
             if (res?.isSuccess) {
@@ -478,7 +519,12 @@ export class ChatPageComponent implements OnInit {
   // Utility Methods
   private formatTime(isoString: string): string {
     const date = new Date(isoString);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mm = String(date.getMinutes()).padStart(2, '0');
+    return `${y}/${m}/${d} ${hh}:${mm}`;
   }
 
   private handleError(message: string, error: any): void {

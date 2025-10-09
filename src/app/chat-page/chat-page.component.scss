@@ -70,7 +70,7 @@ header {
 }
 
 .menu-toggle {
-    display: none;
+    display: block; /* 全螢幕也可手動切換側邊欄 */
     font-size: 24px;
     cursor: pointer;
     color: #003366;
@@ -85,15 +85,29 @@ header {
 
 /* 左側欄：用戶資訊與歷史 */
 .sidebar {
-    width: 30%;
+    width: 25%;
     background-color: $bg-sidebar;
-    padding: 24px 20px;
+    padding: 12px 14px;
     border-right: 1px solid $border-color;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    // gap: 24px;
     overflow-y: auto;
     transition: transform 0.3s ease;
+}
+
+/* 桌面側欄可折疊 */
+.sidebar.collapsed {
+    width: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+    transform: translateX(-100%);
+}
+
+.main-container .sidebar.collapsed + .chat-container {
+    flex: 1 !important;
+    width: 100% !important;
 }
 
 .sidebar h2 {
@@ -104,7 +118,7 @@ header {
 
 .user-info {
     text-align: center;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     border-bottom: 1px solid $border-color;
     display: flex;
     flex-direction: column;
@@ -149,6 +163,8 @@ header {
 .history {
     flex: 1;
     overflow-y: auto;
+    position: relative; /* 讓 sticky 生效 */
+
 }
 
 .history-header{
@@ -158,6 +174,13 @@ header {
     // justify-content: left;
     align-items: center;
     margin-bottom: 12px;
+
+
+    background-color: #f8f9fa; /* 背景要加白色，避免被下方內容透出 */
+    position: sticky;
+    top: 0;
+    z-index: 10; /* 確保不被蓋住 */
+    padding: 8px; /* 給一點內距比較好看 */
 
     //文字水平對齊至中
     h2 {
@@ -170,6 +193,7 @@ header {
 }
 
 .history ul {
+    // overflow-y: auto;
     list-style: none;
     padding-left: 0;
     font-size: 14px;
@@ -194,7 +218,7 @@ header {
 }
 
 .quick-ask {
-    margin-top: 20px;
+    // margin-top: 20px;
 }
 
 .quick-ask button {
@@ -218,12 +242,12 @@ header {
     font-size: 12px;
     color: #999;
     text-align: center;
-    margin-top: 20px;
+    // margin-top: 20px;
 }
 
 /* 聊天區域 */
 .chat-container {
-    width: 70%;
+    flex: 1; /* 自動填滿剩餘空間 */
     display: flex;
     flex-direction: column;
     background-color: $bg-light;
@@ -473,7 +497,7 @@ header {
     }
 
     .chat-container {
-        width: calc(100% - 280px);
+        flex: 1; /* 保持自動填滿剩餘空間 */
     }
 }
 
@@ -497,7 +521,7 @@ header {
     }
 
     .chat-container {
-        width: 100%;
+        flex: 1; /* 保持自動填滿剩餘空間 */
     }
 
     .user-profile {

@@ -26,7 +26,7 @@
                     {{userName.at(0)}}
                 </div>
                 <p class="username">{{ userName }}</p>
-                <p class="userid">學號:1111032022</p>
+                <!-- <p class="userid">學號:1111032022</p> -->
                 <button class="logout-btn" (click)="onTestDelete()">登出</button>
             </div>
 
@@ -43,7 +43,6 @@
                     <li *ngFor="let item of historyItems.slice().reverse(); let i = index"
                         [class.active]="historyItems.length - 1 - i === selectedHistoryIndex"
                         (click)="onHistoryClick(historyItems.length - 1 - i)">
-                        <span class="index">{{ historyItems.length - i }}</span>
                         <span class="timestamp">{{ item.createtime }}</span>
                         {{ item.title }}
                     </li>
@@ -116,9 +115,9 @@
 
             <div class="chat-input-container">
                 <div class="chat-input-box">
-                    <input type="text" class="chat-input" placeholder="請輸入問題..." [(ngModel)]="userInput">
-                    <button class="send-button" (click)="onSendClick()" [disabled]="!menuId">送出</button>
-
+                    <textarea class="chat-input chat-textarea" placeholder="請輸入問題..." rows="1"
+                        [(ngModel)]="userInput" (keydown)="onChatKeyDown($event)" (input)="autoResize($event)"></textarea>
+                    <button class="send-button" (click)="onSendClick()">送出</button>
                 </div>
             </div>
         </div>
