@@ -132,9 +132,10 @@ export class TrafficLogPageComponent {
     this.getEchartData();
     this.getVisterEChart();
     this.getMeetingChart();
-    setTimeout(() => {
-    this.showDailyTabHourly();
-    }, 0.5);
+    // 移除延遲，讓資料載入完成後自動渲染圖表
+    // setTimeout(() => {
+    //   this.showDailyTabHourly();
+    // }, 0.5);
   }
 
   showDailyTab() {
@@ -192,6 +193,10 @@ getHourlyData() {
       if (res.isSuccess) {
         this.hourlyData = res.data;
         this.hourlyDataDisplay = this.hourlyData.slice(0, this.hourlyLimit);
+        // 資料載入完成後立即渲染圖表
+        setTimeout(() => {
+          this.getEchartHistory();
+        }, 100);
       } else {
         console.error('API 回傳失敗:', res.message);
       }
@@ -210,9 +215,15 @@ showMoreHourly() {
 
   showDailyTabHourly() {
     this.activeTab = 'hourly';
-    setTimeout(() => {
-      this.getEchartHistory();
-    }, 500); // 1000 = 1 秒
+    // 確保有資料才渲染圖表
+    if (this.hourlyData && this.hourlyData.length > 0) {
+      setTimeout(() => {
+        this.getEchartHistory();
+      }, 100);
+    } else {
+      // 如果沒有資料，先載入資料
+      this.getHourlyData();
+    }
   }
 
   // xDatao = this.dailyData.map(item => item.login_date.split('T')[0]);
@@ -383,7 +394,7 @@ showMoreFaq() {
     this.getCount();
     this.getNuneQA();
     this.getFaqCategory();
-    this.getHourlyData();
+    this.getHourlyData(); // 這個會自動觸發圖表渲染
     this.getMeetingChart();
     this.getVisterEChart();
   }
