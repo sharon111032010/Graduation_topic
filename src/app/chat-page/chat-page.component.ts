@@ -499,8 +499,10 @@ export class ChatPageComponent implements OnInit {
   }
 
   private saveMessage(message: string, isUser: boolean) {
-    if (!this.userId) {
-      return of(null);
+    // 離線模式或沒有 userId 時，不儲存到後端
+    if (this.offlineMode || !this.userId) {
+      console.log('離線模式：訊息不儲存到後端', { message, isUser });
+      return of({ isSuccess: true, message: '離線模式，訊息未儲存' });
     }
 
     const saveMsgReq: ISaveMsgReq = {
