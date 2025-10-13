@@ -536,10 +536,11 @@ export class ChatPageComponent implements OnInit {
 
   // Dialog Methods
   onTestDelete(): void {
-    this.dialog.open(UserInfoDialogComponent, {
-      width: '400px',
-      disableClose: true
-    });
+    this.router.navigate(['/loginPage']);
+    // this.dialog.open(UserInfoDialogComponent, {
+    //   width: '400px',
+    //   disableClose: true
+    // });
   }
   toISOString2Digits(date: Date): string {
     const iso = date.toISOString(); // 例如 "2025-09-02T12:53:09.920Z"
