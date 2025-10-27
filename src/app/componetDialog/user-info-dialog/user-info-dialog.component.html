@@ -1,14 +1,35 @@
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-
-    <input type="text" formControlName="name" placeholder="Enter your name">
-    <br>
-
-    <input type="password" formControlName="password" placeholder="Enter your password">
-    <br>
-
-    <input type="email" formControlName="email" placeholder="Enter your email">
-    <br>
-
-    <button type="submit" [disabled]="!myForm.valid">Submit</button>
-
-</form>
+<div class="user-info-dialog">
+    <h2>👤 使用者資訊</h2>
+    
+    <div class="user-details">
+        <div class="detail-item">
+            <label>姓名：</label>
+            <span>{{ userData?.userName || '未設定' }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <label>學號：</label>
+            <span>{{ userData?.userId || '未設定' }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <label>信箱：</label>
+            <span>{{ userData?.userEmail || '未設定' }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <label>科系：</label>
+            <span>{{ userData?.userDepartment || '未設定' }}</span>
+        </div>
+        
+        <div class="detail-item">
+            <label>年級：</label>
+            <span>{{ userData?.userGrade || '未設定' }}</span>
+        </div>
+    </div>
+    
+    <div class="dialog-actions">
+        <button class="btn btn-primary" (click)="closeDialog()">關閉</button>
+        <button class="btn btn-secondary" (click)="logout()">登出</button>
+    </div>
+</div>

@@ -52,7 +52,7 @@ export class ChatPageComponent implements OnInit {
   isAddButtonDisabled = false; // 控制新增聊天按鈕的禁用狀態
   showAddChatButton = true;
 
-  userName = '';
+  userName = '王小明'; // 寫死的使用者姓名
 
   constructor(
   ) { }
@@ -535,12 +535,22 @@ export class ChatPageComponent implements OnInit {
   }
 
   // Dialog Methods
+  showUserInfoDialog(): void {
+    this.dialog.open(UserInfoDialogComponent, {
+      width: '400px',
+      disableClose: true,
+      data: {
+        userName: this.userName,
+        userId: '1111032022',
+        userEmail: 'wang.xiaoming@student.nutc.edu.tw',
+        userDepartment: '資訊管理系',
+        userGrade: '四年級'
+      }
+    });
+  }
+
   onTestDelete(): void {
     this.router.navigate(['/loginPage']);
-    // this.dialog.open(UserInfoDialogComponent, {
-    //   width: '400px',
-    //   disableClose: true
-    // });
   }
   toISOString2Digits(date: Date): string {
     const iso = date.toISOString(); // 例如 "2025-09-02T12:53:09.920Z"

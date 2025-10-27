@@ -1,10 +1,15 @@
-// 刪除帳號對話框組件
-import { Component } from '@angular/core';
-import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
-import { MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DeleteAccountService } from 'src/app/@service/delete-account.service';
-import { IDeleteAccountReq } from 'src/app/@InterfaceAPI/IDeleteAccoutn';
+// 使用者資訊對話框組件
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+
+export interface UserInfoData {
+  userName: string;
+  userId: string;
+  userEmail: string;
+  userDepartment: string;
+  userGrade: string;
+}
 
 @Component({
   selector: 'app-user-info-dialog',
@@ -12,42 +17,23 @@ import { IDeleteAccountReq } from 'src/app/@InterfaceAPI/IDeleteAccoutn';
   styleUrls: ['./user-info-dialog.component.scss']
 })
 export class UserInfoDialogComponent {
-
-
-  myForm: FormGroup;
+  
+  userData: UserInfoData;
 
   constructor(
-    public fb: FormBuilder,
-    public DelteDialogService: DeleteAccountService // 用於關閉對話框
+    public dialogRef: MatDialogRef<UserInfoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: UserInfoData,
+    private router: Router
   ) {
-    this.myForm = fb.group({
-      name: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
-    });
+    this.userData = data;
   }
 
-  onSubmit() {
-    const fromData :IDeleteAccountReq = this.myForm.getRawValue();
-    if (this.myForm.valid) {
-      console.log('送出的表單資料:', this.myForm.value);
-      this.DelteDialogService.deleteAccountAPI(fromData).subscribe({
-        next: (response) => {
-          alert('帳號刪除成功！');
-          console.log('帳號刪除成功:', response);
-          // 在這裡可以處理成功刪除帳號後的邏輯
-        },
-        error: (error) => {
-          console.error('帳號刪除失敗:', error);
-          // 在這裡可以處理刪除帳號失敗的情況
-        }
-      }); // 關閉對話框
-      alert('表單已提交！');
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 
-      // 可以在這裡用 HttpClient 發送 API 請求
-      // this.http.post('http://api.url', this.myForm.value).subscribe(...)
-    } else {
-      console.log('表單驗證失敗');
-    }
+  logout(): void {
+    this.dialogRef.close();
+    this.router.navigate(['/loginPage']);
   }
 }
